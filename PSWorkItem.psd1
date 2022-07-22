@@ -2,10 +2,9 @@
 # Module manifest for module 'PSWorkItem'
 #
 
-
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '0.1.0'
+    ModuleVersion          = '0.2.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -28,7 +27,7 @@
     AliasesToExport        = ''
     PrivateData            = @{
         PSData = @{
-            # Tags = @()
+             Tags = @('database','sqlite','to-do','project-management','tasks')
             # LicenseUri = ''
             # ProjectUri = ''
             # IconUri = ''
