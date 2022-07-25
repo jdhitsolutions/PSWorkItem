@@ -1,0 +1,87 @@
+<!--
+Format type data generated 07/25/2022 13:54:12 by THINKX1-JH\Jeff
+
+This file was created using the New-PSFormatXML command that is part
+of the PSScriptTools module.
+
+https://github.com/jdhitsolutions/PSScriptTools
+-->
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <!--Created 07/25/2022 13:54:12 by THINKX1-JH\Jeff-->
+      <Name>default</Name>
+      <ViewSelectedBy>
+        <TypeName>PSWorkItemDatabase</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <!--
+            You can also use a scriptblock to define a custom property name.
+            You must have a Label tag.
+            <ScriptBlock>$_.machinename.toUpper()</ScriptBlock>
+            <Label>Computername</Label>
+
+            Use <Label> to set the displayed value.
+-->
+        <ScriptBlock>"{0} [{1:f0}KB]" -f $_.Path,($_.size/1KB)</ScriptBlock>
+        <Label>Path</Label>
+      </GroupBy>
+      <TableControl>
+        <!--Delete the AutoSize node if you want to use the defined widths.-->
+        <AutoSize />
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Created</Label>
+            <Width>23</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>LastModified</Label>
+            <Width>23</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Tasks</Label>
+            <Width>12</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Archived</Label>
+            <Width>15</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Categories</Label>
+            <Width>16</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <!--
+            By default the entries use property names, but you can replace them with scriptblocks.
+            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
+-->
+              <TableColumnItem>
+                <PropertyName>Created</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastModified</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TaskCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ArchiveCount</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CategoryCount</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

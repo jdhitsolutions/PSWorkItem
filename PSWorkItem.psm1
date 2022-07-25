@@ -30,6 +30,19 @@ class PSWorkItemCategory {
     }
 }
 
+class PSWorkItemDatabase {
+    [string]$Path
+    [datetime]$Created
+    [datetime]$LastModified
+    [int32]$Size
+    [int32]$TaskCount
+    [int32]$CategoryCount
+    [int32]$ArchiveCount
+    [string]$Encoding
+    [int32]$PageCount
+    [int32]$PageSize
+}
+
 #Add a dynamic type extension to the PSWorkItem class
 Add-PSTypeExtension -TypeName PSWorkitem -MemberType ScriptProperty -MemberName OverDue -Value {
     if ($this.DueDate -lt (Get-Date)) {
@@ -43,4 +56,5 @@ $PSWorkItemDefaultCategories = "Work","Personal","Project","Other"
 
 Export-ModuleMember -Variable PSWorkItemPath -Function 'Get-PSWorkItem','Set-PSWorkItem',
 'Remove-PSWorkItem','Initialize-PSWorkItemDatabase','Complete-PSWorkItem','Get-PSWorkitemCategory',
-'Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory','Add-PSWorkItemCategory'
+'Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory','Add-PSWorkItemCategory',
+'Get-PSWorkItemDatabase'
