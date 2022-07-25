@@ -19,6 +19,17 @@ class PSWorkItem {
     hidden[guid]$TaskID
 }
 
+class PSWorkItemCategory {
+    [string]$Category
+    [string]$Comment
+
+    #constructor
+    PSWorkItemCategory([string]$Category, [string]$Comment) {
+        $this.Category = $Category
+        $this.Comment = $Comment
+    }
+}
+
 #Add a dynamic type extension to the PSWorkItem class
 Add-PSTypeExtension -TypeName PSWorkitem -MemberType ScriptProperty -MemberName OverDue -Value {
     if ($this.DueDate -lt (Get-Date)) {
@@ -28,7 +39,8 @@ Add-PSTypeExtension -TypeName PSWorkitem -MemberType ScriptProperty -MemberName 
 }
 
 $PSWorkItemPath = Join-Path -path $HOME -childpath "PSWorkItem.db"
+$PSWorkItemDefaultCategories = "Work","Personal","Project","Other"
 
 Export-ModuleMember -Variable PSWorkItemPath -Function 'Get-PSWorkItem','Set-PSWorkItem',
 'Remove-PSWorkItem','Initialize-PSWorkItemDatabase','Complete-PSWorkItem','Get-PSWorkitemCategory',
-'Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory'
+'Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory','Add-PSWorkItemCategory'

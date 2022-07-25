@@ -21,7 +21,7 @@
     # FormatsToProcess = @()
     FunctionsToExport      = 'Get-PSWorkItem','Set-PSWorkItem','Remove-PSWorkItem',
     'Initialize-PSWorkItemDatabase','Complete-PSWorkItem','Get-PSWorkitemCategory',
-    'Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory'
+    'Add-PSWorkitemCategory','Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory'
     CmdletsToExport        = ''
     VariablesToExport      = 'PSWorkItemPath'
     AliasesToExport        = ''

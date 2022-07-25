@@ -33,11 +33,11 @@ $props = [ordered]@{
     completed = "integer"
 }
 
-New-MySQLiteDBTable -Path $PSWorkItemPath -TableName tasks -ColumnProperties $props -force
+New-MySQLiteDBTable -Path $Path -TableName tasks -ColumnProperties $props -force
 
 ### Tables: Archive
 
-New-MySQLiteDBTable -Path $PSWorkItemPath -TableName archive -ColumnProperties $props -force
+New-MySQLiteDBTable -Path $Path -TableName archive -ColumnProperties $props -force
 
 ### Tables: Categories
 
@@ -49,3 +49,5 @@ $props = [ordered]@{
 New-MySQLiteDBTable -Path $PSWorkItemPath -TableName categories -ColumnProperties $props -force
 
 get-mysQLiteTable -Path $PSWorkItemPath -Detail
+
+Everything is stored in the database in lower case to make it easier to find and test for existing items. Values will be converted to proper and title case when data is treated as a PSWorkItem or PSWorkItemCategory object.
