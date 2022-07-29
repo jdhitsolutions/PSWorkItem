@@ -5,15 +5,15 @@ Function Initialize-PSWorkItemDatabase {
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
-                $parent = Split-Path -Path $_ -Parent
-                if (Test-Path $parent) {
-                    Return $True
-                }
-                else {
-                    Throw "Failed to validate the parent path $parent."
-                    Return $False
-                }
-            })]
+            $parent = Split-Path -Path $_ -Parent
+            if (Test-Path $parent) {
+                Return $True
+            }
+            else {
+                Throw "Failed to validate the parent path $parent."
+                Return $False
+            }
+        })]
         [string]$Path = $PSWorkItemPath,
         [switch]$Passthru,
         [Parameter(HelpMessage = "Force overwriting an existing file.")]
@@ -25,7 +25,6 @@ Function Initialize-PSWorkItemDatabase {
 
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Initializing PSWorkItem database $Path "
-
         Try {
             $db = New-MySQLiteDB -Path $Path -Passthru -force:$Force -comment "PSWorkItem database created $(Get-Date)." -ErrorAction stop
         }
@@ -39,7 +38,7 @@ Function Initialize-PSWorkItemDatabase {
                 taskcreated  = "text"
                 taskmodified = "text"
                 name         = "text"
-                descripton   = "text"
+                description   = "text"
                 duedate      = "text"
                 category     = "text"
                 progress     = "integer"
@@ -53,7 +52,7 @@ Function Initialize-PSWorkItemDatabase {
 
             $props = [ordered]@{
                 category = "text"
-                comment = "text"
+                description = "text"
             }
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): ...categories"
             New-MySQLiteDBTable -Path $Path -TableName categories -ColumnProperties $props -force:$force

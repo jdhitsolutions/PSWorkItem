@@ -6,7 +6,7 @@ Function Remove-PSWorkItemCategory {
             HelpMessage = "Specify the category name",
             ValueFromPipelineByPropertyName,
             ValueFromPipeline
-            )]
+        )]
         [ValidateNotNullOrEmpty()]
         [alias("Name")]
         [string[]]$Category,
@@ -14,15 +14,14 @@ Function Remove-PSWorkItemCategory {
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
-            $parent = Split-Path -Path $_ -Parent
-            if (Test-Path $parent) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate the parent path $parent."
-                Return $False
-            }
-        })]
+                if (Test-Path $_) {
+                    Return $True
+                }
+                else {
+                    Throw "Failed to validate $_"
+                    Return $False
+                }
+            })]
         [string]$Path = $PSWorkItemPath
     )
     Begin {
@@ -30,15 +29,14 @@ Function Remove-PSWorkItemCategory {
         Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Opening a connection to $Path"
-        if ($script:conn.state -ne 'Open') {
-            Try {
-                $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
-                $conn | Out-String | Write-Verbose
-            }
-            Catch {
-                Throw "Failed to open the database $Path"
-            }
+        Try {
+            $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
+            $conn | Out-String | Write-Verbose
         }
+        Catch {
+            Throw "Failed to open the database $Path"
+        }
+
     } #begin
 
     Process {
@@ -47,7 +45,7 @@ Function Remove-PSWorkItemCategory {
                 Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Removing category $item "
                 $query = "DELETE FROM categories WHERE category = '$item'"
                 if ($pscmdlet.ShouldProcess($item)) {
-                    Invoke-MySQLiteQuery -Query $query -Connection $conn -keepalive
+                    Invoke-MySQLiteQuery -Query $query -Connection $conn -KeepAlive
                 }
             }
         }

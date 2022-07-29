@@ -1,0 +1,187 @@
+---
+external help file: PSWorkItem-help.xml
+Module Name: PSWorkItem
+online version:
+schema: 2.0.0
+---
+
+# New-PSWorkItem
+
+## SYNOPSIS
+
+Create a new PSWorkItem.
+
+## SYNTAX
+
+```yaml
+New-PSWorkItem [-Name] <String> -Category <String> [-Description <String>] [-DueDate <DateTime>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+## DESCRIPTION
+
+Use this command to add a new PSWorkItem to the database. It is assumed you have already defined your task categories.
+
+## EXAMPLES
+
+### Example 1
+
+```powershell
+PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog
+```
+
+You should be able to use tab completion for the Category parameter.
+
+## PARAMETERS
+
+### -Category
+Select a valid catetory
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Add a comment or task description
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: comment
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -DueDate
+When is this task due?
+The default is 30 days from now.
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+The name of the work item.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: task
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Passthru
+{{ Fill Passthru Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Path
+The path to the PSWorkitem SQLite database file.
+It should end in .db
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+### System.String
+
+## OUTPUTS
+
+### None
+
+### PSWorkItem
+
+## NOTES
+
+This command has an alias of nwi.
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+
+## RELATED LINKS
+
+[Get-PSWorkItem](Get-PSWorkItem.md)
+
+[Set-PSWorkItem](Set-PSWorkItem.md)
+
+[Complete-PSWorkItem](Complete-PSWorkItem.md)
+
+[Remove-PSWorkItem](Remove-PSWorkItem.md)

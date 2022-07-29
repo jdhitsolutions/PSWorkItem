@@ -6,14 +6,13 @@ Function Get-PSWorkItemDatabase {
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
-                $parent = Split-Path -Path $_ -Parent
-                if (Test-Path $parent) {
-                    Return $True
-                }
-                else {
-                    Throw "Failed to validate the parent path $parent."
-                    Return $False
-                }
+            if (Test-Path $_) {
+                Return $True
+            }
+            else {
+                Throw "Failed to validate $_"
+                Return $False
+            }
             })]
         [string]$Path = $PSWorkItemPath
     )

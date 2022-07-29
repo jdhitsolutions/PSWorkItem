@@ -1,4 +1,4 @@
-Function Get-PSWorkitemCategory {
+Function Get-PSWorkItemCategory {
     [cmdletbinding()]
     [OutputType("PSWorkItemCategory")]
     Param(
@@ -16,73 +16,50 @@ Function Get-PSWorkitemCategory {
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
-                $parent = Split-Path -Path $_ -Parent
-                if (Test-Path $parent) {
-                    Return $True
-                }
-                else {
-                    Throw "Failed to validate the parent path $parent."
-                    Return $False
-                }
-            })]
+            if (Test-Path $_) {
+                Return $True
+            }
+            else {
+                Throw "Failed to validate $_"
+                Return $False
+            }
+        })]
         [string]$Path = $PSWorkItemPath
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting"
         Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Opening a connection to $Path"
-        Try {
-            <#
-            Save the connection to a script-scoped variable so that if this command is piped
-            to another command like Remove-PSWorkItemCategory, the open connection will be
-            reused.
-            #>
-            $script:conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
-            $script:conn | Out-String | Write-Debug
-            #parameters to splat to Invoke-MySQLiteQuery
-            $splat = @{
-                connection  = $script:conn
-                KeepAlive   = $true
-                Query       = ""
-                As          = "Object"
-                ErrorAction = "Stop"
-            }
-        }
-        Catch {
-            Throw "$($myinvocation.mycommand): Failed to open the database $Path"
+
+        $splat = @{
+            Query     = ""
+            Path      = $Path
+            As        = "Object"
         }
     } #begin
 
     Process {
-        if ($script:conn.State -eq 'open') {
-            if ($Category -eq "*") {
-                $splat.Query = "SELECT * FROM categories"
+        if ($Category -eq "*") {
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting all categories"
+            $splat.Query = "SELECT * FROM categories"
+            $data = Invoke-MySQLiteQuery @splat
+        }
+        else {
+            Foreach ($item in $Category) {
+                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting category $item"
+                #make a case-insensitive query
+                $splat.Query = "SELECT * FROM categories WHERE category = '$item' collate nocase"
                 $data = Invoke-MySQLiteQuery @splat
             }
-            else {
-                Foreach ($item in $Category) {
-                    Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting category $item"
-                    $splat.Query = "SELECT * FROM categories WHERE category = '$item'"
-                    $data = Invoke-MySQLiteQuery @splat
-
-                }
-            }
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($data.count) categories"
-            foreach ($cat in $data) {
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Creating category object for $($cat.category)"
-                [PSWorkItemCategory]::New($cat.category, $cat.comment)
-            }
+        }
+        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($data.count) categories"
+        foreach ($cat in $data) {
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Creating category object for $($cat.category)"
+            [PSWorkItemCategory]::New($cat.category, $cat.description)
         }
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Closing the connection to $Path"
-        <#
-        There is a chance that subsequent commands might still need the connection.
-        #>
-        Close-MySQLiteDB -Connection $script:conn
-        Write-Debug "connection state is $($script:conn.state)"
         Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
     } #end
 

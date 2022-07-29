@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '0.2.0'
+    ModuleVersion          = '0.3.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -16,14 +16,14 @@
     ProcessorArchitecture  = 'Amd64'
     RequiredModules        = @("mySQLite")
     # TypesToProcess = @()
-    FormatsToProcess = @('formats/psworkitemdatabase.format.ps1xml')
+    FormatsToProcess = @('formats/psworkitemdatabase.format.ps1xml','formats/psworkitem.format.ps1xml')
     FunctionsToExport      = 'Get-PSWorkItem','Set-PSWorkItem','Remove-PSWorkItem',
     'Initialize-PSWorkItemDatabase','Complete-PSWorkItem','Get-PSWorkitemCategory',
     'Add-PSWorkItemCategory','Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory',
     'Get-PSWorkItemDatabase'
     CmdletsToExport        = ''
-    VariablesToExport      = 'PSWorkItemPath'
-    AliasesToExport        = ''
+    VariablesToExport      = ''
+    AliasesToExport        = @('gwi','nwi','swi')
     PrivateData            = @{
         PSData = @{
              Tags = @('database','sqlite','to-do','project-management','tasks')
