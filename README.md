@@ -1,6 +1,6 @@
 # PSWorkItem
 
-This module is a replacement for the [`MyTasks`](https://github.com/jdhitsolutions/MyTasks) module. That module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file.
+This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. That module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file.
 
 ## Installation
 
@@ -10,7 +10,7 @@ This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell,
 Install-Module PSWorkItem
 ```
 
-Installation will also install the required [`MySQLite`](https://github.com/jdhitsolutions/MySQLite) module.
+Installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
 
 ## Module Commands and Design
 
@@ -26,7 +26,7 @@ Installation will also install the required [`MySQLite`](https://github.com/jdhi
 + [New-PSWorkItem](New-PSWorkItem.md)
 + [Set-PSWorkItem](Set-PSWorkItem.md)
 
-The module is based on 3 tables in a SQLite database file. The primary Tasks table is where active items are stored.
+The module is based on three tables in a SQLite database file. The primary Tasks table is where active items are stored.
 
 ```text
 ColumnIndex ColumnName   ColumnType
