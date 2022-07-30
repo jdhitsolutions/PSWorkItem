@@ -8,29 +8,33 @@ schema: 2.0.0
 # Remove-PSWorkItem
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+
+Remove a PSWorkItem.
 
 ## SYNTAX
 
-```
+```yaml
 Remove-PSWorkItem [-ID] <Int32> [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+
+If you want to delete a PSWorkItem from the database, use Remove-PSWorkItem. You might do this to correct a mistake or to delete a cancelled task. To mark a task as complete and retain an archived copy, use Complete-PSWorkItem.
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Remove-PSWorkItem -ID 10
 ```
 
-{{ Add example description here }}
+Remove the PSWorkItem with an ID of 10.
 
 ## PARAMETERS
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -46,6 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -ID
+
 The work item ID.
 
 ```yaml
@@ -61,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
+
 The path to the PSWorkitem SQLite database file.
 It should end in .db
 
@@ -71,12 +77,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: $PSWorkItemPath
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -93,6 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
@@ -101,7 +109,18 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Object
+### None
+
 ## NOTES
 
+This command should have an alias of rwi.
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+
 ## RELATED LINKS
+
+[Complete-PSWorkItem](Complete-PSWorkItem.md)
+
+[Get-PSWorkItem](Get-PSWorkItem.md)
+
+[Set-PSWorkItem](Set-PSWorkItem.md)

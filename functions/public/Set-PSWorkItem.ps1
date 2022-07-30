@@ -1,7 +1,7 @@
 Function Set-PSWorkItem {
     [cmdletbinding(SupportsShouldProcess)]
     [alias("swi")]
-    [OutputType("None","PSWorkItem")]
+    [OutputType("None", "PSWorkItem")]
     Param(
         [Parameter(
             Position = 0,
@@ -64,55 +64,69 @@ Function Set-PSWorkItem {
 
         #parameters to splat to Invoke-MySQLiteQuery
         $splat = @{
-            Connection = $conn
-            KeepAlive  = $true
-            Query      = ""
+            Connection  = $conn
+            KeepAlive   = $true
+            Query       = ""
+            ErrorAction = "Stop"
         }
-
-        $basequery = "UPDATE tasks set taskmodified = '$(Get-Date)'"
     } #begin
 
     Process {
+        $basequery = "UPDATE tasks set taskmodified = '$(Get-Date)'"
         if ($PSBoundParameters.ContainsKey("Category")) {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Validating category $category"
             $splat.query = "SELECT * FROM categories WHERE category = '$Category' collate nocase"
-            $cat = Invoke-MySQLiteQuery @splat
-
-        }
-        if (($cat.category -eq $Category) -OR (-Not $PSBoundParameters.ContainsKey("Category"))) {
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Setting task"
-        $updates = @{
-            name = $name
-            description = $Description
-            duedate = $DueDate
-            progress = $Progress
-            category = $Category
-        }
-        $updates.GetEnumerator() | Where-object {$_.value} | Foreach-Object {
-            $basequery += ", $($_.key) = '$($_.value)'"
-        }
-        $basequery += " WHERE ROWID = '$ID'"
-        $splat.query = $basequery
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $($splat.query)"
-        if ($pscmdlet.ShouldProcess($splat.query,"Invoke update")) {
-            Invoke-MySQLiteQuery @splat
-
-            if ($passthru) {
-                Write-Debug "Task object"
-                $task | Select-Object * | Out-String | Write-Debug
-                Write-Debug "TaskID = $($task.taskid)"
-                $splat.query = "Select *,RowID from tasks where RowID = '$ID'"
-                Write-Debug "Query = $($splat.query)"
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $($splat.query)"
-                $data = Invoke-MySQLiteQuery @splat
-                $data | Out-String | Write-Verbose
-                _newWorkItem $data
+            Try {
+                $cat = Invoke-MySQLiteQuery @splat
+            }
+            Catch {
+                Write-Warning "Failed to execute query $($splat.query)"
+                Close-MySQLiteDB -Connection $conn
+                Throw $_
             }
         }
-    }
-    else {
-        Write-Warning "The category $category is not valid."
-    }
+        if (($cat.category -eq $Category) -OR (-Not $PSBoundParameters.ContainsKey("Category"))) {
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Setting task"
+            $updates = @{
+                name        = $name
+                description = $Description
+                duedate     = $DueDate
+                progress    = $Progress
+                category    = $Category
+            }
+            $updates.GetEnumerator() | Where-Object { $_.value } | ForEach-Object {
+                $basequery += ", $($_.key) = '$($_.value)'"
+            }
+            $basequery += " WHERE ROWID = '$ID'"
+            $splat.query = $basequery
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $($splat.query)"
+            if ($pscmdlet.ShouldProcess($splat.query, "Invoke update")) {
+
+                Try {
+                    Invoke-MySQLiteQuery @splat
+                }
+                Catch {
+                    Write-Warning "Failed to execute query $($splat.query)"
+                    Close-MySQLiteDB -Connection $conn
+                    Throw $_
+                }
+
+                if ($passthru) {
+                    Write-Debug "Task object"
+                    $task | Select-Object * | Out-String | Write-Debug
+                    Write-Debug "TaskID = $($task.taskid)"
+                    $splat.query = "Select *,RowID from tasks where RowID = '$ID'"
+                    Write-Debug "Query = $($splat.query)"
+                    Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $($splat.query)"
+                    $data = Invoke-MySQLiteQuery @splat
+                    $data | Out-String | Write-Verbose
+                    _newWorkItem $data
+                }
+            }
+        }
+        else {
+            Write-Warning "The category $category is not valid."
+        }
     } #process
 
     End {

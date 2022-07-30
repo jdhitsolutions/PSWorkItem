@@ -9,7 +9,6 @@ https://github.com/jdhitsolutions/PSScriptTools
 <Configuration>
   <ViewDefinitions>
     <View>
-      <!--Created 07/25/2022 14:53:42 by THINKX1-JH\Jeff-->
       <Name>default</Name>
       <ViewSelectedBy>
         <TypeName>PSWorkItem</TypeName>
@@ -61,7 +60,7 @@ https://github.com/jdhitsolutions/PSScriptTools
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-              <ScriptBlock>
+                <ScriptBlock>
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
@@ -99,7 +98,7 @@ https://github.com/jdhitsolutions/PSScriptTools
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-               <ScriptBlock>
+                <ScriptBlock>
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
@@ -119,6 +118,241 @@ https://github.com/jdhitsolutions/PSScriptTools
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Category</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Progress</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>countdown</Name>
+      <ViewSelectedBy>
+        <TypeName>PSWorkItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <!--Delete the AutoSize node if you want to use the defined widths.-->
+        <AutoSize />
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ID</Label>
+            <Width>5</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>21</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Description</Label>
+            <Width>39</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DueDate</Label>
+            <Width>23</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>TimeRemaining</Label>
+            <Width>23</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <!--
+            By default the entries use property names, but you can replace them with scriptblocks.
+            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
+-->
+              <TableColumnItem>
+                <PropertyName>ID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DueDate</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <!--this is the simplest way to handle negative values-->
+                <ScriptBlock>$_.TimeRemaining.ToString().substring(0,$_.TimeRemaining.ToString().LastIndexOf("."))</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>default</Name>
+      <ViewSelectedBy>
+        <TypeName>PSWorkItemArchive</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <!--Delete the AutoSize node if you want to use the defined widths.-->
+        <AutoSize />
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ID</Label>
+            <Width>5</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>21</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Description</Label>
+            <Width>39</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Category</Label>
+            <Width>11</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Completed</Label>
+            <Width>12</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <Wrap />
+            <TableColumnItems>
+              <!--
+            By default the entries use property names, but you can replace them with scriptblocks.
+            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
+-->
+              <TableColumnItem>
+                <PropertyName>ID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Category</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CompletedDate</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <Name>category</Name>
+      <ViewSelectedBy>
+        <TypeName>PSWorkItem</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <!--
+            You can also use a scriptblock to define a custom property name.
+            You must have a Label tag.
+            <ScriptBlock>$_.machinename.toUpper()</ScriptBlock>
+            <Label>Computername</Label>
+
+            Use <Label> to set the displayed value.
+-->
+        <PropertyName>Category</PropertyName>
+        <Label>Category</Label>
+      </GroupBy>
+      <TableControl>
+        <!--Delete the AutoSize node if you want to use the defined widths.
+        <AutoSize />-->
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ID</Label>
+            <Width>5</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>20</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Description</Label>
+            <Width>25</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DueDate</Label>
+            <Width>22</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Pct</Label>
+            <Width>4</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <Wrap />
+            <TableColumnItems>
+              <!--
+            By default the entries use property names, but you can replace them with scriptblocks.
+            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
+-->
+              <TableColumnItem>
+                <PropertyName>ID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+              <ScriptBlock>
+              if ($host.name -match "console|code") {
+                $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
+                If ($ts.TotalDays -le 0) {
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $_.name, $psstyle.reset
+                }
+                ElseIf ($ts.totaldays -le 3) {
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.name, $psstyle.reset
+                }
+                else {
+                    $_.name
+                }
+            }
+            else {
+                $_.Name
+            }
+                </ScriptBlock>
+
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Description</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                      <ScriptBlock>
+              if ($host.name -match "console|code") {
+                $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
+                If ($ts.TotalDays -le 0) {
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $_.DueDate, $psstyle.reset
+                }
+                ElseIf ($ts.totaldays -le 3) {
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.DueDate, $psstyle.reset
+                }
+                else {
+                    $_.DueDate
+                }
+            }
+            else {
+                $_.DueDate
+            }
+                </ScriptBlock>
+
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Progress</PropertyName>

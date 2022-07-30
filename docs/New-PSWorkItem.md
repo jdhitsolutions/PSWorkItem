@@ -13,28 +13,45 @@ Create a new PSWorkItem.
 
 ## SYNTAX
 
+### date (Default)
+
 ```yaml
 New-PSWorkItem [-Name] <String> -Category <String> [-Description <String>] [-DueDate <DateTime>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
+### days
+
+```yaml
+New-PSWorkItem [-Name] <String> -Category <String> [-Description <String>] [-DaysDue <Int32>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 
-Use this command to add a new PSWorkItem to the database. It is assumed you have already defined your task categories.
+Use this command to add a new PSWorkItem to the database. It is assumed you have already defined your task categories. The default is to create a new PSWorkItem with a due date 30 days from now. You can specify any due date or the number of days from now.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog
+PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog -passthru
 ```
 
-You should be able to use tab completion for the Category parameter.
+Create a new PSWorkitem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.
+
+### Example 2
+
+```powershell
+PS C:\> New-PSWorkItem -Name "Publish PSWorkitem" -DaysDue 3 -Category Project
+```
+
+Create a new PSWorkItem due in 3 days.
 
 ## PARAMETERS
 
 ### -Category
-Select a valid catetory
+
+Select a valid catetory. The category must be pre-defined. There should be tab-completion for this parameter.
 
 ```yaml
 Type: String
@@ -49,6 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -64,7 +82,8 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-Add a comment or task description
+
+Add a comment or task description.
 
 ```yaml
 Type: String
@@ -79,12 +98,13 @@ Accept wildcard characters: False
 ```
 
 ### -DueDate
+
 When is this task due?
-The default is 30 days from now.
+The default is 30 days.
 
 ```yaml
 Type: DateTime
-Parameter Sets: (All)
+Parameter Sets: date
 Aliases:
 
 Required: False
@@ -95,6 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
+
 The name of the work item.
 
 ```yaml
@@ -110,7 +131,6 @@ Accept wildcard characters: False
 ```
 
 ### -Passthru
-{{ Fill Passthru Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -125,6 +145,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
+
 The path to the PSWorkitem SQLite database file.
 It should end in .db
 
@@ -135,12 +156,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: $PSWorkItemPath
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -153,6 +175,22 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DaysDue
+
+Specify the number of days before the task is due to be completed. Enter a value between 1 and 365
+
+```yaml
+Type: Int32
+Parameter Sets: days
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

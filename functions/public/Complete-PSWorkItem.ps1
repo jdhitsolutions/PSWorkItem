@@ -1,5 +1,7 @@
 Function Complete-PSWorkItem {
     [cmdletbinding(SupportsShouldProcess)]
+    [Alias('cwi')]
+    [OutputType("None","PSWorkItemArchive")]
     Param(
         [Parameter(
             Position = 0,
@@ -22,7 +24,13 @@ Function Complete-PSWorkItem {
                 Return $False
             }
         })]
-        [string]$Path = $PSWorkItemPath
+        [string]$Path = $PSWorkItemPath,
+
+        [Parameter(HelpMessage = "Specify the completion date. The default is now.")]
+        [ValidateNotNullOrEmpty()]
+        [datetime]$CompletionDate = (Get-Date),
+
+        [switch]$Passthru
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting"
@@ -39,9 +47,10 @@ Function Complete-PSWorkItem {
 
         #parameters to splat to Invoke-MySQLiteQuery
         $splat = @{
-            Connection = $conn
-            KeepAlive  = $true
-            Query      = ""
+            Connection  = $conn
+            KeepAlive   = $true
+            Query       = ""
+            ErrorAction = "Stop"
         }
     } #begin
 
@@ -50,35 +59,83 @@ Function Complete-PSWorkItem {
         #validate the task id
         $splat.query = "SELECT *,RowID FROM tasks WHERE RowID = '$ID'"
         Write-Debug $splat.query
-        $task = Invoke-MySQLiteQuery @splat
+        Try {
+            $task = Invoke-MySQLiteQuery @splat
+        }
+        Catch {
+            Write-Warning "Failed to execute query $($splat.query)"
+            Close-MySQLiteDB $conn
+            Throw $_
+        }
         if ($task.RowID -eq $ID) {
 
             #update the task to mark it complete
-            $splat.query = "UPDATE tasks set taskmodified='$(Get-Date)', completed='1',progress='100' WHERE RowID= '$ID'"
+            $splat.query = "UPDATE tasks set taskmodified='$CompletionDate', completed='1',progress='100' WHERE RowID= '$ID'"
             if ($Pscmdlet.ShouldProcess($splat.query, "Complete-PSWorkItem")) {
-                Invoke-MySQLiteQuery @splat
+                Try {
+                    Invoke-MySQLiteQuery @splat
+                }
+                Catch {
+                    Write-Warning "Failed to execute query $($splat.query)"
+                    Close-MySQLiteDB $conn
+                    Throw $_
+                }
                 #copy the task to the archive table
                 $splat.query = "INSERT into archive SELECT * from tasks WHERE RowID= '$ID'"
                 Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Moving item to Archive."
                 Write-Debug $splat.query
-                Invoke-MySQLiteQuery @splat
+                Try {
+                    Invoke-MySQLiteQuery @splat
+                }
+                Catch {
+                    Write-Warning "Failed to execute query $($splat.query)"
+                    Close-MySQLiteDB $conn
+                    Throw $_
+                }
                 #Validate the copy using the task GUID
                 $splat.query = "SELECT * from archive WHERE taskid= '$($task.taskid)'"
                 Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Validating the move"
                 Write-Debug $splat.query
-
-                $archived = Invoke-MySQLiteQuery @splat
+                Try {
+                    $archived = Invoke-MySQLiteQuery @splat
+                }
+                Catch {
+                    Write-Warning "Failed to execute query $($splat.query)"
+                    Close-MySQLiteDB $conn
+                    Throw $_
+                }
                 if ($archived.taskid -eq $task.taskId) {
                     #remove the task from the tasks table
                     $splat.query = "DELETE from tasks WHERE taskid = '$($task.taskid)'"
                     Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Removing the original task"
                     Write-Debug $splat.query
-                    Invoke-MySQLiteQuery @splat
+                    Try {
+                        Invoke-MySQLiteQuery @splat
+                    }
+                    Catch {
+                        Write-Warning "Failed to execute query $($splat.query)"
+                        Close-MySQLiteDB $conn
+                        Throw $_
+                    }
                 }
                 else {
                     Write-Warning "Could not verify that task $ID [$($task.taskid)] was copied to the archive table."
                 }
-
+                if ($Passthru) {
+                    $splat.Query = "SELECT *,RowID from archive WHERE taskid = '$($task.taskid)'"
+                    Try {
+                        $pass = Invoke-MySQLiteQuery @splat
+                        $t = _newWorkItem $pass
+                        #insert a new typename
+                        $t.psobject.typenames.insert(0,"PSWorkItemArchive")
+                        $t
+                    }
+                    Catch {
+                        Write-Warning "Failed to execute query $($splat.query)"
+                        Close-MySQLiteDB $conn
+                        Throw $_
+                    }
+                }
             } #Whatif
         } #if ID verified
         else {

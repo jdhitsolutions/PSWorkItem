@@ -23,7 +23,7 @@
     'Get-PSWorkItemDatabase'
     CmdletsToExport        = ''
     VariablesToExport      = ''
-    AliasesToExport        = @('gwi','nwi','swi')
+    AliasesToExport        = @('gwi','nwi','swi','rwi','cwi')
     PrivateData            = @{
         PSData = @{
              Tags = @('database','sqlite','to-do','project-management','tasks')

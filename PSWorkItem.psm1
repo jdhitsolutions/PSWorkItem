@@ -51,6 +51,8 @@ class PSWorkItemDatabase {
 
 #Add a dynamic type extension to the PSWorkItem class
 Update-TypeData -TypeName PSWorkitem -MemberType ScriptProperty -MemberName OverDue -Value {$this.DueDate  -le (Get-Date)} -Force
+Update-TypeData -TypeName PSWorkItem -MemberType ScriptProperty -MemberName "TimeRemaining" -Value {New-Timespan -end $this.DueDate -start (Get-Date)} -force
+Update-TypeData -TypeName PSWorkItemArchive -MemberType AliasProperty -MemberName "CompletedDate" -Value 'TaskModified' -force
 
 #make this variable global instead of exporting so that I don't have to use Export-ModuleMember 7/28/2022 JDH
 $global:PSWorkItemPath = Join-Path -path $HOME -childpath "PSWorkItem.db"

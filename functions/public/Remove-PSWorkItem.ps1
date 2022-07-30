@@ -1,5 +1,7 @@
 Function  Remove-PSWorkItem {
     [cmdletbinding(SupportsShouldProcess)]
+    [alias("rwi")]
+    [outputType("None")]
     Param(
         [Parameter(
             Position = 0,

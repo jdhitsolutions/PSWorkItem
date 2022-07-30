@@ -1,5 +1,6 @@
 Function Get-PSWorkItemArchive {
     [cmdletbinding(DefaultParameterSetName = "name")]
+    [OutputType("PSWorkItemArchive")]
     Param(
         [Parameter(
             Position = 0,
@@ -65,9 +66,12 @@ Function Get-PSWorkItemArchive {
         if ($tasks.count -gt 0) {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($tasks.count) matching tasks"
            $results = foreach ($task in $tasks) {
-            _newWorkItem $task
+            $t = _newWorkItem $task
+            #insert a new typename
+            $t.psobject.typenames.insert(0,"PSWorkItemArchive")
+            $t
            }
-           $results | Sort-Object -Property DueDate
+           $results | Sort-Object -Property TaskModified
         }
         else {
             Write-Warning "Failed to find any matching archived tasks"
@@ -79,4 +83,3 @@ Function Get-PSWorkItemArchive {
     } #end
 
 }
-

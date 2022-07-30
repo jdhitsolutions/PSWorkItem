@@ -1,5 +1,5 @@
 Function New-PSWorkItem {
-    [cmdletbinding(SupportsShouldProcess)]
+    [cmdletbinding(SupportsShouldProcess,DefaultParameterSetName = "date")]
     [alias('nwi')]
     [OutputType("none","PSWorkItem")]
     Param(
@@ -27,8 +27,19 @@ Function New-PSWorkItem {
         [string]$Description,
         [Parameter(
             ValueFromPipelineByPropertyName,
-            HelpMessage = "When is this task due? The default is 30 days from now.")]
+            HelpMessage = "When is this task due? The default is 30 days from now.",
+            ParameterSetName = "date"
+            )]
         [datetime]$DueDate = (Get-Date).AddDays(30),
+
+        [Parameter(
+            HelpMessage = "Specify the number of days before the task is due to be completed. Enter a value between 1 and 365",
+            ValueFromPipelineByPropertyName,
+            ParameterSetName = "days"
+            )]
+        [ValidateRange(1,365)]
+        [int]$DaysDue,
+
         [Parameter(HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
@@ -66,6 +77,9 @@ Function New-PSWorkItem {
     } #begin
 
     Process {
+        if ($pscmdlet.ParameterSetName -eq 'days') {
+            $DueDate = (Get-Date).AddDays($DaysDue)
+        }
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Validating category $Category"
         $splat.query = "SELECT * FROM categories WHERE category = '$Category' collate nocase"
         $cat = Invoke-MySQLiteQuery @splat

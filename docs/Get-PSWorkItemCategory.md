@@ -23,6 +23,8 @@ When you create a PSWorkItem, you need to tag it with a category. The category m
 
 ## EXAMPLES
 
+### Example 1
+
 ```powershell
 PS C:\> Get-PSWorkItemCategory
 

@@ -81,7 +81,7 @@ Function Get-PSWorkItem {
         }
 
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $query"
-        $tasks = invoke-MySQLiteQuery -query $query -Path $Path
+        $tasks = Invoke-MySQLiteQuery -query $query -Path $Path
         if ($tasks.count -gt 0) {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($tasks.count) matching tasks"
            $results = foreach ($task in $tasks) {
