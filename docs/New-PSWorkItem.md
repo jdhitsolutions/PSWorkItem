@@ -1,7 +1,7 @@
 ---
 external help file: PSWorkItem-help.xml
 Module Name: PSWorkItem
-online version:
+online version: https://bit.ly/3vnOvI3
 schema: 2.0.0
 ---
 
@@ -16,13 +16,13 @@ Create a new PSWorkItem.
 ### date (Default)
 
 ```yaml
-New-PSWorkItem [-Name] <String> -Category <String> [-Description <String>] [-DueDate <DateTime>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DueDate <DateTime>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### days
 
 ```yaml
-New-PSWorkItem [-Name] <String> -Category <String> [-Description <String>] [-DaysDue <Int32>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DaysDue <Int32>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,7 +59,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -Confirm
 
-Prompts you for confirmation before running the cmdlet.
+Prompts you for confirmation before running the command.
 
 ```yaml
 Type: SwitchParameter
@@ -91,7 +91,7 @@ Parameter Sets: (All)
 Aliases: comment
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -147,7 +147,7 @@ Accept wildcard characters: False
 ### -Path
 
 The path to the PSWorkitem SQLite database file.
-It should end in .db
+It should end in .db.
 
 ```yaml
 Type: String
@@ -163,8 +163,8 @@ Accept wildcard characters: False
 
 ### -WhatIf
 
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the command runs.
+The command is not run.
 
 ```yaml
 Type: SwitchParameter
@@ -180,7 +180,7 @@ Accept wildcard characters: False
 
 ### -DaysDue
 
-Specify the number of days before the task is due to be completed. Enter a value between 1 and 365
+Specify the number of days before the task is due to be completed. Enter a value between 1 and 365.
 
 ```yaml
 Type: Int32
@@ -195,19 +195,15 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### System.String
-
 ## OUTPUTS
 
 ### None
-
 ### PSWorkItem
-
 ## NOTES
 
 This command has an alias of nwi.

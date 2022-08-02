@@ -1,5 +1,6 @@
 Function Add-PSWorkItemCategory {
     [cmdletbinding(SupportsShouldProcess)]
+    [OutputType("None","PSWorkItemCategory")]
     Param(
         [Parameter(
             Position = 0,
@@ -23,14 +24,14 @@ Function Add-PSWorkItemCategory {
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
-                if (Test-Path $_) {
-                    Return $True
-                }
-                else {
-                    Throw "Failed to validate $_"
-                    Return $False
-                }
-            })]
+            if (Test-Path $_) {
+                Return $True
+            }
+            else {
+                Throw "Failed to validate $_"
+                Return $False
+            }
+        })]
         [string]$Path = $PSWorkItemPath,
 
         [Parameter(HelpMessage = "Force overwriting an existing category")]

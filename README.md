@@ -1,13 +1,15 @@
 # PSWorkItem
 
-This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. That module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file.
+[![PSGallery Version](https://img.shields.io/powershellgallery/v/PSWorkItem.png?style=for-the-badge&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/PSWorkItem/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSWorkItem.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/PSWorkItem/)
+
+This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. That PowerShell module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the MySQLite module.
 
 ## Installation
 
-This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell, which most people are running. You will eventually be able to install this module from the PowerShell Gallery.
+This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell, which most people are running. __The module requires a Windows platform.__ You can install this module from the PowerShell Gallery.
 
 ```powershell
-Install-Module PSWorkItem
+Install-Module PSWorkItem [-scope CurrentUser]
 ```
 
 Installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
@@ -105,7 +107,7 @@ SRV      server management tasks
 If you need to update a category, you can re-add it using `-Force`. The category name is case-sensitive.
 
 ```powershell
-PS C:\> > Add-PSWorkItemCategory -Category Work -Description "business related tasks" -Passthru -Force
+PS C:\> Add-PSWorkItemCategory -Category Work -Description "business related tasks" -Passthru -Force
 
 Category Description
 -------- -----------
@@ -114,14 +116,20 @@ Work     business related tasks
 
 Or you can use `Remove-PSWorkItemCategory` and start all over.
 
-Commands that have a `Category` parameter should have tab-completion.
+Commands that have a `Category` parameter should have tab completion.
 
 ## Adding a Task
 
-Use `New-PSWorkItem` to define a task. You need to specify a name and category. You must specify a valid category. By default the task will be configured with a due date of 30 days from now. You can specify a different datetime or specify the number of days from now.
+Use `New-PSWorkItem` to define a task. You need to specify a name and category. You must specify a valid, pre-defined category. By default, the task will be configured with a due date of 30 days from now. You can specify a different datetime or specify the number of days from now.
 
 ```powershell
 New-PSWorkItem -Name "Publish PSWorkitem" -DaysDue 3 -Category Project
+```
+
+Because you have to specify a task, you might want to set a default category.
+
+```powershell
+$PSDefaultParameterValues.Add("New-PSWorkItem:Category","Work")
 ```
 
 ## Viewing Tasks
@@ -182,7 +190,25 @@ Remove-PSWorkItem -id 13
 
 This will delete the item from the Tasks database.
 
+## Database Backup
+
+This module doesn't have any specific commands for backing up or restoring a database file. But you can use the `Export-MySQLiteDB` command to export the PSWorkItem database file to a JSON file.
+
+```powershell
+Export-MySQLiteDB -path $PSWorkItemPath -Destination d:\backups\pwi.json
+```
+
+Use `Import-MySQLiteDB` to import the file and rebuild the database file. It is recommended to restore to a new location, verify the database, then copy the file to `$PSWorkItemPath`.
+
+## Database Sample
+
+A sample database has been created in the module's Samples directory. You can specify the path to the sample database or copy it to `$PSWorkItemPath` to try the module out. Note that it is very likely that many of the tasks will be flagged as overdue by the time you view the database.
+
+If you copy the sample to `$PSWorkItemPath`, delete the file before creating your database file.
+
 ## Future Tasks or Commands
 
-+ Backup database file
 + Password protection options
++ A WPF form for entering new work items
+
+If you have enhancement suggestions, please submit it as an Issue.

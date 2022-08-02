@@ -4,6 +4,7 @@ Foreach-Object {
 . $_.FullName
 }
 
+#region class definitions
 #define item class
 class PSWorkItem {
     #this can be the ROWID of the item in the database
@@ -54,10 +55,16 @@ Update-TypeData -TypeName PSWorkitem -MemberType ScriptProperty -MemberName Over
 Update-TypeData -TypeName PSWorkItem -MemberType ScriptProperty -MemberName "TimeRemaining" -Value {New-Timespan -end $this.DueDate -start (Get-Date)} -force
 Update-TypeData -TypeName PSWorkItemArchive -MemberType AliasProperty -MemberName "CompletedDate" -Value 'TaskModified' -force
 
+#endregion
+
 #make this variable global instead of exporting so that I don't have to use Export-ModuleMember 7/28/2022 JDH
 $global:PSWorkItemPath = Join-Path -path $HOME -childpath "PSWorkItem.db"
 
-#this will be a module-scoped variable
+<#
+ Default categories when creating a new database file.
+ This will be a module-scoped variable
+#>
+
 $PSWorkItemDefaultCategories = "Work","Personal","Project","Other"
 
 Register-ArgumentCompleter -CommandName New-PSWorkItem,Get-PSWorkItem,Set-PSWorkItem,Get-PSWorkItemArchive -ParameterName Category -ScriptBlock {
@@ -71,12 +78,3 @@ Register-ArgumentCompleter -CommandName New-PSWorkItem,Get-PSWorkItem,Set-PSWork
         [System.Management.Automation.CompletionResult]::new($_.category, $_.category, 'ParameterValue', $_.description)
     }
 }
-
-<#
-
-Export-ModuleMember -Variable PSWorkItemPath -alias 'gwi','nwi','swi' -Function 'Get-PSWorkItem','Set-PSWorkItem',
-'Remove-PSWorkItem','Initialize-PSWorkItemDatabase','Complete-PSWorkItem','Get-PSWorkitemCategory',
-'Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory','Add-PSWorkItemCategory',
-'Get-PSWorkItemDatabase'
-
-#>

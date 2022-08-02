@@ -1,5 +1,6 @@
 Function Initialize-PSWorkItemDatabase {
     [cmdletbinding(SupportsShouldProcess)]
+    [OutputType("None","PSWorkItemDatabase")]
     Param(
         [Parameter(Position = 0, HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]

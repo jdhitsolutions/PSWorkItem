@@ -1,5 +1,16 @@
 # Changelog for PSWorkItem
 
+## 0.4.0
+
++ Updated `README`.
++ Added online help links.
++ Help updates.
++ Updated module manifest.
++ Made `Category` and `Description` positional parameters in `New-PSWorkItem`.
++ Defined a module dependency on version 0.9.2 or later of the MySQLite module.
++ Created a sample database file.
++ Published to the PowerShell Gallery.
+
 ## 0.3.0
 
 + Added format file `psworkitem.format.ps1xml`.

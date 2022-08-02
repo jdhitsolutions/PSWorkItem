@@ -1,5 +1,6 @@
 Function Remove-PSWorkItemCategory {
     [cmdletbinding(SupportsShouldProcess)]
+    [OutputType("None")]
     Param(
         [Parameter(
             Position = 0,

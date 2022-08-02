@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '0.3.0'
+    ModuleVersion          = '0.4.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -14,27 +14,26 @@
     PowerShellVersion      = '7.2'
     DotNetFrameworkVersion = '4.6'
     ProcessorArchitecture  = 'Amd64'
-    RequiredModules        = @("mySQLite")
+    RequiredModules        = @(@{ModuleName="mySQLite";ModuleVersion="0.9.2"})
     # TypesToProcess = @()
-    FormatsToProcess = @('formats/psworkitemdatabase.format.ps1xml','formats/psworkitem.format.ps1xml')
-    FunctionsToExport      = 'Get-PSWorkItem','Set-PSWorkItem','Remove-PSWorkItem',
-    'Initialize-PSWorkItemDatabase','Complete-PSWorkItem','Get-PSWorkitemCategory',
-    'Add-PSWorkItemCategory','Get-PSWorkItemArchive','New-PSWorkItem','Remove-PSWorkItemCategory',
-    'Get-PSWorkItemDatabase'
-    CmdletsToExport        = ''
-    VariablesToExport      = ''
-    AliasesToExport        = @('gwi','nwi','swi','rwi','cwi')
+    FormatsToProcess       = @('formats/psworkitemdatabase.format.ps1xml', 'formats/psworkitem.format.ps1xml')
+    FunctionsToExport      = 'Get-PSWorkItem', 'Set-PSWorkItem', 'Remove-PSWorkItem',
+    'Initialize-PSWorkItemDatabase', 'Complete-PSWorkItem', 'Get-PSWorkitemCategory',
+    'Add-PSWorkItemCategory', 'Get-PSWorkItemArchive', 'New-PSWorkItem', 'Remove-PSWorkItemCategory',
+    'Get-PSWorkItemDatabase','Export-PSWorkItemDatabase','Import-PSWorkItemDatabase'
+    CmdletsToExport        = @()
+    VariablesToExport      = @()
+    AliasesToExport        = @('gwi', 'nwi', 'swi', 'rwi', 'cwi')
     PrivateData            = @{
         PSData = @{
-             Tags = @('database','sqlite','to-do','project-management','tasks')
-            # LicenseUri = ''
-            # ProjectUri = ''
+            Tags                       = @('database', 'sqlite', 'to-do', 'project-management', 'tasks')
+            LicenseUri                 = 'https://github.com/jdhitsolutions/PSWorkItem/blob/main/License.txt'
+            ProjectUri                 = 'https://github.com/jdhitsolutions/PSWorkItem'
             # IconUri = ''
             # ReleaseNotes = ''
             # Prerelease = ''
             # RequireLicenseAcceptance = $false
-            ExternalModuleDependencies = @("mySQLite")
-
+            ExternalModuleDependencies = @(@{ModuleName="mySQLite";ModuleVersion="0.9.2"})
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable

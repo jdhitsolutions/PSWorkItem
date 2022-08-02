@@ -13,6 +13,7 @@ Function New-PSWorkItem {
         [alias("task")]
         [string]$Name,
         [Parameter(
+            Position = 1,
             Mandatory,
             ValueFromPipelineByPropertyName,
             HelpMessage = "Select a valid catetory"
@@ -20,6 +21,7 @@ Function New-PSWorkItem {
         [ValidateNotNullOrEmpty()]
         [string]$Category,
         [Parameter(
+            Position = 2,
             ValueFromPipelineByPropertyName,
             HelpMessage = "Add a comment or task description"
             )]
