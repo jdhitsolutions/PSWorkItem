@@ -235,5 +235,6 @@ If you copy the sample to `$PSWorkItemPath`, delete the file before creating you
 
 + Password protection options
 + A WPF form for entering new work items
++ A WPF form for displaying and managing items.
 
-If you have enhancement suggestions, please submit it as an Issue.
+If you have an enhancement suggestion, please submit it as an Issue.
