@@ -150,6 +150,31 @@ If you are running the command in the PowerShell console or VSCode, overdue task
 
 Read the examples for [Get-PSWorkItem](docs/Get-PSWorkItem.md) for other ways to use this command including custom format views.
 
+### PSWorkItemCategory
+
+In addition to formatting overdue and imminent due dates, the module also provides a mechanism to add highlighting of specific categores. Importing the module will create a global variable called `PSWorkItemCategory`. The key will be a category name. The value will be a $PSStyle or ANSI escape sequence. These are the module defaults.
+
+```powershell
+$global:PSWorkItemCategory = @{
+    "Work"     = $PSStyle.Foreground.Cyan
+    "Personal" = $PSStyle.Foreground.Green
+}
+```
+
+You can modify this hashtable as you would any other hashtable.
+
+```powershell
+$PSWorkItemCategory.Add("Event","`e[38;5;153m")
+```
+
+The entry will have no effect unless the category is definied in the database.
+
+> Note that when you view the hashtable, you won't see any values because they escape sequences are non-printable.,
+
+![colorized categories](images/psworkitemcategory.png)
+
+Category highlighting is only available in the default view.
+
 ## Updating Tasks
 
 Use [Set-PSWorkItem](docs/Set-PSWorkItem.md) or its alias `swi` to update a task based on its ID.

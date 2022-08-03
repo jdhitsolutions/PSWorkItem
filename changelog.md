@@ -1,5 +1,11 @@
 # Changelog for PSWorkItem
 
+## 0.5.0
+
++ Fixed module manifest. [Issue #1](https://github.com/jdhitsolutions/PSWorkItem/issues/1)
++ Added a feature to highlight tasks based on category. The module defines a global variable, `$PSWorkItemCategory`, which is a hashtable. The key is the category and the value is the `$PSStyle` or ANSI sequence. The default format view is configured to use these settings.
++ Updated `README.md`.
+
 ## 0.4.0
 
 + Updated `README`.

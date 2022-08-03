@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '0.4.0'
+    ModuleVersion          = '0.5.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -33,7 +33,7 @@
             # ReleaseNotes = ''
             # Prerelease = ''
             # RequireLicenseAcceptance = $false
-            ExternalModuleDependencies = @(@{ModuleName="mySQLite";ModuleVersion="0.9.2"})
+            ExternalModuleDependencies = "MySQLite"
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable
