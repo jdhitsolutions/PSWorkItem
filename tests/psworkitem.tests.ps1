@@ -66,6 +66,9 @@ Describe Add-PSWorkItemCategory {
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Add-PSWorkItemCategory).OutputType | Should -Not -BeNullOrEmpty
     }
+    It "Should fail on a bad path" {
+        {Add-PSWorkItemCategory -Path TestDrive:\foo.db -Category Foo} | Should -Throw
+    }
     It "Should run without error" {
         <#
         mock and set mandatory parameters as needed
@@ -84,6 +87,9 @@ Describe Complete-PSWorkItem {
     }
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Complete-PSWorkItem).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should fail on a bad path" {
+        {Complete-PSWorkItem -id 1 -Path TestDrive:\foo.db} | Should -Throw
     }
     It "Should run without error" {
         <#
@@ -104,6 +110,9 @@ Describe Get-PSWorkItem {
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Get-PSWorkItem).OutputType | Should -Not -BeNullOrEmpty
     }
+    It "Should fail on a bad path" {
+        {Get-PSWorkItem -Path TestDrive:\foo.db} | Should -Throw
+    }
     It "Should run without error" {
         <#
         mock and set mandatory parameters as needed
@@ -116,12 +125,37 @@ Describe Get-PSWorkItem {
 
 } -Tag function
 
+Describe Get-PSWorkItemData {
+    It "Should have help documentation" {
+        (Get-Help Get-PSWorkItemData).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -Name Get-PSWorkItemData).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should fail on a bad path" {
+        {Get-PSWorkItemData -Path TestDrive:\foo.db} | Should -Throw
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        { Get-PSWorkItemData } | Should -Not -Throw
+    } -Pending
+    #insert additional command-specific tests
+
+} -Tag function
+
 Describe Get-PSWorkItemArchive {
     It "Should have help documentation" {
         (Get-Help Get-PSWorkItemArchive).Description | Should -Not -BeNullOrEmpty
     }
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Get-PSWorkItemArchive).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should fail on a bad path" {
+        {Get-PSWorkItemArchive -Path TestDrive:\foo.db} | Should -Throw
     }
     It "Should run without error" {
         <#
@@ -142,6 +176,9 @@ Describe Get-PSWorkItemCategory {
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Get-PSWorkItemCategory).OutputType | Should -Not -BeNullOrEmpty
     }
+    It "Should fail on a bad path" {
+        {Get-PSWorkItemCategory-Path TestDrive:\foo.db} | Should -Throw
+    }
     It "Should run without error" {
         <#
         mock and set mandatory parameters as needed
@@ -160,6 +197,9 @@ Describe Get-PSWorkItemDatabase {
     }
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Get-PSWorkItemDatabase).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should fail on a bad path" {
+        {Get-PSWorkItemDatabase -Path TestDrive:\foo.db} | Should -Throw
     }
     It "Should run without error" {
         <#
@@ -180,6 +220,9 @@ Describe Initialize-PSWorkItemDatabase {
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Initialize-PSWorkItemDatabase).OutputType | Should -Not -BeNullOrEmpty
     }
+    It "Should fail on a bad path" {
+        {Initialize-PSWorkItemDatabase -Path TestDrive:\foo.bar} | Should -Throw
+    }
     It "Should run without error" {
         <#
         mock and set mandatory parameters as needed
@@ -198,6 +241,9 @@ Describe New-PSWorkItem {
     }
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name New-PSWorkItem).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should fail on a bad path" {
+        {New-PSWorkItem -name Foo -Category work -Path TestDrive:\foo.db} | Should -Throw
     }
     It "Should run without error" {
         <#
@@ -218,6 +264,9 @@ Describe Remove-PSWorkItem {
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Remove-PSWorkItem).OutputType | Should -Not -BeNullOrEmpty
     }
+    It "Should fail on a bad path" {
+        {Remove-PSWorkItem -id 1 -Path TestDrive:\foo.db} | Should -Throw
+    }
     It "Should run without error" {
         <#
         mock and set mandatory parameters as needed
@@ -237,6 +286,9 @@ Describe Remove-PSWorkItemCategory {
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Remove-PSWorkItemCategory).OutputType | Should -Not -BeNullOrEmpty
     }
+    It "Should fail on a bad path" {
+        {Remove-PSWorkItemCategory Foo -Path TestDrive:\foo.db} | Should -Throw
+    }
     It "Should run without error" {
         <#
         mock and set mandatory parameters as needed
@@ -255,6 +307,9 @@ Describe Set-PSWorkItem {
     }
     It "Should have a defined output type" {
         (Get-Command -CommandType function -Name Set-PSWorkItem).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should fail on a bad path" {
+        {Set-PSWorkItem -Path TestDrive:\foo.db} | Should -Throw
     }
     It "Should run without error" {
         <#

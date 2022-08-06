@@ -4,13 +4,14 @@ function _newWorkItem {
     [cmdletbinding()]
     Param([object]$data)
 
+    # modified 6 August 2022 to explicitly set datetime values to handle culture - JDH
     $item = [psworkitem]::new($data.name,$data.category)
     $item.ID = $data.RowID
     $item.Description = $data.description
-    $item.DueDate = $data.duedate
+    $item.DueDate = $data.duedate -as [datetime]
     $item.progress = $data.progress
-    $item.taskcreated = $data.TaskCreated
-    $item.taskmodified = $data.TaskModified
+    $item.taskcreated = $data.TaskCreated -as [datetime]
+    $item.taskmodified = $data.TaskModified -as [datetime]
     $item.Completed = $data.completed
     $item.taskId = $data.TaskId
 

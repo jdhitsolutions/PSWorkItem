@@ -100,3 +100,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Get-PSWorkItemCategory](Get-PSWorkItemCategory.md)
 
 [Initialize-PSWorkItemDatabase](Initialize-PSWorkItemDatabase.md)
+
+[Get-PSWorkItemData](Get-PSWorkItemData.md)

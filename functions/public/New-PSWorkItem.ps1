@@ -90,8 +90,16 @@ Function New-PSWorkItem {
             $task = [psworkitem]::new($Name, $Category)
             $task.description = $Description
             $task.duedate = $DueDate
-            $splat.query = "Insert into tasks (taskid,taskcreated,taskmodified,name,description,category,duedate,progress,completed) values ('$($task.taskid)', '$($Task.TaskCreated)','$($task.TaskModified)','$($task.name)','$($task.description)','$($task.Category)', '$($task.Duedate)', '$($task.progress)','$($task.completed)')"
-            Write-Verbose $splat.query
+            Write-Debug "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Detected culture $(Get-Culture)"
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Inserting task:"
+            $task | Select-Object * | Out-String | Write-Debug
+            <#
+            6 Aug 2022 variable expansion appears to be culture-invariant. This is a problem
+            with datetime values. Explicitly getting a string appears to resolve problem. - JDH
+            #>
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Task created $($task.taskcreated.ToString())"
+            $splat.query = "Insert into tasks (taskid,taskcreated,taskmodified,name,description,category,duedate,progress,completed) values ('$($task.taskid)', '$($Task.TaskCreated.toString())','$($task.TaskModified.ToString())','$($task.name)','$($task.description)','$($task.Category)', '$($task.Duedate.ToString())', '$($task.progress)','$($task.completed)')"
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($splat.query)"
             if ($pscmdlet.ShouldProcess($task.name)) {
                 Invoke-MySQLiteQuery @splat
                 if ($Passthru) {

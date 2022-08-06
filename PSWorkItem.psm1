@@ -1,4 +1,7 @@
 
+# used for culture debugging
+# write-host "Importing with culture $(Get-Culture)"
+
 Get-ChildItem $psscriptroot\functions\*.ps1 -Recurse |
 ForEach-Object {
     . $_.FullName

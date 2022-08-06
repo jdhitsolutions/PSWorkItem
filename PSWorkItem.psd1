@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '0.5.0'
+    ModuleVersion          = '0.6.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -20,7 +20,7 @@
     FunctionsToExport      = 'Get-PSWorkItem', 'Set-PSWorkItem', 'Remove-PSWorkItem',
     'Initialize-PSWorkItemDatabase', 'Complete-PSWorkItem', 'Get-PSWorkitemCategory',
     'Add-PSWorkItemCategory', 'Get-PSWorkItemArchive', 'New-PSWorkItem', 'Remove-PSWorkItemCategory',
-    'Get-PSWorkItemDatabase','Export-PSWorkItemDatabase','Import-PSWorkItemDatabase'
+    'Get-PSWorkItemDatabase','Get-PSWorkItemData'
     CmdletsToExport        = @()
     VariablesToExport      = @()
     AliasesToExport        = @('gwi', 'nwi', 'swi', 'rwi', 'cwi')

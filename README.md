@@ -231,6 +231,26 @@ A sample database has been created in the module's Samples directory. You can sp
 
 If you copy the sample to `$PSWorkItemPath`, delete the file before creating your database file.
 
+## Troubleshooting
+
+Most of the commands in this module create custom objects derived from PowerShell [class definitions](PSWorkItem.psm1)and data in the SQLite database file. If you need to troubleshoot a problem, you can use `Get-PSWorkItemData` to select all data from one of the three tables.
+
+```powershell
+ get-psworkItemdata
+
+taskid       : 2196617b-b818-415d-b9cc-52b0c649a77e
+taskcreated  : 07/28/2022 16:56:25
+taskmodified : 07/30/2022 14:01:09
+name         : Update PSWorkItem module
+description  : v0.6.0
+duedate      : 12/31/2022 12:00:00
+category     : Other
+progress     : 10
+completed    : 0
+rowid        : 19
+...
+```
+
 ## Future Tasks or Commands
 
 + Password protection options

@@ -42,7 +42,7 @@ Function Get-PSWorkItemDatabase {
             Close-MySQLiteDB -Connection $conn
 
             #create a new PSWorkItemDatabase object
-            $out = [PSWorkitemDatabase]::new()
+            $out = [PSWorkItemDatabase]::new()
             #define properties
             $out.Path = $db.Path
             $out.Created = $db.Created

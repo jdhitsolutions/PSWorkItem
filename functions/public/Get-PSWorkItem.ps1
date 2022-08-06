@@ -58,16 +58,22 @@ Function Get-PSWorkItem {
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting "
+        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Detected parameter set $($pscmdlet.parametersetname)"
     } #begin
 
     Process {
-        Switch ($PScmdlet.ParameterSetName) {
-            "all" {$query = "Select *,RowID from tasks"}
+        Switch -regex ($PScmdlet.ParameterSetName) {
+            "all|days" {$query = "Select *,RowID from tasks"}
             "category" {$query = "Select *,RowID from tasks where category ='$Category' collate nocase"}
-            "days" {
+          <#
+          6 August 2022 -JDH
+          Because SQLite doesn't have a datetime type, querying is messy. It is just
+          as easy to get everything and then use PowerShell to filter by date. This
+          also simplifies things when runnng under different cultures.
+          "days" {
                 $d = (Get-Date).AddDays($DaysDue)
                 $query = "Select *,RowID from tasks where duedate <= '$d' collate nocase"
-            }
+            } #>
             "id" {$query = "Select *,RowID from tasks where RowID ='$ID'"}
             "name" {
                 if ($Name -match "\*") {
@@ -82,9 +88,15 @@ Function Get-PSWorkItem {
 
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $query"
         $tasks = Invoke-MySQLiteQuery -query $query -Path $Path
+        if ($pscmdlet.ParameterSetName -eq 'days') {
+            $d = (Get-Date).AddDays($DaysDue)
+            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Filtering for items due before $d"
+            $tasks = ($tasks).Where({[datetime]$_.duedate -le $d})
+        }
         if ($tasks.count -gt 0) {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($tasks.count) matching tasks"
            $results = foreach ($task in $tasks) {
+            $task | out-string | Write-Debug
             _newWorkItem $task
            }
            $results | Sort-Object -Property DueDate
@@ -95,7 +107,7 @@ Function Get-PSWorkItem {
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending."
+        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
     } #end
 
 }

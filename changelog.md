@@ -1,5 +1,12 @@
 # Changelog for PSWorkItem
 
+## 0.6.0
+
++ Added `Get-PSWorkItemData` to get raw table data.
++ Module manifest cleanup.
++ Modified `New-PSWorkItem` and `Get-PSWorkItem` to better handle dates, especially when runnint commands under different cultures. _These are potential breaking changes._
++ Updated `README.md`.
+
 ## 0.5.0
 
 + Fixed module manifest. [Issue #1](https://github.com/jdhitsolutions/PSWorkItem/issues/1)
