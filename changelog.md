@@ -1,10 +1,18 @@
 # Changelog for PSWorkItem
 
+## 0.7.0
+
++ Updated commands to better handle dates and respect culture. There is a PowerShell issue where using `Get-Date` in as a sub-expression fails to respect culture. An expression like `"Today is (Get-Date)"` may not respect non-US cultures. Using the -f operator does: `"Today is "0}" -f (Get-Date)`. Modified my queries using datetime values accordingly. If you have a database created under a previous version of the module, it is recommended that you use `Set-PSWorkItem` to touch every item.
++ Fixed bug in `Get-PSWorkItemArchive` that was referencing a hardcoded variable and not the parameter.
++ Fixed bug in `Get-PSWorkItem` when filtering by number of days dues.
++ Updated missing online help links.
++ Updated WhatIf message in `New-PSWorkItem` to include more detail.
+
 ## 0.6.0
 
 + Added `Get-PSWorkItemData` to get raw table data.
 + Module manifest cleanup.
-+ Modified `New-PSWorkItem` and `Get-PSWorkItem` to better handle dates, especially when runnint commands under different cultures. _These are potential breaking changes._
++ Modified `New-PSWorkItem` and `Get-PSWorkItem` to better handle dates, especially when running commands under different cultures. _These are potential breaking changes._
 + Updated `README.md`.
 
 ## 0.5.0

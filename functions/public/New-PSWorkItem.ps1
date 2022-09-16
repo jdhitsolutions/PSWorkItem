@@ -100,7 +100,8 @@ Function New-PSWorkItem {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Task created $($task.taskcreated.ToString())"
             $splat.query = "Insert into tasks (taskid,taskcreated,taskmodified,name,description,category,duedate,progress,completed) values ('$($task.taskid)', '$($Task.TaskCreated.toString())','$($task.TaskModified.ToString())','$($task.name)','$($task.description)','$($task.Category)', '$($task.Duedate.ToString())', '$($task.progress)','$($task.completed)')"
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($splat.query)"
-            if ($pscmdlet.ShouldProcess($task.name)) {
+            $whatIf = "{0} [{1}] Category: {2} Due: {3}" -f $task.name,$task.description,$task.category,$task.duedate
+            if ($pscmdlet.ShouldProcess($whatIf, "Create PSWorkitem")) {
                 Invoke-MySQLiteQuery @splat
                 if ($Passthru) {
                     Write-Debug "Task object"

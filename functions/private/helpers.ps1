@@ -5,6 +5,7 @@ function _newWorkItem {
     Param([object]$data)
 
     # modified 6 August 2022 to explicitly set datetime values to handle culture - JDH
+    Write-Debug "[$((Get-Date).TimeofDay) _newWorkItem] Creating item '$($data.name)' [$($data.taskid)]"
     $item = [psworkitem]::new($data.name,$data.category)
     $item.ID = $data.RowID
     $item.Description = $data.description
@@ -15,6 +16,7 @@ function _newWorkItem {
     $item.Completed = $data.completed
     $item.taskId = $data.TaskId
 
+    $item | Select-Object * | Out-String | Write-Debug
     $item
 }
 

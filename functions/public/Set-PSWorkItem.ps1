@@ -72,7 +72,12 @@ Function Set-PSWorkItem {
     } #begin
 
     Process {
-        $basequery = "UPDATE tasks set taskmodified = '$(Get-Date)'"
+        <#
+        9/16/2022 Issue #2
+        Modify how the query string is built. PowerShell doesn't respect culture
+        With variable expansion. JDH
+        #>
+        $basequery = "UPDATE tasks set taskmodified = '{0}'" -f (Get-Date)
         if ($PSBoundParameters.ContainsKey("Category")) {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Validating category $category"
             $splat.query = "SELECT * FROM categories WHERE category = '$Category' collate nocase"

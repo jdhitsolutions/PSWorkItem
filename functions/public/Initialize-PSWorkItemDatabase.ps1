@@ -27,7 +27,9 @@ Function Initialize-PSWorkItemDatabase {
     Process {
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Initializing PSWorkItem database $Path "
         Try {
-            $db = New-MySQLiteDB -Path $Path -Passthru -force:$Force -comment "PSWorkItem database created $(Get-Date)." -ErrorAction stop
+            #using -f to accomodate culture with datetimes
+            $comment = "PSWorkItem database created {0}." -f (Get-Date)
+            $db = New-MySQLiteDB -Path $Path -Passthru -force:$Force -comment $comment -ErrorAction stop
         }
         Catch {
             Throw $_

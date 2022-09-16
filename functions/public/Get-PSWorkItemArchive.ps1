@@ -62,10 +62,11 @@ Function Get-PSWorkItemArchive {
         }
 
         Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $query"
-        $tasks = invoke-MySQLiteQuery -query $query -Path $PSWorkItemPath
+        $tasks = invoke-MySQLiteQuery -query $query -Path $Path
         if ($tasks.count -gt 0) {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($tasks.count) matching tasks"
            $results = foreach ($task in $tasks) {
+            $task | Out-String | Write-Debug
             $t = _newWorkItem $task
             #insert a new typename
             $t.psobject.typenames.insert(0,"PSWorkItemArchive")

@@ -70,7 +70,8 @@ Function Complete-PSWorkItem {
         if ($task.RowID -eq $ID) {
 
             #update the task to mark it complete
-            $splat.query = "UPDATE tasks set taskmodified='$CompletionDate', completed='1',progress='100' WHERE RowID= '$ID'"
+
+            $splat.query = "UPDATE tasks set taskmodified='{0}', completed='1',progress='100' WHERE RowID= '{1}'" -f $CompletionDate,$ID
             if ($Pscmdlet.ShouldProcess($splat.query, "Complete-PSWorkItem")) {
                 Try {
                     Invoke-MySQLiteQuery @splat

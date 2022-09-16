@@ -1353,6 +1353,10 @@ Event       Conference, webinar, or other event     12</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3LiiFn4</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Get-PSWorkItemDatabase</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
