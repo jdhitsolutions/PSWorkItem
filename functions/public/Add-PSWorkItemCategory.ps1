@@ -67,14 +67,14 @@ Function Add-PSWorkItemCategory {
         if ($conn.state -eq "open") {
             foreach ($item in $category) {
                 #test if the category already exists
-                $splat.Query = "SELECT * FROM categories WHERE category = '$item'"
+                $splat.Query = "SELECT * FROM categories WHERE category = '$item' collate nocase"
                 $test = Invoke-MySQLiteQuery @splat
                 if ($test.category -eq $item -AND (-Not $Force)) {
-                    Write-Warning "$($myinvocation.mycommand): The category $Category already exists"
+                    Write-Warning "$($myinvocation.mycommand): The category $item already exists"
                     $ok = $false
                 }
                 elseif ($test.category -eq $item -AND $Force) {
-                    Write-Verbose "$($myinvocation.mycommand): The category $Category already exists and will be overwritten"
+                    Write-Verbose "$($myinvocation.mycommand): The category $item already exists and will be overwritten"
                     $splat.Query = "DELETE FROM categories WHERE category = '$item'"
                     if ($Pscmdlet.ShouldProcess($item, "Remove category")) {
                         Invoke-MySQLiteQuery @splat
