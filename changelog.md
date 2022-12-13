@@ -1,5 +1,12 @@
 # Changelog for PSWorkItem
 
+## 0.8.0
+
++ Add database path as a property to workitem and archived workitem objects.
++ Update default format view to group by database path.
++ Merged [PR#4](https://github.com/jdhitsolutions/PSWorkItem/pull/4) that resolves [Issue #3](https://github.com/jdhitsolutions/PSWorkItem/issues/3) Thank you @jbelina.
++ Help updates.
+
 ## 0.7.0
 
 + Updated commands to better handle dates and respect culture. There is a PowerShell issue where using `Get-Date` in as a sub-expression fails to respect culture. An expression like `"Today is (Get-Date)"` may not respect non-US cultures. Using the -f operator does: `"Today is "0}" -f (Get-Date)`. Modified my queries using datetime values accordingly. If you have a database created under a previous version of the module, it is recommended that you use `Set-PSWorkItem` to touch every item.

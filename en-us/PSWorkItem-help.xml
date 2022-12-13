@@ -451,6 +451,7 @@ Blog     blog management and content</dev:code>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Complete-PSWorkItem -id 9 -Passthru
 
+    Database: C:\Users\Jeff\PSWorkItem.db
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------
 6  Clean database             Other    7/30/2022 10:40:48 AM</dev:code>
@@ -731,6 +732,8 @@ ID Name           Description Category Completed
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItem
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name              Description         DueDate              Category Pct
 -- ----              -----------         -------              -------- ---
  6 new server prep   SQL02               8/3/2022 5:00:00 PM  Work      45
@@ -743,6 +746,8 @@ ID Name              Description         DueDate              Category Pct
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItem -all
+
+   Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name              Description         DueDate               Category Pct
 -- ----              -----------         -------               -------- ---
@@ -760,6 +765,8 @@ ID Name              Description         DueDate               Category Pct
         <maml:title>-------------------------- Example 3 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItem -Category Work
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
  6 new server prep SQL02       8/3/2022 5:00:00 PM   Work      45
@@ -773,6 +780,8 @@ ID Name            Description DueDate               Category Pct
         <maml:title>-------------------------- Example 4 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItem -id 9
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name          Description DueDate              Category Pct
 -- ----          ----------- -------              -------- ---
  9 Prep vacation             11/1/2022 5:00:00 PM Personal   0</dev:code>
@@ -783,6 +792,8 @@ ID Name          Description DueDate              Category Pct
       <command:example>
         <maml:title>-------------------------- Example 5 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItem -Name p*
+
+   Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name            Description DueDate              Category Pct
 -- ----            ----------- -------              -------- ---
@@ -809,6 +820,8 @@ ID Name              Description         DueDate              TimeRemaining
         <maml:title>-------------------------- Example 7 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItem | Where Overdue
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name                Description DueDate               Category Pct
 -- ----                ----------- -------               -------- ---
 13 extend car warranty             6/1/2022 4:00:00 PM   Personal   0
@@ -820,7 +833,7 @@ ID Name                Description DueDate               Category Pct
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 8 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-PSWorkItem -all | Sort-Object category | format-table  -view category
+        <dev:code>PS C:\&gt; Get-PSWorkItem -all | Sort-Object category | Format-Table  -view category
 
    Category: Other
 
@@ -1049,6 +1062,8 @@ ID    Name                 Description               DueDate                 Pct
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItemArchive
 
+    Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name               Description                          Category Completed
 -- ----               -----------                          -------- ---------
 1  upgrade prep                                            Temp     7/29/2022 10:35:42 AM
@@ -1064,6 +1079,8 @@ ID Name               Description                          Category Completed
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItemArchive -Category Personal
+
+    Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------
@@ -2753,7 +2770,9 @@ ColumnIndex ColumnName  ColumnType
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-PSWorkItem -Category blog | Set-PSworIitem -Category Other -Passthru
+        <dev:code>PS C:\&gt; Get-PSWorkItem -Category blog | Set-PSworkItem -Category Other -Passthru
+
+    Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name              Description         DueDate             Category Pct
 -- ----              -----------         -------             -------- ---
