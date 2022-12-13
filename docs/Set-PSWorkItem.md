@@ -34,7 +34,9 @@ Set the progress on a PSWorkItem.
 ### Example 2
 
 ```powershell
-PS C:\> Get-PSWorkItem -Category blog | Set-PSworIitem -Category Other -Passthru
+PS C:\> Get-PSWorkItem -Category blog | Set-PSworkItem -Category Other -Passthru
+
+    Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name              Description         DueDate             Category Pct
 -- ----              -----------         -------             -------- ---

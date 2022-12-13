@@ -20,6 +20,7 @@ class PSWorkItem {
     [datetime]$TaskCreated = (Get-Date)
     [datetime]$TaskModified = (Get-Date)
     [boolean]$Completed
+    [string]$Path
     #this will be last resort GUID to ensure uniqueness
     hidden[guid]$TaskID = (New-Guid).Guid
 

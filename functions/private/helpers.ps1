@@ -2,7 +2,7 @@
 
 function _newWorkItem {
     [cmdletbinding()]
-    Param([object]$data)
+    Param([object]$data,[string]$path)
 
     # modified 6 August 2022 to explicitly set datetime values to handle culture - JDH
     Write-Debug "[$((Get-Date).TimeofDay) _newWorkItem] Creating item '$($data.name)' [$($data.taskid)]"
@@ -15,6 +15,7 @@ function _newWorkItem {
     $item.taskmodified = $data.TaskModified -as [datetime]
     $item.Completed = $data.completed
     $item.taskId = $data.TaskId
+    $item.path = Convert-Path $path
 
     $item | Select-Object * | Out-String | Write-Debug
     $item

@@ -67,7 +67,7 @@ Function Get-PSWorkItemArchive {
             Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($tasks.count) matching tasks"
            $results = foreach ($task in $tasks) {
             $task | Out-String | Write-Debug
-            $t = _newWorkItem $task
+            $t = _newWorkItem $task -path $path
             #insert a new typename
             $t.psobject.typenames.insert(0,"PSWorkItemArchive")
             $t

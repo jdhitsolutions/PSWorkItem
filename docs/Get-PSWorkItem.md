@@ -54,6 +54,8 @@ This command will retrieve PSWorkItems from the database using a parameter defin
 ```powershell
 PS C:\> Get-PSWorkItem
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name              Description         DueDate              Category Pct
 -- ----              -----------         -------              -------- ---
  6 new server prep   SQL02               8/3/2022 5:00:00 PM  Work      45
@@ -67,6 +69,8 @@ Get all items due in the next 10 days.
 
 ```powershell
 PS C:\> Get-PSWorkItem -all
+
+   Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name              Description         DueDate               Category Pct
 -- ----              -----------         -------               -------- ---
@@ -85,6 +89,8 @@ Get all open tasks.
 ```powershell
 PS C:\> Get-PSWorkItem -Category Work
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
  6 new server prep SQL02       8/3/2022 5:00:00 PM   Work      45
@@ -99,6 +105,8 @@ Get tasks from the Work category.
 ```powershell
 PS C:\> Get-PSWorkItem -id 9
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name          Description DueDate              Category Pct
 -- ----          ----------- -------              -------- ---
  9 Prep vacation             11/1/2022 5:00:00 PM Personal   0
@@ -110,6 +118,8 @@ Get a PSWorkItem by its ID.
 
 ```powershell
 PS C:\> Get-PSWorkItem -Name p*
+
+   Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name            Description DueDate              Category Pct
 -- ----            ----------- -------              -------- ---
@@ -138,6 +148,8 @@ The PSWorkItem has a named table view called Countdown.
 ```powershell
 PS C:\> Get-PSWorkItem | Where Overdue
 
+   Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name                Description DueDate               Category Pct
 -- ----                ----------- -------               -------- ---
 13 extend car warranty             6/1/2022 4:00:00 PM   Personal   0
@@ -150,7 +162,7 @@ Get all overdue PSWorkItems.
 ### Example 8
 
 ```powershell
-PS C:\> Get-PSWorkItem -all | Sort-Object category | format-table  -view category
+PS C:\> Get-PSWorkItem -all | Sort-Object category | Format-Table  -view category
 
    Category: Other
 

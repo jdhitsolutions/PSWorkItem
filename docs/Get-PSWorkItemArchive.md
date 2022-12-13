@@ -42,6 +42,8 @@ Completed PSWorkItems are moved to the Archive table. Using this command to view
 ```powershell
 PS C:\> Get-PSWorkItemArchive
 
+    Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name               Description                          Category Completed
 -- ----               -----------                          -------- ---------
 1  upgrade prep                                            Temp     7/29/2022 10:35:42 AM
@@ -58,6 +60,8 @@ Get all archived PSWorkItems.
 
 ```powershell
 PS C:\> Get-PSWorkItemArchive -Category Personal
+
+    Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------

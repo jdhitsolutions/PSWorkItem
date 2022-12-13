@@ -182,6 +182,8 @@ Use [Set-PSWorkItem](docs/Set-PSWorkItem.md) or its alias `swi` to update a task
 ```powershell
 PS C:\> Set-PSWorkItem -id 7 -Progress 30 -DueDate "8/15/2022 12:00PM" -Passthru
 
+  Database: C:\Users\Jeff\PSWorkItem.db
+
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
  7 password report             8/15/2022 12:00:00 PM Work      30
@@ -194,6 +196,7 @@ When a task is complete, you can move it to the Archive table.
 ```powershell
 PS C:\> Complete-PSWorkItem -id 11 -Passthru
 
+    Database: C:\Users\Jeff\PSWorkItem.db
 ID Name          Description Category Completed
 -- ----          ----------- -------- ---------
 7  update resume             Work     7/30/2022 1:29:08 PM
@@ -236,7 +239,7 @@ If you copy the sample to `$PSWorkItemPath`, delete the file before creating you
 Most of the commands in this module create custom objects derived from PowerShell [class definitions](PSWorkItem.psm1)and data in the SQLite database file. If you need to troubleshoot a problem, you can use `Get-PSWorkItemData` to select all data from one of the three tables.
 
 ```powershell
- get-psworkItemdata
+PS C:\> Get-PSWorkItemData
 
 taskid       : 2196617b-b818-415d-b9cc-52b0c649a77e
 taskcreated  : 07/28/2022 16:56:25

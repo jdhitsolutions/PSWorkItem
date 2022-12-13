@@ -109,7 +109,7 @@ Function Get-PSWorkItem {
             $i=0
             foreach ($task in $tasks) {
               Write-Debug "Converting rowid $($task.rowid)"
-              $nwi = _newWorkItem $task
+              $nwi = _newWorkItem $task -path $path
               write-Debug "Adding $($nwi.name) to the result list"
                 $results.Add($nwi)
                 $i++

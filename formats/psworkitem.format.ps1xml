@@ -13,6 +13,10 @@ https://github.com/jdhitsolutions/PSScriptTools
       <ViewSelectedBy>
         <TypeName>PSWorkItem</TypeName>
       </ViewSelectedBy>
+      <GroupBy>
+      <PropertyName>Path</PropertyName>
+      <Label>Database</Label>
+      </GroupBy>
       <TableControl>
         <!--Delete the AutoSize node if you want to use the defined widths.-->
         <AutoSize />
@@ -210,6 +214,10 @@ https://github.com/jdhitsolutions/PSScriptTools
       <ViewSelectedBy>
         <TypeName>PSWorkItemArchive</TypeName>
       </ViewSelectedBy>
+            <GroupBy>
+      <PropertyName>Path</PropertyName>
+      <Label>Database</Label>
+      </GroupBy>
       <TableControl>
         <!--Delete the AutoSize node if you want to use the defined widths.-->
         <AutoSize />

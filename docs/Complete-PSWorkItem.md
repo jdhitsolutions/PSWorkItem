@@ -28,6 +28,7 @@ When you are ready to mark a task as complete, use this command. Complete-PSWork
 ```powershell
 PS C:\> Complete-PSWorkItem -id 9 -Passthru
 
+    Database: C:\Users\Jeff\PSWorkItem.db
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------
 6  Clean database             Other    7/30/2022 10:40:48 AM
