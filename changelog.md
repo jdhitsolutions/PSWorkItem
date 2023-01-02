@@ -4,15 +4,21 @@ The format of this file is based on [Keep a Changelog](https://keepachangelog.co
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.9.0] - 2023-01-02
+
 ### Added
+
 - Added aliases of `due` and `deadline` for `DueDate` for the `psworkitem` type.
 - Moved type extensions to external ps1xml files.
 
 ### Changed
+
 - Updated README.md.
 - Migrated CHANGELOG to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 
 ### Fixed
+
 - Merged [PR #6](https://github.com/jdhitsolutions/PSWorkItem/pull/6) to fix [Issue #5](https://github.com/jdhitsolutions/PSWorkItem/issues/5)
 
 ## [0.8.0] - 2022-12-13
@@ -133,12 +139,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.8.0..HEAD
-[0.8.0]:  https://github.com/jdhitsolutions/PSWorkItem/tree/v0.8.0
-[0.7.0]:  https://github.com/jdhitsolutions/PSWorkItem/compare/v0.6.0..v0.7.0
-[0.6.0]:  https://github.com/jdhitsolutions/PSWorkItem/compare/v0.5.0..v0.6.0
-[0.5.0]:  https://github.com/jdhitsolutions/PSWorkItem/compare/v0.4.0..v0.5.0
-[0.4.0]:  https://github.com/jdhitsolutions/PSWorkItem/commit/303837de0fc6ca807e121c3d6fad5b851b25cf7f
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.9.0..HEAD
+[0.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.8.0..v0.9.0
+[0.8.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.7.0..v0.8.0
+[0.7.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.6.0..v0.7.0
+[0.6.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.5.0..v0.6.0
+[0.5.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.4.0..v0.5.0
+[0.4.0]: https://github.com/jdhitsolutions/PSWorkItem/commit/303837de0fc6ca807e121c3d6fad5b851b25cf7f
 [0.3.0]: https://github.com/jdhitsolutions/PSWorkItem/commit/e4a290dd256dc6d86d6b6893113668985c8add61
 [0.2.0]: https://github.com/jdhitsolutions/PSWorkItem/commit/1ea8c57448e4e687d1f81fa4f4515c4dbfea4048
 [0.1.0]: https://github.com/jdhitsolutions/PSWorkItem/commit/fdb4255d4b5f605e03deab409829c13ed5166945
