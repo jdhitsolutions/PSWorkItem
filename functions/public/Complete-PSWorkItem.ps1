@@ -126,7 +126,7 @@ Function Complete-PSWorkItem {
                     $splat.Query = "SELECT *,RowID from archive WHERE taskid = '$($task.taskid)'"
                     Try {
                         $pass = Invoke-MySQLiteQuery @splat
-                        $t = _newWorkItem $pass
+                        $t = _newWorkItem $pass -$path $Path
                         #insert a new typename
                         $t.psobject.typenames.insert(0,"PSWorkItemArchive")
                         $t
