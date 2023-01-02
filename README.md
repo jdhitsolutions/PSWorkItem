@@ -2,7 +2,7 @@
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/PSWorkItem.png?style=for-the-badge&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/PSWorkItem/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSWorkItem.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/PSWorkItem/)
 
-This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. That PowerShell module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the MySQLite module.
+This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The origial PowerShell module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the MySQLite module.
 
 ## Installation
 
@@ -12,7 +12,7 @@ This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell,
 Install-Module PSWorkItem [-scope CurrentUser]
 ```
 
-Installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
+Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
 
 ## Module Commands and Design
 
@@ -28,7 +28,7 @@ Installation will also install the required [MySQLite](https://github.com/jdhits
 + [New-PSWorkItem](New-PSWorkItem.md)
 + [Set-PSWorkItem](Set-PSWorkItem.md)
 
-The module is based on three tables in a SQLite database file. The primary Tasks table is where active items are stored.
+The module is based on three tables in a SQLite database file. The primary `Tasks` table is where active items are stored.
 
 ```text
 ColumnIndex ColumnName   ColumnType
@@ -46,7 +46,30 @@ ColumnIndex ColumnName   ColumnType
 
 When items are queried from this table using `Get-PSWorkItem` they are written to the pipeline as a `PSWorkItem` object. This is a class-based object defined in the root module.
 
-Each task or `PSWorkItem` must have an associated category. These are stored in the Categories table.
+```powershell
+class PSWorkItem {
+    #this can be the ROWID of the item in the database
+    [int]$ID
+    [string]$Name
+    [string]$Category
+    [string]$Description
+    [DateTime]$DueDate = (Get-Date).AddDays(30)
+    [int]$Progress = 0
+    [DateTime]$TaskCreated = (Get-Date)
+    [DateTime]$TaskModified = (Get-Date)
+    [boolean]$Completed
+    [string]$Path
+    #this will be last resort GUID to ensure uniqueness
+    hidden[guid]$TaskID = (New-Guid).Guid
+
+    PSWorkItem ([string]$Name, [string]$Category) {
+        $this.Name = $Name
+        $this.Category = $Category
+    }
+}
+```
+
+Each task or `PSWorkItem` must have an associated category. These are stored in the `Categories` table.
 
 ```text
 ColumnIndex ColumnName  ColumnType
@@ -55,19 +78,31 @@ ColumnIndex ColumnName  ColumnType
 1           description text
 ```
 
-You must define categories with `Add-PSWorkItemCategory` before you can create a new task. Categories are written to the pipeline as `PSWorkItemCategory` objects, also defined with a PowerShell class.
+You __must__ define categories with `Add-PSWorkItemCategory` before you can create a new task. Categories are written to the pipeline as `PSWorkItemCategory` objects, also defined with a PowerShell class.
 
-when a task is complete, you can use `Complete-PSWorkItem` to update the task as completed. This command will copy the task to the Archive table, which has the same layout as the Tasks table, and then delete it from Tasks.
+```powershell
+class PSWorkItemCategory {
+    [string]$Category
+    [string]$Description
+
+    PSWorkItemCategory([string]$Category, [string]$Description) {
+        $this.Category = $Category
+        $this.Description = $Description
+    }
+}
+```
+
+When a task is complete, you can use `Complete-PSWorkItem` to update the task as completed. This command will copy the task to the `Archive` table, which has the same layout as the `Tasks` table, and then delete it from `Tasks`.
 
 ### PSWorkItemPath
 
 The module defines a global variable, `$PSWorkItemPath`, which points to the database file. The default file is `$HOME\PSWorkItem.db`. This variable is used as the default `Path` parameter on all module commands. If you want to change it, do so in your PowerShell profile.
 
-Because everything is stored in a single database file, advanced users could setup multiple PSWorkItem systems. It is up to the user to keep track of database paths.
+Because everything is stored in a single database file, advanced users could set up multiple PSWorkItem systems. It is up to the user to keep track of database paths.
 
 ## Creating a New Database
 
-To get started, run `Initialize-PSWorkItemDatabase`. This will create a new database file and set default categories of Work, Personal, Project, and Other. By default, the new database will created at `$PSWorkItemPath`.
+To get started, run `Initialize-PSWorkItemDatabase`. This will create a new database file and set default categories of Work, Personal, Project, and Other. By default, the new database will be created using the value of `$PSWorkItemPath`.
 
 You can view a database summary with `Get-PSWorkitemDatabase`.
 
@@ -83,13 +118,13 @@ Created              LastModified         Tasks Archived Categories
 
 ## Categories
 
-To add a new category you must specify a category name. The description is optional. The category will be defined exactly as you enter it so watch casing.
+To add a new category, you must specify a category name. The description is optional. The category will be defined exactly as you enter it, so watch casing.
 
 ```powershell
 Add-PSWorkItemCategory -Category "SRV" -Description "server management tasks"
 ```
 
-Use `Get-PSWorkItemCategory` to view.
+Use `Get-PSWorkItemCategory` to view your categories.
 
 ```powershell
 PS C:\>  Get-PSWorkItemCategory
@@ -104,7 +139,9 @@ Blog     blog management and content
 SRV      server management tasks
 ```
 
-If you need to update a category, you can re-add it using `-Force`. The category name is case-sensitive.
+If you need to update a category, you can re-add it using `-Force`.
+
+> The category name is case-sensitive.
 
 ```powershell
 PS C:\> Add-PSWorkItemCategory -Category Work -Description "business related tasks" -Passthru -Force
@@ -142,17 +179,17 @@ The primary command in this module, `Get-PSWorkItem`, which has an alias of `gwi
 + `Get-PSWorkItem [-ID <String>] [-Path <String>]`
 + `Get-PSWorkItem [[-Name] <String>] [-Path <String>]`
 
-The default behavior is to get tasks due within the next 10 days
+The default behavior is to get tasks due within the next ten days
 
-![get-psworkitem](images/get-psworkitem.png)
+![Get-PSWorkItem](images/get-psworkitem.png)
 
-If you are running the command in the PowerShell console or VSCode, overdue tasks will be higlighted in red. Tasks due within 3 days will be highlighted in yellow.
+If you are running the command in the PowerShell console or VSCode, overdue tasks will be highlighted in red. Tasks due within three days will be highlighted in yellow.
 
 Read the examples for [Get-PSWorkItem](docs/Get-PSWorkItem.md) for other ways to use this command including custom format views.
 
 ### PSWorkItemCategory
 
-In addition to formatting overdue and imminent due dates, the module also provides a mechanism to add highlighting of specific categores. Importing the module will create a global variable called `PSWorkItemCategory`. The key will be a category name. The value will be a $PSStyle or ANSI escape sequence. These are the module defaults.
+In addition to formatting overdue and imminent due dates, the module also provides a mechanism to add highlighting of specific categories. Importing the module will create a global variable called `PSWorkItemCategory`. The key will be a category name. The value will be a $PSStyle or ANSI escape sequence. These are the module defaults.
 
 ```powershell
 $global:PSWorkItemCategory = @{
@@ -167,9 +204,9 @@ You can modify this hashtable as you would any other hashtable.
 $PSWorkItemCategory.Add("Event","`e[38;5;153m")
 ```
 
-The entry will have no effect unless the category is definied in the database.
+The entry will have no effect unless the category is defined in the database.
 
-> Note that when you view the hashtable, you won't see any values because they escape sequences are non-printable.,
+> Note that when you view the hashtable, you won't see any values because they escape sequences are non-printable.
 
 ![colorized categories](images/psworkitemcategory.png)
 
@@ -191,7 +228,7 @@ ID Name            Description DueDate               Category Pct
 
 ## Completing Tasks
 
-When a task is complete, you can move it to the Archive table.
+When a task is complete, you can move it to the `Archive` table.
 
 ```powershell
 PS C:\> Complete-PSWorkItem -id 11 -Passthru
@@ -202,9 +239,9 @@ ID Name          Description Category Completed
 7  update resume             Work     7/30/2022 1:29:08 PM
 ```
 
-There are no commands to modify the task after it has been archived so if you want to update the name, description, or category, do so before marking it as complete.
+There are no commands to modify the task after it has been archived, so if you want to update the name, description, or category, do so before marking it as complete.
 
-Note that when the task is moved to the Archive table, it will most likely get a new ID.
+Note that when you move a task to the `Archive` table, it will most likely get a new ID.
 
 [Complete-PSWorkItem](docs/Complete-PSWorkItem.md) has an alias of `cwi`.
 
@@ -216,17 +253,17 @@ If you want to delete a task, you can use [Remove-PSWorkItem](docs/Remove-PSWork
 Remove-PSWorkItem -id 13
 ```
 
-This will delete the item from the Tasks database.
+This command will delete the item from the Tasks database.
 
 ## Database Backup
 
-This module doesn't have any specific commands for backing up or restoring a database file. But you can use the `Export-MySQLiteDB` command to export the PSWorkItem database file to a JSON file.
+This module has no specific commands for backing up or restoring a database file. But you can use the `Export-MySQLiteDB` command to export the PSWorkItem database file to a JSON file.
 
 ```powershell
 Export-MySQLiteDB -path $PSWorkItemPath -Destination d:\backups\pwi.json
 ```
 
-Use `Import-MySQLiteDB` to import the file and rebuild the database file. It is recommended to restore to a new location, verify the database, then copy the file to `$PSWorkItemPath`.
+Use `Import-MySQLiteDB` to import the file and rebuild the database file. When restoring a database file, you should restore the file to a new location, verify the database, then copy the file to `$PSWorkItemPath`.
 
 ## Database Sample
 
@@ -236,7 +273,7 @@ If you copy the sample to `$PSWorkItemPath`, delete the file before creating you
 
 ## Troubleshooting
 
-Most of the commands in this module create custom objects derived from PowerShell [class definitions](PSWorkItem.psm1)and data in the SQLite database file. If you need to troubleshoot a problem, you can use `Get-PSWorkItemData` to select all data from one of the three tables.
+Most of the commands in this module create custom objects derived from PowerShell [class definitions](PSWorkItem.psm1) and data in the SQLite database file. If you need to troubleshoot a problem, you can use `Get-PSWorkItemData` to select all data from one of the three tables.
 
 ```powershell
 PS C:\> Get-PSWorkItemData
@@ -257,7 +294,7 @@ rowid        : 19
 ## Future Tasks or Commands
 
 + Password protection options
-+ A WPF form for entering new work items
-+ A WPF form for displaying and managing items.
++ A WPF and/or TUI form for entering new work items
++ A WPF and/or TUI form for displaying and managing work items.
 
 If you have an enhancement suggestion, please submit it as an Issue.

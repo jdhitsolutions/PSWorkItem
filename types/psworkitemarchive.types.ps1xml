@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file was created with Export-PSTypeExtenstion from the
+PSTypeExtensionTools module which you can install from
+the PowerShell Gallery.
+
+Use Update-TypeData to import this file in your PowerShell session.
+
+Created 12/30/2022 16:05:04
+-->
+<Types>
+  <Type>
+    <Name>psworkitemarchive</Name>
+    <Members>
+      <AliasProperty>
+        <Name>CompletedDate</Name>
+        <ReferencedMemberName>TaskModified</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+</Types>

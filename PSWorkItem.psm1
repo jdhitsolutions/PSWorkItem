@@ -15,10 +15,10 @@ class PSWorkItem {
     [string]$Name
     [string]$Category
     [string]$Description
-    [datetime]$DueDate = (Get-Date).AddDays(30)
+    [DateTime]$DueDate = (Get-Date).AddDays(30)
     [int]$Progress = 0
-    [datetime]$TaskCreated = (Get-Date)
-    [datetime]$TaskModified = (Get-Date)
+    [DateTime]$TaskCreated = (Get-Date)
+    [DateTime]$TaskModified = (Get-Date)
     [boolean]$Completed
     [string]$Path
     #this will be last resort GUID to ensure uniqueness
@@ -43,8 +43,8 @@ class PSWorkItemCategory {
 
 class PSWorkItemDatabase {
     [string]$Path
-    [datetime]$Created
-    [datetime]$LastModified
+    [DateTime]$Created
+    [DateTime]$LastModified
     [int32]$Size
     [int32]$TaskCount
     [int32]$CategoryCount
@@ -54,16 +54,10 @@ class PSWorkItemDatabase {
     [int32]$PageSize
 }
 
-#Add a dynamic type extension to the PSWorkItem class
-Update-TypeData -TypeName PSWorkitem -MemberType ScriptProperty -MemberName OverDue -Value { $this.DueDate -le (Get-Date) } -Force
-Update-TypeData -TypeName PSWorkItem -MemberType ScriptProperty -MemberName "TimeRemaining" -Value { New-TimeSpan -End $this.DueDate -Start (Get-Date) } -Force
-Update-TypeData -TypeName PSWorkItemArchive -MemberType AliasProperty -MemberName "CompletedDate" -Value 'TaskModified' -Force
-
 #endregion
 
 #make this variable global instead of exporting so that I don't have to use Export-ModuleMember 7/28/2022 JDH
 $global:PSWorkItemPath = Join-Path -Path $HOME -ChildPath "PSWorkItem.db"
-
 
 <#
 Default categories when creating a new database file.

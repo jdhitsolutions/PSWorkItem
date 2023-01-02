@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file was created with Export-PSTypeExtenstion from the
+PSTypeExtensionTools module which you can install from
+the PowerShell Gallery.
+
+Use Update-TypeData to import this file in your PowerShell session.
+
+Created 12/30/2022 16:04:28
+-->
+<Types>
+  <Type>
+    <Name>psworkitem</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>OverDue</Name>
+        <GetScriptBlock> $this.DueDate -le (Get-Date) </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>TimeRemaining</Name>
+        <GetScriptBlock> New-TimeSpan -End $this.DueDate -Start (Get-Date) </GetScriptBlock>
+      </ScriptProperty>
+       <AliasProperty>
+        <Name>Due</Name>
+        <ReferencedMemberName>DueDate</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>Deadline</Name>
+        <ReferencedMemberName>DueDate</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+</Types>
