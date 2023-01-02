@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated README.md.
 - Migrated CHANGELOG to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) format.
 
+### Fixed
+- Merged [PR #6](https://github.com/jdhitsolutions/PSWorkItem/pull/6) to fix [Issue #5](https://github.com/jdhitsolutions/PSWorkItem/issues/5)
+
 ## [0.8.0] - 2022-12-13
 
 ### Added
