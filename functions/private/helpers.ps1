@@ -15,7 +15,9 @@ function _newWorkItem {
     $item.taskmodified = $data.TaskModified -as [datetime]
     $item.Completed = $data.completed
     $item.taskId = $data.TaskId
+    if ($path -ne '') {
     $item.path = Convert-Path $path
+    }
 
     $item | Select-Object * | Out-String | Write-Debug
     $item
