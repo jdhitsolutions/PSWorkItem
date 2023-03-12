@@ -2,7 +2,7 @@ Function Initialize-PSWorkItemDatabase {
     [cmdletbinding(SupportsShouldProcess)]
     [OutputType("None","PSWorkItemDatabase")]
     Param(
-        [Parameter(Position = 0, HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
+        [Parameter(Position = 0, HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
@@ -15,62 +15,64 @@ Function Initialize-PSWorkItemDatabase {
                 Return $False
             }
         })]
-        [string]$Path = $PSWorkItemPath,
-        [switch]$Passthru,
+        [String]$Path = $PSWorkItemPath,
+        [Switch]$PassThru,
         [Parameter(HelpMessage = "Force overwriting an existing file.")]
-        [switch]$Force
+        [Switch]$Force
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
     } #begin
 
     Process {
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Initializing PSWorkItem database $Path "
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Initializing PSWorkItem database $Path "
         Try {
-            #using -f to accomodate culture with datetimes
+            #using -f to accommodate culture with datetimes
             $comment = "PSWorkItem database created {0}." -f (Get-Date)
-            $db = New-MySQLiteDB -Path $Path -Passthru -force:$Force -comment $comment -ErrorAction stop
+            $db = New-MySQLiteDB -Path $Path -PassThru -force:$Force -comment $comment -ErrorAction stop
         }
         Catch {
             Throw $_
         }
         if ($db) {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Adding tables"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Adding tables"
             $props = [ordered]@{
                 taskid       = "text"
                 taskcreated  = "text"
                 taskmodified = "text"
                 name         = "text"
-                description   = "text"
+                description  = "text"
                 duedate      = "text"
                 category     = "text"
                 progress     = "integer"
                 completed    = "integer"
+                id           = "integer"
             }
 
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): ...tasks"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): ...tasks"
             New-MySQLiteDBTable -Path $Path -TableName tasks -ColumnProperties $props -Force:$Force
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): ...archive"
+
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): ...archive"
             New-MySQLiteDBTable -Path $Path -TableName archive -ColumnProperties $props -force:$Force
 
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): ...categories"
             $props = [ordered]@{
                 category = "text"
                 description = "text"
             }
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): ...categories"
             New-MySQLiteDBTable -Path $Path -TableName categories -ColumnProperties $props -force:$force
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Adding default categories $($PSWorkItemDefaultCategories -join ',')"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Adding default categories $($PSWorkItemDefaultCategories -join ',')"
             #give the database a chance to close
             Start-Sleep -milliseconds 500
             Add-PSWorkItemCategory -Path $Path -Category $PSWorkItemDefaultCategories -Force
-            if ($passthru) {
+            if ($PassThru) {
                 Get-mySQLiteTable -Path $Path -Detail
             }
         }
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
     } #end
 
 }

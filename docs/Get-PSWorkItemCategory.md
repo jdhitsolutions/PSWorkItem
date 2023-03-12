@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Get defined PSWorkitem categories.
+Get defined PSWorkItem categories.
 
 ## SYNTAX
 
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml

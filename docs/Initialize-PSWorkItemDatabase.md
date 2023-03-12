@@ -14,7 +14,7 @@ Create a new PSWorkItem database file.
 ## SYNTAX
 
 ```yaml
-Initialize-PSWorkItemDatabase [[-Path] <String>] [-Passthru] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Initialize-PSWorkItemDatabase [[-Path] <String>] [-PassThru] [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -38,7 +38,7 @@ Create a new database file.
 ### Example 2
 
 ```powershell
-PS C:\> Initialize-PSWorkItemDatabase -passthru
+PS C:\> Initialize-PSWorkItemDatabase -PassThru
 
    Database: C:\Users\jeff\PSWorkItem.db Table:Metadata
 
@@ -85,7 +85,7 @@ ColumnIndex ColumnName  ColumnType
 1           description text
 ```
 
-The passthru output shows the new table definitions.
+The PassThru output shows the new table definitions.
 
 ## PARAMETERS
 
@@ -121,7 +121,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Passthru
+### -PassThru
 
 ```yaml
 Type: SwitchParameter
@@ -137,7 +137,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml

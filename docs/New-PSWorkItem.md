@@ -16,13 +16,13 @@ Create a new PSWorkItem.
 ### date (Default)
 
 ```yaml
-New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DueDate <DateTime>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DueDate <DateTime>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### days
 
 ```yaml
-New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DaysDue <Int32>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DaysDue <Int32>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,15 +34,15 @@ Use this command to add a new PSWorkItem to the database. It is assumed you have
 ### Example 1
 
 ```powershell
-PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog -passthru
+PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog -PassThru
 ```
 
-Create a new PSWorkitem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.
+Create a new PSWorkItem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.
 
 ### Example 2
 
 ```powershell
-PS C:\> New-PSWorkItem -Name "Publish PSWorkitem" -DaysDue 3 -Category Project
+PS C:\> New-PSWorkItem -Name "Publish PSWorkItem" -DaysDue 3 -Category Project
 ```
 
 Create a new PSWorkItem due in 3 days.
@@ -51,7 +51,7 @@ Create a new PSWorkItem due in 3 days.
 
 ### -Category
 
-Select a valid catetory. The category must be pre-defined. There should be tab-completion for this parameter.
+Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.
 
 ```yaml
 Type: String
@@ -130,7 +130,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Passthru
+### -PassThru
 
 ```yaml
 Type: SwitchParameter
@@ -146,7 +146,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db.
 
 ```yaml

@@ -11,25 +11,25 @@ Function Remove-PSWorkItemCategory {
         [ValidateNotNullOrEmpty()]
         [alias("Name")]
         [string[]]$Category,
-        [Parameter(HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
+        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
-                if (Test-Path $_) {
-                    Return $True
-                }
-                else {
-                    Throw "Failed to validate $_"
-                    Return $False
-                }
-            })]
-        [string]$Path = $PSWorkItemPath
+            if (Test-Path $_) {
+                Return $True
+            }
+            else {
+                Throw "Failed to validate $_"
+                Return $False
+            }
+        })]
+        [String]$Path = $PSWorkItemPath
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Starting $($myinvocation.mycommand)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
         Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] Opening a connection to $Path"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Opening a connection to $Path"
         Try {
             $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
             $conn | Out-String | Write-Verbose
@@ -37,15 +37,14 @@ Function Remove-PSWorkItemCategory {
         Catch {
             Throw "Failed to open the database $Path"
         }
-
     } #begin
 
     Process {
         if ($conn.state -eq 'open') {
             foreach ($item in $Category ) {
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] Removing category $item "
+                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Removing category $item "
                 $query = "DELETE FROM categories WHERE category = '$item'"
-                if ($pscmdlet.ShouldProcess($item)) {
+                if ($PSCmdlet.ShouldProcess($item)) {
                     Invoke-MySQLiteQuery -Query $query -Connection $conn -KeepAlive
                 }
             }
@@ -54,10 +53,10 @@ Function Remove-PSWorkItemCategory {
 
     End {
         if ($conn.state -eq 'open') {
-            Write-Verbose "[$((Get-Date).TimeofDay) END    ] Closing the connection to $Path"
+            Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Closing the connection to $Path"
             Close-MySQLiteDB -Connection $conn
         }
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] Ending $($myinvocation.mycommand)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
     } #end
 
 }

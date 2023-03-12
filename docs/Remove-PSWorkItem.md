@@ -67,7 +67,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml
@@ -124,3 +124,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Get-PSWorkItem](Get-PSWorkItem.md)
 
 [Set-PSWorkItem](Set-PSWorkItem.md)
+
+[Remove-PSWorkItemArchive](Remove-PSWorkItemArchive.md)

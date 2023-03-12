@@ -2,7 +2,7 @@ Function Get-PSWorkItemDatabase {
     [cmdletbinding()]
     [OutputType("PSWorkItemDatabase")]
     Param(
-        [Parameter(HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
+        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
@@ -14,14 +14,14 @@ Function Get-PSWorkItemDatabase {
                 Return $False
             }
             })]
-        [string]$Path = $PSWorkItemPath
+        [String]$Path = $PSWorkItemPath
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting "
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting "
     } #begin
 
     Process {
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting database information from $Path"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Getting database information from $Path"
 
         Try {
             $db = Get-MySQLiteDB -Path $Path -ErrorAction Stop
@@ -30,15 +30,15 @@ Function Get-PSWorkItemDatabase {
             Throw $_
         }
         if ($db) {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Opening a database connection"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Opening a database connection"
             $conn = Open-MySQLiteDB -Path $path
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting task count"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Getting task count"
             $tasks = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from tasks" -ErrorAction Stop
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting archive count"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Getting archive count"
             $archived = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from archive" -ErrorAction Stop
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting category count"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Getting category count"
             $categories = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from categories" -ErrorAction Stop
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Closing the database connection"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Closing the database connection"
             Close-MySQLiteDB -Connection $conn
 
             #create a new PSWorkItemDatabase object
@@ -48,9 +48,9 @@ Function Get-PSWorkItemDatabase {
             $out.Created = $db.Created
             $out.LastModified = $db.Modified
             $out.size = $db.Size
-            $out.taskcount = $tasks.'Count()'
-            $out.archivecount = $archived.'Count()'
-            $out.categorycount = $categories.'Count()'
+            $out.TaskCount = $tasks.'Count()'
+            $out.ArchiveCount = $archived.'Count()'
+            $out.CategoryCount = $categories.'Count()'
             $out.encoding = $db.Encoding
             $out.PageCount = $db.PageCount
             $out.PageSize = $db.PageSize
@@ -59,7 +59,7 @@ Function Get-PSWorkItemDatabase {
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
     } #end
 
 } #close Get-PSWorkItemDatabase

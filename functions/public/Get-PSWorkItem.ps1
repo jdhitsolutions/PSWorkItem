@@ -10,8 +10,9 @@ Function Get-PSWorkItem {
             ParameterSetName = "name"
         )]
         [ValidateNotNullOrEmpty()]
+        [SupportsWildcards()]
         [alias("task")]
-        [string]$Name,
+        [String]$Name,
 
         [Parameter(
             HelpMessage = "The task ID.",
@@ -19,7 +20,7 @@ Function Get-PSWorkItem {
             ParameterSetName = "id"
         )]
         [ValidateNotNullOrEmpty()]
-        [string]$ID,
+        [String]$ID,
 
         [Parameter(
             HelpMessage = "Get open tasks due in the number of days between 1 and 365.",
@@ -33,16 +34,16 @@ Function Get-PSWorkItem {
             HelpMessage = "Get all open tasks",
             ParameterSetName = "all"
         )]
-        [switch]$All,
+        [Switch]$All,
 
         [Parameter(
             HelpMessage = "Get all open tasks by category",
             ParameterSetName = "category"
         )]
         [ValidateNotNullOrEmpty()]
-        [string]$Category,
+        [String]$Category,
 
-        [Parameter(HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
+        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
@@ -54,68 +55,67 @@ Function Get-PSWorkItem {
                     Return $False
                 }
             })]
-        [string]$Path = $PSWorkItemPath
+        [String]$Path = $PSWorkItemPath
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting "
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Detected culture $(Get-Culture)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting "
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Detected culture $(Get-Culture)"
     } #begin
 
     Process {
         $results = [System.Collections.Generic.list[object]]::new()
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Detected parameter set $($pscmdlet.parametersetname)"
-        Switch -regex ($PScmdlet.ParameterSetName) {
-            "all|days" { $query = "Select *,RowID from tasks" }
-            "category" { $query = "Select *,RowID from tasks where category ='$Category' collate nocase" }
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Detected parameter set $($PSCmdlet.parametersetname)"
+        Switch -regex ($PSCmdlet.ParameterSetName) {
+            "all|days" { $query = "Select * from tasks" }
+            "category" { $query = "Select * from tasks where category ='$Category' collate nocase" }
             <#
-          6 August 2022 -JDH
-          Because SQLite doesn't have a datetime type, querying is messy. It is just
-          as easy to get everything and then use PowerShell to filter by date. This
-          also simplifies things when runnng under different cultures.
-          "days" {
-                $d = (Get-Date).AddDays($DaysDue)
-                $query = "Select *,RowID from tasks where duedate <= '$d' collate nocase"
-            } #>
-            "id" { $query = "Select *,RowID from tasks where RowID ='$ID'" }
+                6 August 2022 -JDH
+                Because SQLite doesn't have a datetime type, querying is messy. It is just
+                as easy to get everything and then use PowerShell to filter by date. This
+                also simplifies things when running under different cultures.
+                "days" {
+                        $d = (Get-Date).AddDays($DaysDue)
+                        $query = "Select * from tasks where duedate <= '$d' collate nocase"
+                    } 
+            #>
+            "id" { $query = "Select * from tasks where ID ='$ID'" }
             "name" {
                 if ($Name -match "\*") {
                     $Name = $name.replace("*", "%")
-                    $query = "Select *,RowID from tasks where name like '$Name' collate nocase"
                 }
-                else {
-                    $query = "Select *,RowID from tasks where name = '$Name' collate nocase"
-                }
+                $query = "Select * from tasks where name = '$Name' collate nocase"
+
             }
         }
 
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $query"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $query"
         $tasks = Invoke-MySQLiteQuery -Query $query -Path $Path
 
         if ($tasks.count -gt 0) {
 
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($tasks.count) matching tasks"
-            if ($pscmdlet.ParameterSetName -eq 'days') {
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Found $($tasks.count) matching tasks"
+            if ($PSCmdlet.ParameterSetName -eq 'days') {
                 $d = (Get-Date).AddDays($DaysDue)
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Re-filtering for tasks due in the next $DaysDue day(s)."
-                Write-Verbose ("[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Cutoff date is {0}" -f $d)
-                Write-Verbose ("[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Filtering for items due before {0}" -f $d)
+                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Re-filtering for tasks due in the next $DaysDue day(s)."
+                Write-Verbose ("[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Cutoff date is {0}" -f $d)
+                Write-Verbose ("[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Filtering for items due before {0}" -f $d)
                 <#
                 This format doesn't appear to respect culture
-                $tasks = ($tasks).Where({ [datetime]$_.duedate -le $d })
+                $tasks = ($tasks).Where({ [DateTime]$_.duedate -le $d })
                 #>
-                $tasks = $tasks | Where-Object { ($_.duedate -as [datetime]) -le $d}
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Re-Filtering found $($tasks.count) items"
+                $tasks = $tasks | Where-Object { ($_.duedate -as [DateTime]) -le $d}
+                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Re-Filtering found $($tasks.count) items"
             }
             $i=0
             foreach ($task in $tasks) {
-              Write-Debug "Converting rowid $($task.rowid)"
+              Write-Debug "Converting id $($task.id)"
               $nwi = _newWorkItem $task -path $path
               write-Debug "Adding $($nwi.name) to the result list"
                 $results.Add($nwi)
                 $i++
             }
             Write-Debug "processed $i tasks"
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Sorting $($results.count) results"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Sorting $($results.count) results"
             $results | Sort-Object -Property DueDate
         }
         else {
@@ -124,6 +124,6 @@ Function Get-PSWorkItem {
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
     } #end
 }

@@ -14,7 +14,7 @@ Add a new PSWorkItem category
 ## SYNTAX
 
 ```yaml
-Add-PSWorkItemCategory [-Category] <String[]> [[-Description] <String>] [-Path <String>] [-Force] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-PSWorkItemCategory [-Category] <String[]> [[-Description] <String>] [-Path <String>] [-Force] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +26,7 @@ When you setup a new PSWorkItem database, it will define the default categories 
 ### Example 1
 
 ```powershell
-PS C:\> Add-PSWorkItemCategory -Name Blog -Description "blog management and content" -Passthru
+PS C:\> Add-PSWorkItemCategory -Name Blog -Description "blog management and content" -PassThru
 
 Category Description
 -------- -----------
@@ -99,7 +99,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Passthru
+### -PassThru
 
 ```yaml
 Type: SwitchParameter
@@ -115,7 +115,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml

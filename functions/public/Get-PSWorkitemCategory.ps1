@@ -12,7 +12,7 @@ Function Get-PSWorkItemCategory {
         [alias("Name")]
         [string[]]$Category = "*",
 
-        [Parameter(HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
+        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
@@ -24,10 +24,10 @@ Function Get-PSWorkItemCategory {
                 Return $False
             }
         })]
-        [string]$Path = $PSWorkItemPath
+        [String]$Path = $PSWorkItemPath
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
         Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
 
@@ -40,27 +40,27 @@ Function Get-PSWorkItemCategory {
 
     Process {
         if ($Category -eq "*") {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting all categories"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Getting all categories"
             $splat.Query = "SELECT * FROM categories"
             $data = Invoke-MySQLiteQuery @splat
         }
         else {
             Foreach ($item in $Category) {
-                Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Getting category $item"
+                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Getting category $item"
                 #make a case-insensitive query
                 $splat.Query = "SELECT * FROM categories WHERE category = '$item' collate nocase"
                 $data = Invoke-MySQLiteQuery @splat
             }
         }
-        Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Found $($data.count) categories"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Found $($data.count) categories"
         foreach ($cat in $data) {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Creating category object for $($cat.category)"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Creating category object for $($cat.category)"
             [PSWorkItemCategory]::New($cat.category, $cat.description)
         }
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
     } #end
 
 }

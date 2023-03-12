@@ -14,19 +14,19 @@ Mark a PSWorkItem as complete.
 ## SYNTAX
 
 ```yaml
-Complete-PSWorkItem [-ID] <Int32> [-Path <String>] [-CompletionDate <DateTime>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Complete-PSWorkItem [-ID] <Int32> [-Path <String>] [-CompletionDate <DateTime>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-When you are ready to mark a task as complete, use this command. Complete-PSWorkITem will set the progress to 100, mark the item as completed, copy it to the Arhive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.
+When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Arhive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.
 
 ## EXAMPLES
 
 ### Example 1
 
 ```powershell
-PS C:\> Complete-PSWorkItem -id 9 -Passthru
+PS C:\> Complete-PSWorkItem -id 9 -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
 ID Name           Description Category Completed
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml
@@ -120,7 +120,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Passthru
+### -PassThru
 
 ```yaml
 Type: SwitchParameter

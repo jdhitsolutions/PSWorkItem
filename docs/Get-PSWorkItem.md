@@ -127,7 +127,7 @@ ID Name            Description DueDate              Category Pct
  9 Prep vacation               11/1/2022 5:00:00 PM Personal   0
 ```
 
-Get PSWorkitems with a name that begins with P.
+Get PSWorkItems with a name that begins with P.
 
 ### Example 6
 
@@ -162,7 +162,7 @@ Get all overdue PSWorkItems.
 ### Example 8
 
 ```powershell
-PS C:\> Get-PSWorkItem -all | Sort-Object category | Format-Table  -view category
+PS C:\> Get-PSWorkItem -all | Sort-Object category | Format-Table -view category
 
    Category: Other
 
@@ -182,7 +182,7 @@ ID    Name                 Description               DueDate                 Pct
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-12    Publish PSWorkitem                             8/2/2022 12:05:44 PM      0
+12    Publish PSWorkItem                             8/2/2022 12:05:44 PM      0
 ...
 ```
 
@@ -268,13 +268,13 @@ Required: False
 Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
-It should end in .db
+The path to the PSWorkItem SQLite database file.
+It should end in .db.
 
 ```yaml
 Type: String

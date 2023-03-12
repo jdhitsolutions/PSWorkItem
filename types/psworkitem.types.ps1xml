@@ -4,13 +4,11 @@ This file was created with Export-PSTypeExtenstion from the
 PSTypeExtensionTools module which you can install from
 the PowerShell Gallery.
 
-Use Update-TypeData to import this file in your PowerShell session.
-
 Created 12/30/2022 16:04:28
 -->
 <Types>
   <Type>
-    <Name>psworkitem</Name>
+    <Name>PSWorkItem</Name>
     <Members>
       <ScriptProperty>
         <Name>OverDue</Name>
@@ -20,7 +18,11 @@ Created 12/30/2022 16:04:28
         <Name>TimeRemaining</Name>
         <GetScriptBlock> New-TimeSpan -End $this.DueDate -Start (Get-Date) </GetScriptBlock>
       </ScriptProperty>
-       <AliasProperty>
+       <ScriptProperty>
+        <Name>Age</Name>
+        <GetScriptBlock> New-TimeSpan -Start $this.TaskCreated -End (Get-Date) </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
         <Name>Due</Name>
         <ReferencedMemberName>DueDate</ReferencedMemberName>
       </AliasProperty>
@@ -28,6 +30,16 @@ Created 12/30/2022 16:04:28
         <Name>Deadline</Name>
         <ReferencedMemberName>DueDate</ReferencedMemberName>
       </AliasProperty>
+      <PropertySet>
+        <Name>ProgressSet</Name>
+        <ReferencedProperties>
+          <Name>ID</Name>
+          <Name>Name</Name>
+          <Name>Due</Name>
+          <Name>Progress</Name>
+          <Name>TimeRemaining</Name>
+        </ReferencedProperties>
+      </PropertySet>
     </Members>
   </Type>
 </Types>

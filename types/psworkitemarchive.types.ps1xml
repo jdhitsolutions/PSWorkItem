@@ -10,7 +10,7 @@ Created 12/30/2022 16:05:04
 -->
 <Types>
   <Type>
-    <Name>psworkitemarchive</Name>
+    <Name>PSWorkItemarchive</Name>
     <Members>
       <AliasProperty>
         <Name>CompletedDate</Name>

@@ -62,7 +62,7 @@
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Passthru</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:description>
             <maml:para></maml:para>
           </maml:description>
@@ -75,7 +75,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -147,7 +147,7 @@
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Passthru</maml:name>
+        <maml:name>PassThru</maml:name>
         <maml:description>
           <maml:para></maml:para>
         </maml:description>
@@ -161,7 +161,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -227,7 +227,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Add-PSWorkItemCategory -Name Blog -Description "blog management and content" -Passthru
+        <dev:code>PS C:\&gt; Add-PSWorkItemCategory -Name Blog -Description "blog management and content" -PassThru
 
 Category Description
 -------- -----------
@@ -262,7 +262,7 @@ Blog     blog management and content</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>When you are ready to mark a task as complete, use this command. Complete-PSWorkITem will set the progress to 100, mark the item as completed, copy it to the Arhive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.</maml:para>
+      <maml:para>When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Arhive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -293,7 +293,7 @@ Blog     blog management and content</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -326,7 +326,7 @@ Blog     blog management and content</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Passthru</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:description>
             <maml:para></maml:para>
           </maml:description>
@@ -366,7 +366,7 @@ Blog     blog management and content</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -400,7 +400,7 @@ Blog     blog management and content</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Passthru</maml:name>
+        <maml:name>PassThru</maml:name>
         <maml:description>
           <maml:para></maml:para>
         </maml:description>
@@ -449,7 +449,7 @@ Blog     blog management and content</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Complete-PSWorkItem -id 9 -Passthru
+        <dev:code>PS C:\&gt; Complete-PSWorkItem -id 9 -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
 ID Name           Description Category Completed
@@ -508,7 +508,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -535,7 +535,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -562,7 +562,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -589,7 +589,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -601,7 +601,7 @@ ID Name           Description Category Completed
       </command:syntaxItem>
       <command:syntaxItem>
         <maml:name>Get-PSWorkItem</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
+        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
           <maml:name>Name</maml:name>
           <maml:description>
             <maml:para>The name of the work item. Wilcards are supported.</maml:para>
@@ -616,7 +616,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -676,7 +676,7 @@ ID Name           Description Category Completed
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
+      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
         <maml:name>Name</maml:name>
         <maml:description>
           <maml:para>The name of the work item. Wilcards are supported.</maml:para>
@@ -691,7 +691,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -800,7 +800,7 @@ ID Name            Description DueDate              Category Pct
  7 password report             8/5/2022 12:00:00 PM Work      10
  9 Prep vacation               11/1/2022 5:00:00 PM Personal   0</dev:code>
         <dev:remarks>
-          <maml:para>Get PSWorkitems with a name that begins with P.</maml:para>
+          <maml:para>Get PSWorkItems with a name that begins with P.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -833,7 +833,7 @@ ID Name                Description DueDate               Category Pct
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 8 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-PSWorkItem -all | Sort-Object category | Format-Table  -view category
+        <dev:code>PS C:\&gt; Get-PSWorkItem -all | Sort-Object category | Format-Table -view category
 
    Category: Other
 
@@ -853,7 +853,7 @@ ID    Name                 Description               DueDate                 Pct
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-12    Publish PSWorkitem                             8/2/2022 12:05:44 PM      0
+12    Publish PSWorkItem                             8/2/2022 12:05:44 PM      0
 ...</dev:code>
         <dev:remarks>
           <maml:para>Get PSWorkItems sorted by category and display using the Category table view.</maml:para>
@@ -917,7 +917,7 @@ ID    Name                 Description               DueDate                 Pct
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -944,7 +944,7 @@ ID    Name                 Description               DueDate                 Pct
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -956,10 +956,10 @@ ID    Name                 Description               DueDate                 Pct
       </command:syntaxItem>
       <command:syntaxItem>
         <maml:name>Get-PSWorkItemArchive</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
+        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
           <maml:name>Name</maml:name>
           <maml:description>
-            <maml:para>The name of the work item. Wilcards are supported.</maml:para>
+            <maml:para>The name of the work item. Wildcards are supported.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -971,7 +971,7 @@ ID    Name                 Description               DueDate                 Pct
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1007,10 +1007,10 @@ ID    Name                 Description               DueDate                 Pct
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
+      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
         <maml:name>Name</maml:name>
         <maml:description>
-          <maml:para>The name of the work item. Wilcards are supported.</maml:para>
+          <maml:para>The name of the work item. Wildcards are supported.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1022,7 +1022,7 @@ ID    Name                 Description               DueDate                 Pct
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1112,7 +1112,7 @@ ID Name           Description Category Completed
       <command:verb>Get</command:verb>
       <command:noun>PSWorkItemCategory</command:noun>
       <maml:description>
-        <maml:para>Get defined PSWorkitem categories.</maml:para>
+        <maml:para>Get defined PSWorkItem categories.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -1136,7 +1136,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1163,7 +1163,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1281,7 +1281,7 @@ Blog     Blog management or content</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1296,7 +1296,7 @@ Blog     Blog management or content</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1389,7 +1389,7 @@ Event       Conference, webinar, or other event     12</dev:code>
       <command:verb>Get</command:verb>
       <command:noun>PSWorkItemDatabase</command:noun>
       <maml:description>
-        <maml:para>Get information about the PSWorkitem database</maml:para>
+        <maml:para>Get information about the PSWorkItem database</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -1401,7 +1401,7 @@ Event       Conference, webinar, or other event     12</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1416,7 +1416,7 @@ Event       Conference, webinar, or other event     12</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1513,6 +1513,100 @@ PageSize      : 4096</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-PSWorkItemReport</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PSWorkItemReport</command:noun>
+      <maml:description>
+        <maml:para>Get a summary report of PSWorkItems.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Use this simple command to get a report of PSWorkItems by category. The percentages for each category are rounded. The percentage of Overdue items is based on all open work items.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PSWorkItemReport</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSWorkItemReport</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PSWorkItemReport
+
+   Path: C:\Users\Jeff\PSWorkItem.db
+
+Count Category PctTotal
+----- -------- --------
+3     Personal       50
+1     Other          17
+1     Event          17
+1     Blog           17
+2     Overdue        33</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Get-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Initialize-PSWorkItemDatabase</command:name>
       <command:verb>Initialize</command:verb>
       <command:noun>PSWorkItemDatabase</command:noun>
@@ -1531,7 +1625,7 @@ PageSize      : 4096</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1563,7 +1657,7 @@ PageSize      : 4096</dev:code>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Passthru</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:description>
             <maml:para></maml:para>
           </maml:description>
@@ -1612,7 +1706,7 @@ PageSize      : 4096</dev:code>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Passthru</maml:name>
+        <maml:name>PassThru</maml:name>
         <maml:description>
           <maml:para></maml:para>
         </maml:description>
@@ -1626,7 +1720,7 @@ PageSize      : 4096</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1683,7 +1777,7 @@ PageSize      : 4096</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Initialize-PSWorkItemDatabase -passthru
+        <dev:code>PS C:\&gt; Initialize-PSWorkItemDatabase -PassThru
 
    Database: C:\Users\jeff\PSWorkItem.db Table:Metadata
 
@@ -1729,7 +1823,7 @@ ColumnIndex ColumnName  ColumnType
 0           category    text
 1           description text</dev:code>
         <dev:remarks>
-          <maml:para>The passthru output shows the new table definitions.</maml:para>
+          <maml:para>The PassThru output shows the new table definitions.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1782,7 +1876,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Select a valid catetory. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
+            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1827,7 +1921,7 @@ ColumnIndex ColumnName  ColumnType
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Passthru</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:description>
             <maml:para></maml:para>
           </maml:description>
@@ -1840,7 +1934,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db.</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1878,7 +1972,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Select a valid catetory. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
+            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1911,7 +2005,7 @@ ColumnIndex ColumnName  ColumnType
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Passthru</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:description>
             <maml:para></maml:para>
           </maml:description>
@@ -1924,7 +2018,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db.</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1962,7 +2056,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Select a valid catetory. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
+          <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2020,7 +2114,7 @@ ColumnIndex ColumnName  ColumnType
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Passthru</maml:name>
+        <maml:name>PassThru</maml:name>
         <maml:description>
           <maml:para></maml:para>
         </maml:description>
@@ -2034,7 +2128,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db.</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2105,14 +2199,14 @@ ColumnIndex ColumnName  ColumnType
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog -passthru</dev:code>
+        <dev:code>PS C:\&gt; New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog -PassThru</dev:code>
         <dev:remarks>
-          <maml:para>Create a new PSWorkitem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.</maml:para>
+          <maml:para>Create a new PSWorkItem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; New-PSWorkItem -Name "Publish PSWorkitem" -DaysDue 3 -Category Project</dev:code>
+        <dev:code>PS C:\&gt; New-PSWorkItem -Name "Publish PSWorkItem" -DaysDue 3 -Category Project</dev:code>
         <dev:remarks>
           <maml:para>Create a new PSWorkItem due in 3 days.</maml:para>
         </dev:remarks>
@@ -2182,7 +2276,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2232,7 +2326,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2306,6 +2400,322 @@ ColumnIndex ColumnName  ColumnType
         <maml:linkText>Set-PSWorkItem</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Remove-PSWorkItemArchive</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Remove-PSWorkItemArchive</command:name>
+      <command:verb>Remove</command:verb>
+      <command:noun>PSWorkItemArchive</command:noun>
+      <maml:description>
+        <maml:para>Remove archive PSWorkItems</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Completed work items are moved to the Archive table in the PSWorkItem database. At some point, you may wish to clear out old archived tasks. There is no technical reason you would need to do this, but if you want to, use Remove-PSWorkItemArchive. You can remove archived items by ID, category, or name.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Remove-PSWorkItemArchive</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Category</maml:name>
+          <maml:description>
+            <maml:para>A PSWorkItem category.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Remove-PSWorkItemArchive</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
+          <maml:name>ID</maml:name>
+          <maml:description>
+            <maml:para>The archive work item ID.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Remove-PSWorkItemArchive</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="0" aliases="task">
+          <maml:name>Name</maml:name>
+          <maml:description>
+            <maml:para>The name of the archive work item. Wilcards are supported.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Category</maml:name>
+        <maml:description>
+          <maml:para>A PSWorkItem category.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
+        <maml:name>ID</maml:name>
+        <maml:description>
+          <maml:para>The archive work item ID.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="0" aliases="task">
+        <maml:name>Name</maml:name>
+        <maml:description>
+          <maml:para>The name of the archive work item. Wilcards are supported.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.Int32</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Remove-PSWorkItem -id 7 -Verbose
+VERBOSE: [12:37:40.2036443 BEGIN  ] Remove-PSWorkItem: Starting
+VERBOSE: [12:37:40.2045322 BEGIN  ] Remove-PSWorkItem: PSBoundparameters
+VERBOSE: 
+Key     Value
+---     -----
+ID          7
+Verbose  True
+
+
+VERBOSE: [12:37:40.2099707 BEGIN  ] Remove-PSWorkItem: Opening a connection to C:\Users\artd\PSWorkItem.db
+VERBOSE: [12:37:40.2142745 PROCESS] Remove-PSWorkItem: Removing task 7
+VERBOSE: Performing the operation "Remove-PSWorkItem" on target "1a2d1acc-738d-458f-8744-6a6e541a8bc5".
+VERBOSE: [12:37:40.2245915 END    ] Remove-PSWorkItem: Closing database connection.
+VERBOSE: [12:37:40.2261433 END    ] Remove-PSWorkItem: Ending</dev:code>
+        <dev:remarks>
+          <maml:para>Delete an archived item by its ID.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Remove-PSWorkItemArchive -Category work -whatif
+What if: Performing the operation "Remove-PSWorkItemArchive" on target "7e87a44f-d0ff-4cbc-ad08-ce3bf834b8e0".
+What if: Performing the operation "Remove-PSWorkItemArchive" on target "02290cca-5e59-45f7-a2d9-9f34bf51817e".
+What if: Performing the operation "Remove-PSWorkItemArchive" on target "44d12012-915f-481c-9dfc-c31041bb20cc".
+What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee-4a2d-489e-b993-84ce5677ac99".</dev:code>
+        <dev:remarks>
+          <maml:para>Remove archived items based on a category.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt;  Remove-PSWorkItemArchive -name *report</dev:code>
+        <dev:remarks>
+          <maml:para>Remove archived items where the name end in 'report'.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Remove-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Get-PSWorkItemArchive</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
@@ -2349,7 +2759,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2399,7 +2809,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2557,7 +2967,7 @@ ColumnIndex ColumnName  ColumnType
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Passthru</maml:name>
+          <maml:name>PassThru</maml:name>
           <maml:description>
             <maml:para></maml:para>
           </maml:description>
@@ -2570,7 +2980,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2678,7 +3088,7 @@ ColumnIndex ColumnName  ColumnType
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Passthru</maml:name>
+        <maml:name>PassThru</maml:name>
         <maml:description>
           <maml:para></maml:para>
         </maml:description>
@@ -2692,7 +3102,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>The path to the PSWorkitem SQLite database file. It should end in .db</maml:para>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2770,7 +3180,7 @@ ColumnIndex ColumnName  ColumnType
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-PSWorkItem -Category blog | Set-PSworkItem -Category Other -Passthru
+        <dev:code>PS C:\&gt; Get-PSWorkItem -Category blog | Set-PSWorkItem -Category Other -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
 
@@ -2802,6 +3212,200 @@ ID Name              Description         DueDate             Category Pct
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>New-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Update-PSWorkItemDatabase</command:name>
+      <command:verb>Update</command:verb>
+      <command:noun>PSWorkItemDatabase</command:noun>
+      <maml:description>
+        <maml:para>Update the PSWorkItem database</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run this command before adding, changing, or completing work items. It is recommended that you backup you database file before running this command.</maml:para>
+      <maml:para>As an alternative, you could export your work items, delete the database file, initialize a new one, and re-import your work items.</maml:para>
+      <maml:para>During the upgrade, a new table column called ID is added to the Tasks and Archive database tables. In the Tasks table, the ID column for existing entries will be set to the row id, which should be the task number you are used to seeing. In the archive table, existing entries will get an ID value of 0, since it is impossible to know the original ID number. This database change corrects this problem. Going forward, the PSWorkItem ID will remain the same when you complete it and move the item to the Archive table.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Update-PSWorkItemDatabase</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill PassThru Description }}</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill PassThru Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>none</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>MySQLiteTableDetail</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; New-PSWorkItem -Name "DOM1 backup" -DaysDue 3 -Category work
+WARNING: Cannot verify the tasks table column ID. Please run Update-PSWorkItemDatabase to update the table then try completing the command again. It is recommended that you backup your database before updating the table.
+PS C:\&gt;  Update-PSWorkItemDatabase -verbose
+VERBOSE: [12:52:31.6590850 BEGIN  ] Starting Update-PSWorkItemDatabase
+VERBOSE: [12:52:31.6605213 BEGIN  ] Running under PowerShell version 7.3.2
+VERBOSE: [12:52:31.6619354 BEGIN  ] Opening database connection to C:\Users\artd\PSWorkItem.db
+VERBOSE: [12:52:31.6652856 PROCESS] Processing C:\Users\artd\PSWorkItem.db
+VERBOSE: [12:52:31.6662476 PROCESS] Testing for column ID
+VERBOSE: [12:52:31.6717249 PROCESS] Adding the column ID
+VERBOSE: Performing the operation "Adding column ID" on target "table archive".
+VERBOSE: [12:52:31.6831185 PROCESS] Testing for column ID
+VERBOSE: [12:52:31.6861450 PROCESS] Adding the column ID
+VERBOSE: Performing the operation "Adding column ID" on target "table tasks".
+VERBOSE: [12:52:31.6956355 PROCESS] Updating table values
+VERBOSE: [12:52:31.7008825 PROCESS] UPDATE tasks set id = '68' Where taskid='03cae2d7-2c7e-4db9-b486-8abd06e8b9c3'
+VERBOSE: [12:52:31.7099177 PROCESS] UPDATE tasks set id = '19' Where taskid='2196617b-b818-415d-b9cc-52b0c649a77e'
+VERBOSE: [12:52:31.7170601 PROCESS] UPDATE tasks set id = '21' Where taskid='47580992-3262-4b6d-8ff2-2e7153f162a8'
+VERBOSE: [12:52:31.7259486 PROCESS] UPDATE tasks set id = '72' Where taskid='53055f56-34c0-4065-8bef-011c6364b17b'
+VERBOSE: [12:52:31.7353692 PROCESS] UPDATE tasks set id = '66' Where taskid='781d5acd-04ce-41da-99b8-afb7c96a81e1'
+VERBOSE: [12:52:31.7451607 PROCESS] UPDATE tasks set id = '67' Where taskid='7c338d54-43f0-4608-93c9-69933ded0972'
+VERBOSE: [12:52:31.7546639 PROCESS] UPDATE tasks set id = '69' Where taskid='a0aa0f98-eea0-4469-8107-f808c9bbc5a0'
+VERBOSE: [12:52:31.7650915 PROCESS] UPDATE tasks set id = '71' Where taskid='bb3f9bb2-efab-4aa9-810d-088b82eeccc4'
+VERBOSE: [12:52:31.7728867 PROCESS] UPDATE tasks set id = '70' Where taskid='c913444e-7e08-4baa-800f-23d961852c7e'
+VERBOSE: [12:52:31.7809348 END    ] Closing database connection
+VERBOSE: [12:52:31.7820780 END    ] Ending Update-PSWorkItemDatabase
+PS C:\&gt; New-PSWorkItem -Name "DOM1 backup" -DaysDue 3 -Category work -PassThru
+
+   Database: C:\Users\artd\PSWorkItem.db
+
+ID Name        Description DueDate               Category Pct
+-- ----        ----------- -------               -------- ---
+73 DOM1 backup             3/14/2023 12:53:43 PM work       0</dev:code>
+        <dev:remarks>
+          <maml:para>You can't change the database until you run Update-PSWorkItemDatabase.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Get-PSWorkItemDatabase</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>

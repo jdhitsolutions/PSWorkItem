@@ -108,7 +108,7 @@ Accept wildcard characters: False
 ### -Name
 
 The name of the work item.
-Wilcards are supported.
+Wildcards are supported.
 
 ```yaml
 Type: String
@@ -119,12 +119,12 @@ Required: False
 Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml

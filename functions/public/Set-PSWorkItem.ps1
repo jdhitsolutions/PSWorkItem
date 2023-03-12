@@ -15,25 +15,25 @@ Function Set-PSWorkItem {
         [Parameter(HelpMessage = "The name of the work item.")]
         [ValidateNotNullOrEmpty()]
         [alias("task")]
-        [string]$Name,
+        [String]$Name,
 
         [Parameter(HelpMessage = "Specify an updated description.")]
         [ValidateNotNullOrEmpty()]
-        [string]$Description,
+        [String]$Description,
 
         [Parameter(HelpMessage = "Specify an updated due date.")]
         [ValidateNotNullOrEmpty()]
-        [datetime]$DueDate,
+        [DateTime]$DueDate,
 
         [Parameter(HelpMessage = "Specify an updated category")]
         [ValidateNotNullOrEmpty()]
-        [string]$Category,
+        [String]$Category,
 
         [Parameter(HelpMessage = "Specify a percentage complete.")]
         [ValidateRange(0, 100)]
         [int]$Progress,
 
-        [Parameter(HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
+        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
@@ -45,21 +45,21 @@ Function Set-PSWorkItem {
                 Return $False
             }
         })]
-        [string]$Path = $PSWorkItemPath,
+        [String]$Path = $PSWorkItemPath,
 
-        [switch]$Passthru
+        [Switch]$PassThru
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting"
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): PSBoundparameters"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundparameters"
         $PSBoundParameters | Out-String | Write-Verbose
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Opening a connection to $Path"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
         Try {
             $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
             $conn | Out-String | Write-Debug
         }
         Catch {
-            Throw "$($myinvocation.mycommand): Failed to open the database $Path"
+            Throw "$($MyInvocation.MyCommand): Failed to open the database $Path"
         }
 
         #parameters to splat to Invoke-MySQLiteQuery
@@ -77,9 +77,9 @@ Function Set-PSWorkItem {
         Modify how the query string is built. PowerShell doesn't respect culture
         With variable expansion. JDH
         #>
-        $basequery = "UPDATE tasks set taskmodified = '{0}'" -f (Get-Date)
+        $BaseQuery = "UPDATE tasks set taskmodified = '{0}'" -f (Get-Date)
         if ($PSBoundParameters.ContainsKey("Category")) {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Validating category $category"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Validating category $category"
             $splat.query = "SELECT * FROM categories WHERE category = '$Category' collate nocase"
             Try {
                 $cat = Invoke-MySQLiteQuery @splat
@@ -91,7 +91,7 @@ Function Set-PSWorkItem {
             }
         }
         if (($cat.category -eq $Category) -OR (-Not $PSBoundParameters.ContainsKey("Category"))) {
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Setting task"
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Setting task"
             $updates = @{
                 name        = $name
                 description = $Description
@@ -100,13 +100,12 @@ Function Set-PSWorkItem {
                 category    = $Category
             }
             $updates.GetEnumerator() | Where-Object { $_.value } | ForEach-Object {
-                $basequery += ", $($_.key) = '$($_.value)'"
+                $BaseQuery += ", $($_.key) = '$($_.value)'"
             }
-            $basequery += " WHERE ROWID = '$ID'"
-            $splat.query = $basequery
-            Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $($splat.query)"
-            if ($pscmdlet.ShouldProcess($splat.query, "Invoke update")) {
-
+            $BaseQuery += " WHERE ID = '$ID'"
+            $splat.query = $BaseQuery
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($splat.query)"
+            if ($PSCmdlet.ShouldProcess($splat.query, "Invoke update")) {
                 Try {
                     Invoke-MySQLiteQuery @splat
                 }
@@ -116,13 +115,13 @@ Function Set-PSWorkItem {
                     Throw $_
                 }
 
-                if ($passthru) {
+                if ($PassThru) {
                     Write-Debug "Task object"
                     $task | Select-Object * | Out-String | Write-Debug
                     Write-Debug "TaskID = $($task.taskid)"
-                    $splat.query = "Select *,RowID from tasks where RowID = '$ID'"
+                    $splat.query = "Select * from tasks where ID = '$ID'"
                     Write-Debug "Query = $($splat.query)"
-                    Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): $($splat.query)"
+                    Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($splat.query)"
                     $data = Invoke-MySQLiteQuery @splat
                     $data | Out-String | Write-Verbose
                     _newWorkItem $data -path $Path
@@ -136,9 +135,9 @@ Function Set-PSWorkItem {
 
     End {
         if ($conn.state -eq 'Open') {
-            Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Closing database connection."
+            Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Closing database connection."
             Close-MySQLiteDB -Connection $conn
         }
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
     } #end
 }

@@ -1,15 +1,43 @@
 # Changelog for PSWorkItem
 
-The format of this file is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
+
+## [1.0.0] - 2023-03-12
+
+This is a major update with significant changes. If this is your first time installing the module, no further action is required. If you are upgrading from a previous version of this module, you will need to run `Update-PSWorkItemDatabase`. See the [README](README.md) file for more information.
+
+### Added
+
+- Added command `Update-PSWorkItemDatabase` to add the new `ID` column to the `tasks` and `archive` tables.
+- Added command `Get-PSWorkItemReport`.
+- Added command `Remove-PSWorkItemArchive`.
+- Added format file `psWorkitemreport.format.ps1xml`.
+- Added property set `ProgressSet` for the `PSWorkItem` type.
+- Added property type extension `Age` for `PSWorkItem` to show the age of the item since it was created.
+- Added a table format view called `Age` for PSWorkItems.
+
+### Changed
+
+- Modified module to add an `ID` property that will be the same in both the `Tasks` and `Archive` tables. Commands have been modified to use the `RowID` for the `ID` property for the first task. After that, the next ID will be one more than the highest ID found in the tasks or archive table. **This is a major breaking change**. [Issue #7](https://github.com/jdhitsolutions/PSWorkItem/issues/7)
+- Modified the class definitions into distinct items so that the `PSWorkItemArchive` doesn't inherit properties like `Overdue` that don't belong. **This is a potential breaking change**. [Issue #8](https://github.com/jdhitsolutions/PSWorkItem/issues/8)
+- updated the sample PSWorkItem database.
+- General code cleanup.
+- help updates.
+- Updated `README.md`.
+
+### Removed
+
+- Removed `readme.txt` from the Types folder
+
+### Fixed
+
+- Fixed bug in `Complete-PSWorkItem` when using `-PassThru`
 
 ## [0.9.0] - 2023-01-02
 
 ### Added
 
-- Added aliases of `due` and `deadline` for `DueDate` for the `psworkitem` type.
+- Added aliases of `due` and `deadline` for `DueDate` for the `PSWorkItem` type.
 - Moved type extensions to external ps1xml files.
 
 ### Changed
@@ -92,7 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added format file `psworkitem.format.ps1xml`.
+- Added format file `PSWorkItem.format.ps1xml`.
 - Added `Get-PSWorkItem`,`New-PSWorkItem`,`Set-PSWorkItem`,'`Complete-PSWorkItem` and `Remove-PSWorkItem`.
 - Added `ID` parameter to `Get-PSWorkItem`.
 - Added `Complete-PSWorkItem`.
@@ -124,10 +152,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `Add-PSWorkitemCategory`,`Get-PSWorkItemCategory`, and `Remove-PSWorkItemCategory`.
+- Added `Add-PSWorkItemCategory`,`Get-PSWorkItemCategory`, and `Remove-PSWorkItemCategory`.
 - Added `Get-PSWorkingItemDatabase`.
 - Added class definition for `PSWorkItemDatabase`.
-- Added format file `psworkitemdatabase.format.ps1xml`.
+- Added format file `PSWorkItemdatabase.format.ps1xml`.
 
 ### Changed
 
@@ -139,7 +167,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.9.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.0..HEAD
+[1.0.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.9.0..v1.0.0
 [0.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.8.0..v0.9.0
 [0.8.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.7.0..v0.8.0
 [0.7.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.6.0..v0.7.0

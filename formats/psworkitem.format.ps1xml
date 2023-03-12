@@ -14,8 +14,8 @@ https://github.com/jdhitsolutions/PSScriptTools
         <TypeName>PSWorkItem</TypeName>
       </ViewSelectedBy>
       <GroupBy>
-      <PropertyName>Path</PropertyName>
-      <Label>Database</Label>
+        <PropertyName>Path</PropertyName>
+        <Label>Database</Label>
       </GroupBy>
       <TableControl>
         <!--Delete the AutoSize node if you want to use the defined widths.-->
@@ -56,10 +56,6 @@ https://github.com/jdhitsolutions/PSScriptTools
           <TableRowEntry>
             <Wrap />
             <TableColumnItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
               <TableColumnItem>
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
@@ -132,7 +128,7 @@ https://github.com/jdhitsolutions/PSScriptTools
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                 <ScriptBlock>
+                <ScriptBlock>
                  if ($host.name -match "console|code") {
                  "$($PSWorkItemCategory["$($_.category)"])$($_.progress)$($PSStyle.Reset)"
                  }
@@ -184,10 +180,6 @@ https://github.com/jdhitsolutions/PSScriptTools
         <TableRowEntries>
           <TableRowEntry>
             <TableColumnItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
               <TableColumnItem>
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
@@ -214,9 +206,9 @@ https://github.com/jdhitsolutions/PSScriptTools
       <ViewSelectedBy>
         <TypeName>PSWorkItemArchive</TypeName>
       </ViewSelectedBy>
-            <GroupBy>
-      <PropertyName>Path</PropertyName>
-      <Label>Database</Label>
+      <GroupBy>
+        <PropertyName>Path</PropertyName>
+        <Label>Database</Label>
       </GroupBy>
       <TableControl>
         <!--Delete the AutoSize node if you want to use the defined widths.-->
@@ -252,10 +244,6 @@ https://github.com/jdhitsolutions/PSScriptTools
           <TableRowEntry>
             <Wrap />
             <TableColumnItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
               <TableColumnItem>
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
@@ -282,14 +270,6 @@ https://github.com/jdhitsolutions/PSScriptTools
         <TypeName>PSWorkItem</TypeName>
       </ViewSelectedBy>
       <GroupBy>
-        <!--
-            You can also use a scriptblock to define a custom property name.
-            You must have a Label tag.
-            <ScriptBlock>$_.machinename.toUpper()</ScriptBlock>
-            <Label>Computername</Label>
-
-            Use <Label> to set the displayed value.
--->
         <PropertyName>Category</PropertyName>
         <Label>Category</Label>
       </GroupBy>
@@ -327,15 +307,11 @@ https://github.com/jdhitsolutions/PSScriptTools
           <TableRowEntry>
             <Wrap />
             <TableColumnItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
               <TableColumnItem>
                 <PropertyName>ID</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-              <ScriptBlock>
+                <ScriptBlock>
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
@@ -352,13 +328,12 @@ https://github.com/jdhitsolutions/PSScriptTools
                 $_.Name
             }
                 </ScriptBlock>
-
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Description</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                      <ScriptBlock>
+                <ScriptBlock>
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
@@ -375,10 +350,63 @@ https://github.com/jdhitsolutions/PSScriptTools
                 $_.DueDate
             }
                 </ScriptBlock>
-
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Progress</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+    <View>
+      <!--Created 03/11/2023 14:14:12 by PROSPERO\Jeff-->
+      <Name>age</Name>
+      <ViewSelectedBy>
+        <TypeName>PSWorkItem</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <!--Delete the AutoSize node if you want to use the defined widths.
+        <AutoSize />
+        -->
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ID</Label>
+            <Width>5</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Width>40</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Age</Label>
+            <Width>10</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Created</Label>
+            <Width>22</Width>
+            <Alignment>right</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>ID</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                "{0:dd\.hh\:mm}"-f $_.age
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TaskCreated</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

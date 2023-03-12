@@ -14,7 +14,7 @@ Modify an existing PSWorkItem
 ## SYNTAX
 
 ```yaml
-Set-PSWorkItem [-ID] <Int32> [-Name <String>] [-Description <String>] [-DueDate <DateTime>] [-Category <String>] [-Progress <Int32>] [-Path <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-PSWorkItem [-ID] <Int32> [-Name <String>] [-Description <String>] [-DueDate <DateTime>] [-Category <String>] [-Progress <Int32>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,7 +34,7 @@ Set the progress on a PSWorkItem.
 ### Example 2
 
 ```powershell
-PS C:\> Get-PSWorkItem -Category blog | Set-PSworkItem -Category Other -Passthru
+PS C:\> Get-PSWorkItem -Category blog | Set-PSWorkItem -Category Other -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
 
@@ -144,7 +144,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Passthru
+### -PassThru
 
 ```yaml
 Type: SwitchParameter
@@ -160,7 +160,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml

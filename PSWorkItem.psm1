@@ -2,54 +2,67 @@
 # used for culture debugging
 # write-host "Importing with culture $(Get-Culture)"
 
-Get-ChildItem $psscriptroot\functions\*.ps1 -Recurse |
+Get-ChildItem $PSScriptRoot\functions\*.ps1 -Recurse |
 ForEach-Object {
     . $_.FullName
 }
 
 #region class definitions
+<#
+classes for PSWorkItem and PSWorkItemArchive
+#>
 #define item class
-class PSWorkItem {
-    #this can be the ROWID of the item in the database
+class PSWorkItemBase {
     [int]$ID
-    [string]$Name
-    [string]$Category
-    [string]$Description
-    [DateTime]$DueDate = (Get-Date).AddDays(30)
-    [int]$Progress = 0
+    [String]$Name
+    [String]$Category
+    [String]$Description
     [DateTime]$TaskCreated = (Get-Date)
     [DateTime]$TaskModified = (Get-Date)
     [boolean]$Completed
-    [string]$Path
+    [String]$Path
     #this will be last resort GUID to ensure uniqueness
     hidden[guid]$TaskID = (New-Guid).Guid
 
-    PSWorkItem ([string]$Name, [string]$Category) {
+}
+class PSWorkItem:PSWorkItemBase {
+    [DateTime]$DueDate = (Get-Date).AddDays(30)
+    [int]$Progress = 0
+
+    PSWorkItem ([String]$Name, [String]$Category) {
         $this.Name = $Name
         $this.Category = $Category
     }
+    PSWorkItem() {
+        $this
+    }
+}
+
+Class PSWorkItemArchive:PSWorkItemBase {
+    [DateTime]$DueDate
+    [int]$Progress
 }
 
 class PSWorkItemCategory {
-    [string]$Category
-    [string]$Description
+    [String]$Category
+    [String]$Description
 
     #constructor
-    PSWorkItemCategory([string]$Category, [string]$Description) {
+    PSWorkItemCategory([String]$Category, [String]$Description) {
         $this.Category = $Category
         $this.Description = $Description
     }
 }
 
 class PSWorkItemDatabase {
-    [string]$Path
+    [String]$Path
     [DateTime]$Created
     [DateTime]$LastModified
     [int32]$Size
     [int32]$TaskCount
     [int32]$CategoryCount
     [int32]$ArchiveCount
-    [string]$Encoding
+    [String]$Encoding
     [int32]$PageCount
     [int32]$PageSize
 }
@@ -72,7 +85,7 @@ $global:PSWorkItemCategory = @{
     "Personal" = $PSStyle.Foreground.Green
 }
 
-Register-ArgumentCompleter -CommandName New-PSWorkItem, Get-PSWorkItem, Set-PSWorkItem, Get-PSWorkItemArchive -ParameterName Category -ScriptBlock {
+Register-ArgumentCompleter -CommandName New-PSWorkItem, Get-PSWorkItem, Set-PSWorkItem, Get-PSWorkItemArchive,Remove-PSWorkItemArchive -ParameterName Category -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
     #PowerShell code to populate $wordtoComplete
     Get-PSWorkItemCategory | Where-Object { $_.category -Like "$wordToComplete*" } |

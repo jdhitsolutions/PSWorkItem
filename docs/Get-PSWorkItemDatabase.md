@@ -9,7 +9,7 @@ schema: 2.0.0
 
 ## SYNOPSIS
 
-Get information about the PSWorkitem database
+Get information about the PSWorkItem database
 
 ## SYNTAX
 
@@ -60,7 +60,7 @@ There are additional properties.
 
 ### -Path
 
-The path to the PSWorkitem SQLite database file.
+The path to the PSWorkItem SQLite database file.
 It should end in .db
 
 ```yaml

@@ -18,9 +18,9 @@ Function Add-PSWorkItemCategory {
             HelpMessage = "Specify a category comment or description",
             ValueFromPipelineByPropertyName
         )]
-        [string]$Description,
+        [String]$Description,
 
-        [Parameter(HelpMessage = "The path to the PSWorkitem SQLite database file. It should end in .db")]
+        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern("\.db$")]
         [ValidateScript({
@@ -32,26 +32,26 @@ Function Add-PSWorkItemCategory {
                 Return $False
             }
         })]
-        [string]$Path = $PSWorkItemPath,
+        [String]$Path = $PSWorkItemPath,
 
         [Parameter(HelpMessage = "Force overwriting an existing category")]
-        [switch]$Force,
+        [Switch]$Force,
 
-        [switch]$Passthru
+        [Switch]$PassThru
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Starting"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
         Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
 
-        Write-Verbose "[$((Get-Date).TimeofDay) BEGIN  ] $($myinvocation.mycommand): Opening a connection to $Path"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
         Try {
             $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
             $conn | Out-String | Write-Debug
 
         }
         Catch {
-            Throw "$($myinvocation.mycommand): Failed to open the database $Path"
+            Throw "$($MyInvocation.MyCommand): Failed to open the database $Path"
         }
 
         #parameters to splat to Invoke-MySQLiteQuery
@@ -70,13 +70,13 @@ Function Add-PSWorkItemCategory {
                 $splat.Query = "SELECT * FROM categories WHERE category = '$item' collate nocase"
                 $test = Invoke-MySQLiteQuery @splat
                 if ($test.category -eq $item -AND (-Not $Force)) {
-                    Write-Warning "$($myinvocation.mycommand): The category $item already exists"
+                    Write-Warning "$($MyInvocation.MyCommand): The category $item already exists"
                     $ok = $false
                 }
                 elseif ($test.category -eq $item -AND $Force) {
-                    Write-Verbose "$($myinvocation.mycommand): The category $item already exists and will be overwritten"
-                    $splat.Query = "DELETE FROM categories WHERE category = '$item'"
-                    if ($Pscmdlet.ShouldProcess($item, "Remove category")) {
+                    Write-Verbose "$($MyInvocation.MyCommand): The category $item already exists and will be overwritten"
+                    $splat.Query = "DELETE FROM categories WHERE category = '$item' collate nocase"
+                    if ($PSCmdlet.ShouldProcess($item, "Remove category")) {
                         Invoke-MySQLiteQuery @splat
                         $ok = $true
                     }
@@ -85,19 +85,19 @@ Function Add-PSWorkItemCategory {
                     $ok = $True
                 }
 
-                Write-Debug "$($myinvocation.mycommand): Connection state is $($conn.state)"
+                Write-Debug "$($MyInvocation.MyCommand): Connection state is $($conn.state)"
                 if ($ok) {
-                    Write-Verbose "[$((Get-Date).TimeofDay) PROCESS] $($myinvocation.mycommand): Adding category $Item"
+                    Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Adding category $Item"
                     $splat.query = "INSERT INTO categories (category,description) VALUES ('$item','$Description')"
-                    If ($pscmdlet.ShouldProcess($item)) {
+                    If ($PSCmdlet.ShouldProcess($item)) {
                         Invoke-MySQLiteQuery @splat
-                        if ($Passthru) {
-                            $splat.query = "Select * from categories where category = '$item'"
+                        if ($PassThru) {
+                            $splat.query = "Select * from categories where category = '$item' collate nocase"
                             Invoke-MySQLiteQuery @splat | ForEach-Object {
                                 [PSWorkItemCategory]::New($_.category, $_.Description)
                             }
-                        } #passthru
-                    } #Whatif
+                        } #PassThru
+                    } #WhatIf
                 } #if OK
 
             } #foreach item
@@ -105,8 +105,8 @@ Function Add-PSWorkItemCategory {
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Closing the connection to $Path"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Closing the connection to $Path"
         Close-MySQLiteDB -Connection $conn
-        Write-Verbose "[$((Get-Date).TimeofDay) END    ] $($myinvocation.mycommand): Ending"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
     } #end
 }
