@@ -1600,6 +1600,10 @@ Count Category PctTotal
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3YB7fQk</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Get-PSWorkItem</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
@@ -2522,7 +2526,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="0" aliases="task">
           <maml:name>Name</maml:name>
           <maml:description>
-            <maml:para>The name of the archive work item. Wilcards are supported.</maml:para>
+            <maml:para>The name of the archive work item. Wildcards are supported.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2607,7 +2611,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="0" aliases="task">
         <maml:name>Name</maml:name>
         <maml:description>
-          <maml:para>The name of the archive work item. Wilcards are supported.</maml:para>
+          <maml:para>The name of the archive work item. Wildcards are supported.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2671,8 +2675,8 @@ ColumnIndex ColumnName  ColumnType
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Remove-PSWorkItem -id 7 -Verbose
 VERBOSE: [12:37:40.2036443 BEGIN  ] Remove-PSWorkItem: Starting
-VERBOSE: [12:37:40.2045322 BEGIN  ] Remove-PSWorkItem: PSBoundparameters
-VERBOSE: 
+VERBOSE: [12:37:40.2045322 BEGIN  ] Remove-PSWorkItem: PSBoundParameters
+VERBOSE:
 Key     Value
 ---     -----
 ID          7
@@ -2708,6 +2712,10 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3TdOFMX</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Remove-PSWorkItem</maml:linkText>
         <maml:uri></maml:uri>
@@ -3404,6 +3412,10 @@ ID Name        Description DueDate               Category Pct
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3ThCJtF</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-PSWorkItemDatabase</maml:linkText>
         <maml:uri></maml:uri>

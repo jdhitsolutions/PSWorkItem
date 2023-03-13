@@ -1,13 +1,14 @@
 ---
 external help file: PSWorkItem-help.xml
 Module Name: PSWorkItem
-online version:
+online version: https://bit.ly/3TdOFMX
 schema: 2.0.0
 ---
 
 # Remove-PSWorkItemArchive
 
 ## SYNOPSIS
+
 Remove archive PSWorkItems
 
 ## SYNTAX
@@ -41,8 +42,8 @@ Completed work items are moved to the Archive table in the PSWorkItem database. 
 ```powershell
 PS C:\> Remove-PSWorkItem -id 7 -Verbose
 VERBOSE: [12:37:40.2036443 BEGIN  ] Remove-PSWorkItem: Starting
-VERBOSE: [12:37:40.2045322 BEGIN  ] Remove-PSWorkItem: PSBoundparameters
-VERBOSE: 
+VERBOSE: [12:37:40.2045322 BEGIN  ] Remove-PSWorkItem: PSBoundParameters
+VERBOSE:
 Key     Value
 ---     -----
 ID          7
@@ -53,7 +54,7 @@ VERBOSE: [12:37:40.2099707 BEGIN  ] Remove-PSWorkItem: Opening a connection to C
 VERBOSE: [12:37:40.2142745 PROCESS] Remove-PSWorkItem: Removing task 7
 VERBOSE: Performing the operation "Remove-PSWorkItem" on target "1a2d1acc-738d-458f-8744-6a6e541a8bc5".
 VERBOSE: [12:37:40.2245915 END    ] Remove-PSWorkItem: Closing database connection.
-VERBOSE: [12:37:40.2261433 END    ] Remove-PSWorkItem: Ending 
+VERBOSE: [12:37:40.2261433 END    ] Remove-PSWorkItem: Ending
 ```
 
 Delete an archived item by its ID.
@@ -81,6 +82,7 @@ Remove archived items where the name end in 'report'.
 ## PARAMETERS
 
 ### -Category
+
 A PSWorkItem category.
 
 ```yaml
@@ -96,6 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -111,6 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -ID
+
 The archive work item ID.
 
 ```yaml
@@ -126,8 +130,9 @@ Accept wildcard characters: False
 ```
 
 ### -Name
+
 The name of the archive work item.
-Wilcards are supported.
+Wildcards are supported.
 
 ```yaml
 Type: String
@@ -142,6 +147,7 @@ Accept wildcard characters: True
 ```
 
 ### -Path
+
 The path to the PSWorkItem SQLite database file.
 It should end in .db
 
@@ -158,6 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -174,6 +181,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS

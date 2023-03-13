@@ -49,7 +49,7 @@ Function Get-PSWorkItemArchive {
         #test if archive table has been updated to include the OriginalTaskID column
         $test = Invoke-MySQLiteQuery -Path $path -query "pragma table_info('archive')" | Where-Object name -eq 'id'
         if (-Not $test) {
-            Write-Warning "Cannot verify the archive table column ID. Please run Update-PSWorkItemArchive to update the table then try completing the command again. It is recommended that you backup your database before updating the table."
+            Write-Warning "Cannot verify the archive table column ID. Please run Update-PSWorkItemDatabase to update the table then try completing the command again. It is recommended that you backup your database before updating the table."
             Return
         }
         Switch ($PSCmdlet.ParameterSetName) {

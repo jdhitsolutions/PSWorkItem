@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2023-03-13
+
+### Changed
+
+- Minor help corrections.
+- Added missing online help links.
+
+### Fixed
+
+- Fixed warning message in `Get-PSWorkItemArchive`
+
 ## [1.0.0] - 2023-03-12
 
 This is a major update with significant changes. If this is your first time installing the module, no further action is required. If you are upgrading from a previous version of this module, you will need to run `Update-PSWorkItemDatabase`. See the [README](README.md) file for more information.
@@ -167,7 +178,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.1..HEAD
+[1.0.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.0..v1.0.1
 [1.0.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.9.0..v1.0.0
 [0.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.8.0..v0.9.0
 [0.8.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.7.0..v0.8.0

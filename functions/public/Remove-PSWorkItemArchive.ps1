@@ -24,7 +24,7 @@ Function Remove-PSWorkItemArchive {
 
         [Parameter(
             Position = 0,
-            HelpMessage = "The name of the archive work item. Wilcards are supported.",
+            HelpMessage = "The name of the archive work item. Wildcards are supported.",
             ParameterSetName = "name"
         )]
         [ValidateNotNullOrEmpty()]
@@ -48,7 +48,7 @@ Function Remove-PSWorkItemArchive {
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundparameters"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
         $PSBoundParameters | Out-String | Write-Verbose
         Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
         Try {
@@ -68,7 +68,6 @@ Function Remove-PSWorkItemArchive {
     } #begin
 
     Process {
-
         Switch ($PSCmdlet.ParameterSetName) {
             "id" {
                 Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Removing archived task $ID"
@@ -87,7 +86,7 @@ Function Remove-PSWorkItemArchive {
                 }
                 $splat.query = "SELECT * FROM archive WHERE name like '$name' collate nocase"
                 $warn = "Failed to find any archived work items called $name"
-            }            
+            }
         }
 
         Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($splat.query)"

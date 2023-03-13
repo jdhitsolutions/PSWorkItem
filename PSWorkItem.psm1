@@ -1,4 +1,3 @@
-
 # used for culture debugging
 # write-host "Importing with culture $(Get-Culture)"
 
@@ -11,7 +10,7 @@ ForEach-Object {
 <#
 classes for PSWorkItem and PSWorkItemArchive
 #>
-#define item class
+#define base PSWorkItem class
 class PSWorkItemBase {
     [int]$ID
     [String]$Name
@@ -87,13 +86,13 @@ $global:PSWorkItemCategory = @{
 
 Register-ArgumentCompleter -CommandName New-PSWorkItem, Get-PSWorkItem, Set-PSWorkItem, Get-PSWorkItemArchive,Remove-PSWorkItemArchive -ParameterName Category -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
-    #PowerShell code to populate $wordtoComplete
+    #PowerShell code to populate $WordToComplete
     Get-PSWorkItemCategory | Where-Object { $_.category -Like "$wordToComplete*" } |
     Select-Object -Property Category, @{Name = "Description"; Expression = {
             $_.description -match "\w+" ? $_.description : "no description" }
     } |
     ForEach-Object {
-        # completion text,listitem text,result type,Tooltip
+        # completion text,ListItem text,result type,Tooltip
         [System.Management.Automation.CompletionResult]::new($_.category, $_.category, 'ParameterValue', $_.description)
     }
 }

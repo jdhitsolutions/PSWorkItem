@@ -22,40 +22,40 @@ Describe 'ModuleStructure' {
     }
 
     It "Should export functions with a Verb-Noun naming convention" {
-        $mod.ExportedFunctions.keys | where { $_ -notmatch "^\w+\-\w+"} | Should -HaveCount 0
+        $mod.ExportedFunctions.keys | Where-Object { $_ -notmatch "^\w+\-\w+"} | Should -HaveCount 0
     }
 
-    It "Should export two format files" {
-        ( $mod.ExportedFormatFiles).count | Should -Be 2
+    It "Should export 3 format files" {
+        ( $mod.ExportedFormatFiles).count | Should -Be 3
     }
 
-    It "Should export two format files" {
-        ( $mod.ExportedFormatFiles).count | Should -Be 2
+    It "Should export 2 type extension files" {
+        ( $mod.ExportedTypeFiles).count | Should -Be 2
     }
 
     It "Should have a project uri" {
-        $mod.PrivateData.psdata.projecturi | Should -Match "^http"
+        $mod.PrivateData.PSData.ProjectUri | Should -Match "^http"
     }
 
     It "Should have one or more tags" {
-        $mod.PrivateData.psdata.tags.count | Should -BeGreaterThan 0
+        $mod.PrivateData.PSData.tags.count | Should -BeGreaterThan 0
     }
 
     It "Should have markdown documents folder" {
-        Get-ChildItem $psscriptroot\..\docs\*md | Should -Exist
+        Get-ChildItem $PSScriptRoot\..\docs\*md | Should -Exist
     }
 
     It "Should have an external help file" {
         $cult = (Get-Culture).name
-        Get-ChildItem $psscriptroot\..\$cult\*-help.xml | Should -Exist
+        Get-ChildItem $PSScriptRoot\..\$cult\*-help.xml | Should -Exist
     }
 
     It "Should have a README file" {
-        Get-ChildItem $psscriptroot\..\README.md | Should -Exist
+        Get-ChildItem $PSScriptRoot\..\README.md | Should -Exist
     }
 
     It "Should have a License file" {
-        Get-ChildItem $psscriptroot\..\License.* | Should -Exist
+        Get-ChildItem $PSScriptRoot\..\License.* | Should -Exist
     }
 } #Describe ModuleStructure
 
@@ -322,3 +322,42 @@ Describe Set-PSWorkItem {
     #insert additional command-specific tests
 
 } -Tag function
+
+Describe Update-PSWorkItemDatabase {
+    It "Should have help documentation" {
+        (Get-Help Update-PSWorkItemDatabase).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -name Update-PSWorkItemDatabase).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        {Update-PSWorkItemDatabase} | Should -Not -Throw
+    } -pending
+    #insert additional command-specific tests
+
+} -tag function
+
+
+Describe Remove-PSWorkItemArchive {
+    It "Should have help documentation" {
+        (Get-Help Remove-PSWorkItemArchive).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -name Remove-PSWorkItemArchive).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        {Remove-PSWorkItemArchive} | Should -Not -Throw
+    } -pending
+    #insert additional command-specific tests
+
+} -tag function

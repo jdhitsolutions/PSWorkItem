@@ -34,7 +34,7 @@ Function Complete-PSWorkItem {
     )
     Begin {
         Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundparameters"
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
         $PSBoundParameters | Out-String | Write-Verbose
         Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
         Try {
@@ -98,7 +98,7 @@ Function Complete-PSWorkItem {
                     Close-MySQLiteDB $conn
                     Throw $_
                 }
-    
+
                 #Validate the copy using the task GUID
                 $splat.query = "SELECT * from archive WHERE taskid='$($task.taskid)'"
                 Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Validating the move"

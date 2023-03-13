@@ -4,13 +4,13 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '1.0.0'
+    ModuleVersion          = '1.0.1'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
     CompanyName            = 'JDH Information Technology Solutions, Inc.'
     Copyright              = '(c) JDH Information Technology Solutions, Inc. All rights reserved.'
-    Description            = 'A PowerShell 7 module for managing work and personal tasks or to-do items. This module uses a SQLite database to store task and category information. The module is not a full-featured project management solution, but should be find for personal needs. The module requires a 64-bit Windows platform.'
+    Description            = 'A PowerShell 7 module for managing work and personal tasks or to-do items. This module uses a SQLite database to store task and category information. The module is not a full-featured project management solution, but should be fine for personal needs. The module requires a 64-bit Windows platform.'
     PowerShellVersion      = '7.2'
     DotNetFrameworkVersion = '4.6'
     ProcessorArchitecture  = 'Amd64'
