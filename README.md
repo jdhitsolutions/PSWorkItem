@@ -2,23 +2,23 @@
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/PSWorkItem.png?style=for-the-badge&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/PSWorkItem/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSWorkItem.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/PSWorkItem/)
 
-This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The origial PowerShell module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the MySQLite module.
+This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The original PowerShell module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the MySQLite module.
 
 ## Installation
 
-This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell, which most people are running. __The module requires a Windows platform.__ You can install this module from the PowerShell Gallery.
+This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform.__ You can install this module from the PowerShell Gallery.
 
 ```powershell
 Install-Module PSWorkItem [-scope CurrentUser]
 ```
 
-Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
+Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery.
 
 ## PSWorkItem Database Change
 
-**If you were using a version this module prior to v1.0.0, this note applies to you.**
+**If you were using a version of this module prior to v1.0.0, this note applies to you.**
 
-Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. It is recommended that you backup you database file before running this command.
+Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. It is recommended that you backup your database file before running this command.
 
 As an alternative, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
 
@@ -39,7 +39,7 @@ During the upgrade, a new table column called ID is added to the Tasks and Archi
 - [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md)
 - [New-PSWorkItem](docs/New-PSWorkItem.md)
 - [Set-PSWorkItem](docs/Set-PSWorkItem.md)
-- [Update-PSWorkItemDabase](docs/Update-PSWorkItemDatabase.md)
+- [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md)
 
 The module is based on three tables in a SQLite database file. The primary `Tasks` table is where active items are stored.
 
@@ -57,7 +57,7 @@ ColumnIndex ColumnName   ColumnType
 8           completed    integer
 ```
 
-When items are queried from this table using `Get-PSWorkItem` they are written to the pipeline as a `PSWorkItem` object. This is a class-based object defined in the root module. 
+When items are queried from this table using `Get-PSWorkItem` they are written to the pipeline as a `PSWorkItem` object. This is a class-based object defined in the root module.
 
 > These definitions were revised for v1.0.0.
 
@@ -214,7 +214,7 @@ Read the examples for [Get-PSWorkItem](docs/Get-PSWorkItem.md) for other ways to
 
 ### PSWorkItemCategory
 
-In addition to formatting overdue and imminent due dates, the module also provides a mechanism to add highlighting of specific categories. Importing the module will create a global variable called `PSWorkItemCategory`. The key will be a category name. The value will be a $PSStyle or ANSI escape sequence. These are the module defaults.
+In addition to formatting overdue and imminent due dates, the module also provides a mechanism to add highlighting for specific categories. Importing the module will create a global variable called `PSWorkItemCategory`. The key will be a category name. The value will be a $PSStyle or ANSI escape sequence. These are the module defaults.
 
 ```powershell
 $global:PSWorkItemCategory = @{
@@ -276,13 +276,13 @@ If you want to delete a task, you can use [Remove-PSWorkItem](docs/Remove-PSWork
 Remove-PSWorkItem -id 13
 ```
 
-This command will delete the item from the Tasks database. 
+This command will delete the item from the Tasks database.
 
 Beginning with v1.0.0, you can use [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md) to remove items from the archive table.
 
 ## Reporting
 
-You can use [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) to get a brief summary report of open work items grouped by category.
+You can use [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) to get a summary report of open work items grouped by category.
 
 ```powershell
 PS C:\>  Get-PSWorkItemReport
@@ -298,7 +298,7 @@ Count Category PctTotal
 2     Overdue        33
 ```
 
-The percentages for each category are rounded. The percentage for Overdue items is bases on all open work items.
+The percentages for each category are rounded. The percentage for Overdue items is based on all open work items.
 
 ## Database Backup
 
