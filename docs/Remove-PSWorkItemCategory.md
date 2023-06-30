@@ -118,3 +118,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Add-PSWorkItemCategory](Add-PSWorkItemCategory.md)
 
 [Get-PSWorkItemCategory](Get-PSWorkItemCategory.md)
+
+[Set-PSWorkItemCategory](Set-PSWorkItemCategory.md)

@@ -12,17 +12,15 @@ This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell,
 Install-Module PSWorkItem [-scope CurrentUser]
 ```
 
-Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery.
+:heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery.
 
 ## PSWorkItem Database Change
 
 **If you were using a version of this module prior to v1.0.0, this note applies to you.**
 
-Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. It is recommended that you backup your database file before running this command.
-
-As an alternative, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
-
-During the upgrade, a new table column called ID is added to the Tasks and Archive database tables. In the Tasks table, the ID column for existing entries will be set to the row id, which should be the task number you are used to seeing. In the archive table, existing entries will get an ID value of 0, since it is impossible to know the original ID number. This database change corrects this problem. Going forward, the PSWorkItem ID will remain the same when you complete it and move the item to the Archive table.
+>Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. It is recommended that you back up your database file before running this command.
+>As an alternative, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
+>During the upgrade, a new table column called ID is added to the Tasks and Archive database tables. In the Tasks table, the ID column for existing entries will be set to the row id, which should be the task number you are used to seeing. In the archive table, existing entries will get an ID value of 0, since it is impossible to know the original ID number. This database change corrects this problem. Going forward, the PSWorkItem ID will remain the same when you complete it and move the item to the Archive table.
 
 ## Module Commands and Design
 
@@ -31,15 +29,18 @@ During the upgrade, a new table column called ID is added to the Tasks and Archi
 - [Get-PSWorkItem](docs/Get-PSWorkItem.md)
 - [Get-PSWorkItemArchive](docs/Get-PSWorkItemArchive.md)
 - [Get-PSWorkItemCategory](docs/Get-PSWorkItemCategory.md)
+- [Get-PSWorkItemData](docs/Get-PSWorkItemData.md)
 - [Get-PSWorkItemDatabase](docs/Get-PSWorkItemDatabase.md)
 - [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md)
 - [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md)
+- [New-PSWorkItem](docs/New-PSWorkItem.md)
 - [Remove-PSWorkItem](docs/Remove-PSWorkItem.md)
 - [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md)
 - [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md)
-- [New-PSWorkItem](docs/New-PSWorkItem.md)
 - [Set-PSWorkItem](docs/Set-PSWorkItem.md)
+- [Set-PSWorkItemCategory](docs/Set-PSWorkItemCategory.md)
 - [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md)
+- [Update-PSWorkItemPreferences](docs/Update-PSWorkItemPreferences.md)
 
 The module is based on three tables in a SQLite database file. The primary `Tasks` table is where active items are stored.
 
@@ -229,7 +230,7 @@ You can modify this hashtable as you would any other hashtable.
 $PSWorkItemCategory.Add("Event","`e[38;5;153m")
 ```
 
-The entry will have no effect unless the category is defined in the database.
+The entry will have no effect unless the category is defined in the database. The category customizations last for the duration of your PowerShell session or until the module is removed. Add your customizations to your PowerShell profile script.
 
 > Note that when you view the hashtable, you won't see any values because they escape sequences are non-printable.
 
@@ -338,8 +339,8 @@ rowid        : 19
 
 ## Future Tasks or Commands
 
-+ Password protection options.
-+ A WPF and/or TUI form for entering new work items.
-+ A WPF and/or TUI form for displaying and managing work items.
+- Password protection options.
+- A WPF and/or TUI form for entering new work items.
+- A WPF and/or TUI form for displaying and managing work items and categories
 
 If you have an enhancement suggestion, please submit it as an [Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).

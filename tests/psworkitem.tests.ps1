@@ -25,8 +25,8 @@ Describe 'ModuleStructure' {
         $mod.ExportedFunctions.keys | Where-Object { $_ -notmatch "^\w+\-\w+"} | Should -HaveCount 0
     }
 
-    It "Should export 3 format files" {
-        ( $mod.ExportedFormatFiles).count | Should -Be 3
+    It "Should export 4 format files" {
+        ( $mod.ExportedFormatFiles).count | Should -Be 4
     }
 
     It "Should export 2 type extension files" {
@@ -323,6 +323,25 @@ Describe Set-PSWorkItem {
 
 } -Tag function
 
+Describe Update-PSWorkItemPreferences {
+    It "Should have help documentation" {
+        (Get-Help Update-PSWorkItemPreferences).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -name Update-PSWorkItemPreferences).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        {Update-PSWorkItemPreferences} | Should -Not -Throw
+    } -pending
+    #insert additional command-specific tests
+
+} -tag function
+
 Describe Update-PSWorkItemDatabase {
     It "Should have help documentation" {
         (Get-Help Update-PSWorkItemDatabase).Description | Should -Not -BeNullOrEmpty
@@ -342,7 +361,6 @@ Describe Update-PSWorkItemDatabase {
 
 } -tag function
 
-
 Describe Remove-PSWorkItemArchive {
     It "Should have help documentation" {
         (Get-Help Remove-PSWorkItemArchive).Description | Should -Not -BeNullOrEmpty
@@ -357,6 +375,26 @@ Describe Remove-PSWorkItemArchive {
         most likely needs to be refined
         #>
         {Remove-PSWorkItemArchive} | Should -Not -Throw
+    } -pending
+    #insert additional command-specific tests
+
+} -tag function
+
+
+Describe Set-PSWorkItemCategory {
+    It "Should have help documentation" {
+        (Get-Help Set-PSWorkItemCategory).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -name Set-PSWorkItemCategory).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        {Set-PSWorkItemCategory} | Should -Not -Throw
     } -pending
     #insert additional command-specific tests
 

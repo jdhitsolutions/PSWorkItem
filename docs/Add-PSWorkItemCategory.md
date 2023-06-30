@@ -171,4 +171,6 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 [Get-PSWorkItemCategory](Get-PSWorkItemCategory.md)
 
+[Set-PSWorkItemCategory](Set-PSWorkItemCategory.md)
+
 [Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)

@@ -68,21 +68,32 @@ class PSWorkItemDatabase {
 
 #endregion
 
-#make this variable global instead of exporting so that I don't have to use Export-ModuleMember 7/28/2022 JDH
-$global:PSWorkItemPath = Join-Path -Path $HOME -ChildPath "PSWorkItem.db"
-
-<#
-Default categories when creating a new database file.
-This will be a module-scoped variable
-#>
-
-$PSWorkItemDefaultCategories = "Work", "Personal", "Project", "Other"
+#region settings and configuration
 
 #a global hashtable used for formatting PSWorkItems
 $global:PSWorkItemCategory = @{
     "Work"     = $PSStyle.Foreground.Cyan
     "Personal" = $PSStyle.Foreground.Green
 }
+
+#import and use the preference file if found
+$PreferencePath = Join-Path -Path $HOME -ChildPath ".psworkitempref.json"
+If (Test-Path $PreferencePath) {
+    $importPref = Get-Content $PreferencePath | ConvertFrom-Json
+    $global:PSWorkItemPath = $importPref.Path
+    $importPref.categories.foreach({$PSWorkItemCategory[$_.category]=$_.ansi})
+}
+else {
+    #make this variable global instead of exporting so that I don't have to use Export-ModuleMember 7/28/2022 JDH
+    $global:PSWorkItemPath = Join-Path -Path $HOME -ChildPath "PSWorkItem.db"
+}
+
+<#
+Default categories when creating a new database file.
+This will be a module-scoped variable, not exposed to the user
+#>
+
+$PSWorkItemDefaultCategories = "Work", "Personal", "Project", "Other"
 
 Register-ArgumentCompleter -CommandName New-PSWorkItem, Get-PSWorkItem, Set-PSWorkItem, Get-PSWorkItemArchive,Remove-PSWorkItemArchive -ParameterName Category -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
@@ -96,3 +107,5 @@ Register-ArgumentCompleter -CommandName New-PSWorkItem, Get-PSWorkItem, Set-PSWo
         [System.Management.Automation.CompletionResult]::new($_.category, $_.category, 'ParameterValue', $_.description)
     }
 }
+
+#endregion

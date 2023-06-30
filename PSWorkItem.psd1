@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '1.0.1'
+    ModuleVersion          = '1.1.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -22,7 +22,8 @@
     FormatsToProcess       = @(
         'formats\psworkitemdatabase.format.ps1xml',
         'formats\psworkItem.format.ps1xml',
-        '.\formats\psworkitemreport.format.ps1xml'
+        'formats\psworkitemreport.format.ps1xml',
+        'formats\psworkitemcategory.format.ps1xml'
     )
     FunctionsToExport      = @(
         'Get-PSWorkItem',
@@ -39,7 +40,9 @@
         'Get-PSWorkItemDatabase',
         'Get-PSWorkItemData',
         'Get-PSWorkItemReport',
-        'Update-PSWorkItemDatabase'
+        'Update-PSWorkItemDatabase',
+        'Update-PSWorkItemPreferences',
+        'Set-PSWorkItemCategory'
     )
     CmdletsToExport        = @()
     VariablesToExport      = @()

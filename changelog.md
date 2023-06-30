@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2023-06-30
+
+### Added
+
+- Added a format file for PSWorkItemCategory to display categories using the designated color scheme. [Issue #10](https://github.com/jdhitsolutions/PSWorkItem/issues/10)]
+- Added command `Update-PSWorkItemPreferences` to store user preferences in a JSON file stored in `$HOME`. If the file is found, settings will be imported.
+- Added command `Set-PSWorkItemCategory` [Issue 11](https://github.com/jdhitsolutions/PSWorkItem/issues/11)
+
+### Changed
+
+- Updated README.
+
 ## [1.0.1] - 2023-03-13
 
 ### Changed
@@ -178,7 +190,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.1..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.1.0..HEAD
+[1.1.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.1..v1.1.0
 [1.0.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.0..v1.0.1
 [1.0.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.9.0..v1.0.0
 [0.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.8.0..v0.9.0
