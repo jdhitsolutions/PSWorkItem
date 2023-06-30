@@ -6,7 +6,7 @@
 
 ### Added
 
-- Added a format file for PSWorkItemCategory to display categories using the designated color scheme. [Issue #10](https://github.com/jdhitsolutions/PSWorkItem/issues/10)]
+- Added a format file for PSWorkItemCategory to display categories using the designated color scheme. [Issue #10](https://github.com/jdhitsolutions/PSWorkItem/issues/10)
 - Added command `Update-PSWorkItemPreferences` to store user preferences in a JSON file stored in `$HOME`. If the file is found, settings will be imported.
 - Added command `Set-PSWorkItemCategory` [Issue 11](https://github.com/jdhitsolutions/PSWorkItem/issues/11)
 
