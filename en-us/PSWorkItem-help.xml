@@ -3464,6 +3464,10 @@ Work     Uncategorized work activities</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3OvYBRi</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Add-PSWorkItemCategory</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
@@ -3806,6 +3810,10 @@ ID Name        Description DueDate               Category Pct
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3KbxxUX</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-PSWorkItemCategory</maml:linkText>
         <maml:uri></maml:uri>

@@ -1,7 +1,7 @@
 ---
 external help file: PSWorkItem-help.xml
 Module Name: PSWorkItem
-online version:
+online version: https://bit.ly/3KbxxUX
 schema: 2.0.0
 ---
 

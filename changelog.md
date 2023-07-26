@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [1.2.0] - 2023-07-26
+
+### Added
+
+- Added missing online help links.
+
+### Fixed
+
+- Fixed casing in the manifest for format files that was causing an error in non-Windows systems.
+
 ## [1.1.0] - 2023-06-30
 
 ### Added
@@ -190,7 +200,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.1.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.2.0..HEAD
+[1.2.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.1.0..v1.2.0
 [1.1.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.1..v1.1.0
 [1.0.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.0..v1.0.1
 [1.0.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v0.9.0..v1.0.0

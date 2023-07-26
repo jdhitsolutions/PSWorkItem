@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '1.1.0'
+    ModuleVersion          = '1.2.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -21,7 +21,7 @@
     )
     FormatsToProcess       = @(
         'formats\psworkitemdatabase.format.ps1xml',
-        'formats\psworkItem.format.ps1xml',
+        'formats\psworkitem.format.ps1xml',
         'formats\psworkitemreport.format.ps1xml',
         'formats\psworkitemcategory.format.ps1xml'
     )
@@ -49,9 +49,9 @@
     AliasesToExport        = @('gwi', 'nwi', 'swi', 'rwi', 'cwi')
     PrivateData            = @{
         PSData = @{
-            Tags                       = @('database', 'sqlite', 'to-do', 'project-management', 'tasks')
-            LicenseUri                 = 'https://github.com/jdhitsolutions/PSWorkItem/blob/main/License.txt'
-            ProjectUri                 = 'https://github.com/jdhitsolutions/PSWorkItem'
+            Tags           = @('database', 'sqlite', 'to-do', 'project-management', 'tasks')
+            LicenseUri     = 'https://github.com/jdhitsolutions/PSWorkItem/blob/main/License.txt'
+            ProjectUri     = 'https://github.com/jdhitsolutions/PSWorkItem'
             # IconUri = ''
             # ReleaseNotes = ''
             # Prerelease = ''
