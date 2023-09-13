@@ -2,11 +2,11 @@
 
 function _newWorkItem {
     [cmdletbinding()]
-    Param([object]$data,[String]$path)
+    Param([object]$data, [String]$path)
 
     # modified 6 August 2022 to explicitly set datetime values to handle culture - JDH
     Write-Debug "[$((Get-Date).TimeOfDay) _newWorkItem] Creating item '$($data.name)' [$($data.taskid)]"
-    $item = [PSWorkItem]::new($data.name,$data.category)
+    $item = [PSWorkItem]::new($data.name, $data.category)
     $item.ID = $data.ID
     $item.Description = $data.description
     $item.DueDate = $data.duedate -as [DateTime]
@@ -25,7 +25,7 @@ function _newWorkItem {
 
 function _newWorkItemArchive {
     [cmdletbinding()]
-    Param([object]$data,[String]$path)
+    Param([object]$data, [String]$path)
 
     Write-Debug "[$((Get-Date).TimeOfDay) _newWorkItemArchive] Creating item '$($data.name)' [$($data.taskid)]"
 
@@ -34,7 +34,7 @@ function _newWorkItemArchive {
     $item = [PSWorkItemArchive]::new()
     $item.name = $data.name
     $item.Category = $data.category
-    $item.ID = If ($data.ID -is [DBNull]) {0} else {$data.id}
+    $item.ID = If ($data.ID -is [DBNull]) { 0 } else { $data.id }
     $item.Description = $data.description
     $item.DueDate = $data.duedate -as [DateTime]
     $item.progress = 100
@@ -53,16 +53,36 @@ function _newWorkItemArchive {
 
 function _getLastTaskID {
     [cmdletbinding()]
-    Param([string]$table,[String]$path)
+    Param([string]$table, [String]$path)
     #Get the last TaskNumber value from the specified table
 
     $query = "Select ID from $table Order By ID DESC Limit 1"
     Write-Debug "[$((Get-Date).TimeOfDay) _getLastTaskID] $query"
     Try {
-        $r = Invoke-MySQLiteQuery -path $path -query $query -ErrorAction Stop
+        $r = Invoke-MySQLiteQuery -Path $path -Query $query -ErrorAction Stop
     }
     Catch {
-        $r = @{ID = 0}
+        $r = @{ID = 0 }
     }
     $r.ID
 }
+
+function _verbose {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0)]
+        [string]$Message,
+        [string]$Block,
+        [string]$Command
+    )
+
+    Switch ($Block) {
+        'begin' { $BlockString = 'BEGIN  ' }
+        'process' { $BlockString = 'PROCESS' }
+        'end' { $BlockString = 'END    ' }
+        Default { $BlockString = $Block}
+    }
+
+    Write-Verbose "[$((Get-Date).TimeOfDay) $BlockString] $([char]27)[1m$($command)$([char]27)[0m: $([char]27)[3m$message$([char]27)[0m"
+
+}1

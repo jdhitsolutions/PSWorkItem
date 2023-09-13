@@ -20,10 +20,11 @@ body:
       options:
         - '4.0'
         - '5.1'
-        - 6.x
         - '7.0'
         - '7.1'
         - '7.2'
+        - '7.3'
+        - '7.x-preview'
         - Other
     validations:
       required: false
@@ -40,5 +41,3 @@ body:
         - MacOS
         - Linux
         - Other
-
-

@@ -70,7 +70,7 @@ https://github.com/jdhitsolutions/PSScriptTools
                     "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.name, $psstyle.reset
                 }
                 else {
-                  <!--use the PSWorkItemCategory hastable to add custom highlights-->
+                                    <!--use the PSWorkItemCategory hastable to add custom highlights-->
                     "$($PSWorkItemCategory["$($_.category)"])$($_.name)$($PSStyle.Reset)"
                 }
             }
@@ -90,7 +90,7 @@ https://github.com/jdhitsolutions/PSScriptTools
                     "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.Description, $psstyle.reset
                 }
                 else {
-                     "$($PSWorkItemCategory["$($_.category)"])$($_.Description)$($PSStyle.Reset)"
+                    "$($PSWorkItemCategory["$($_.category)"])$($_.Description)$($PSStyle.Reset)"
                 }
             }
             else {
@@ -119,22 +119,22 @@ https://github.com/jdhitsolutions/PSScriptTools
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
-                 if ($host.name -match "console|code") {
-                 "$($PSWorkItemCategory["$($_.category)"])$($_.category)$($PSStyle.Reset)"
-                 }
-                 else {
+                  if ($host.name -match "console|code") {
+                  "$($PSWorkItemCategory["$($_.category)"])$($_.category)$($PSStyle.Reset)"
+                  }
+                  else {
                   $_.category
-                 }
+                  }
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
-                 if ($host.name -match "console|code") {
-                 "$($PSWorkItemCategory["$($_.category)"])$($_.progress)$($PSStyle.Reset)"
-                 }
-                 else {
+                  if ($host.name -match "console|code") {
+                  "$($PSWorkItemCategory["$($_.category)"])$($_.progress)$($PSStyle.Reset)"
+                  }
+                  else {
                   $_.progress
-                 }
+                  }
                 </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>

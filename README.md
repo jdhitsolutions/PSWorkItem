@@ -6,7 +6,7 @@ This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions
 
 ## Installation
 
-This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform.__ You can install this module from the PowerShell Gallery.
+This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform__ until the dependency SQLite module supports non-Windows systems. You can install this module from the PowerShell Gallery.
 
 ```powershell
 Install-Module PSWorkItem [-scope CurrentUser]
@@ -135,11 +135,11 @@ You can view a database summary with `Get-PSWorkItemDatabase`.
 ```powershell
 PS C:\> Get-PSWorkItemDatabase
 
-   Path: C:\Users\Jeff\PSWorkItem.db [32KB]
+   Path: C:\Users\Jeff\PSWorkItem.db [44KB]
 
 Created              LastModified         Tasks Archived Categories
 -------              ------------         ----- -------- ----------
-7/26/2022 9:56:18 AM 7/29/2022 1:11:17 PM     6        6         12
+7/30/2022 1:55:02 PM 9/12/2023 1:05:26 PM    13       35         12
 ```
 
 ## Categories
@@ -290,13 +290,15 @@ PS C:\>  Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db
 
-Count Category PctTotal
------ -------- --------
-3     Personal       50
-1     Other          17
-1     Event          17
-1     Blog           17
-2     Overdue        33
+Category Count PctTotal
+-------- ----- --------
+Personal     5       38
+Event        3       23
+Project      2       15
+Work         1        8
+Other        1        8
+Blog         1        8
+Overdue      4       31
 ```
 
 The percentages for each category are rounded. The percentage for Overdue items is based on all open work items.
@@ -340,7 +342,7 @@ rowid        : 19
 ## Future Tasks or Commands
 
 - Password protection options.
-- A WPF and/or TUI form for entering new work items.
+- A WPF and/or TUI form for entering new work items, although you could easily use `Show-Command`.
 - A WPF and/or TUI form for displaying and managing work items and categories
 
 If you have an enhancement suggestion, please submit it as an [Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).

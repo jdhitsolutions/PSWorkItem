@@ -106,7 +106,6 @@ Function Set-PSWorkItemCategory {
                         }
                     }
                 }
-
             } #If category found
         } #IF connection open
         else {

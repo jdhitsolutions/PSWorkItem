@@ -17,28 +17,29 @@ Function New-PSWorkItem {
             Mandatory,
             ValueFromPipelineByPropertyName,
             HelpMessage = "Select a valid category. You can run Get-PSWorkItemCategory to see the list."
-            )]
+        )]
         [ValidateNotNullOrEmpty()]
         [String]$Category,
         [Parameter(
             Position = 2,
             ValueFromPipelineByPropertyName,
             HelpMessage = "Add a comment or task description"
-            )]
+        )]
         [alias("comment")]
         [String]$Description,
         [Parameter(
             ValueFromPipelineByPropertyName,
             HelpMessage = "When is this task due? The default is 30 days from now.",
             ParameterSetName = "date"
-            )]
+        )]
+        [Alias("Date")]
         [DateTime]$DueDate = (Get-Date).AddDays(30),
 
         [Parameter(
             HelpMessage = "Specify the number of days before the task is due to be completed. Enter a value between 1 and 365",
             ValueFromPipelineByPropertyName,
             ParameterSetName = "days"
-            )]
+        )]
         [ValidateRange(1,365)]
         [int]$DaysDue,
 
@@ -97,7 +98,7 @@ Function New-PSWorkItem {
             $task.description = $Description
             $task.duedate = $DueDate
             #Calculate ID
-             # Get highest TaskNumber from the archive items
+            # Get highest TaskNumber from the archive items
             $archiveID = _getLastTaskID -table archive -path $path
             # Get highest TaskNumber from tasks
             $taskID = _getLastTaskID -table tasks -path $path

@@ -1,6 +1,13 @@
 # Changelog for PSWorkItem
 
 ## [Unreleased]
+### Added
+- Added localized string data for verbose, warning, and error messaging.
+- Added parameter alias `Date` to `DueDate` in `New-PSWorkItem`.
+
+### Changed
+- Moved verbose messaging to a private helper function.
+- Modified layout of the default view for `Get-PSWorkItemReport`.
 
 ## [1.2.0] - 2023-07-26
 

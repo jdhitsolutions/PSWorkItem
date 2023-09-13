@@ -1590,13 +1590,15 @@ PageSize      : 4096</dev:code>
 
    Path: C:\Users\Jeff\PSWorkItem.db
 
-Count Category PctTotal
------ -------- --------
-3     Personal       50
-1     Other          17
-1     Event          17
-1     Blog           17
-2     Overdue        33</dev:code>
+Category Count PctTotal
+-------- ----- --------
+Personal     5       38
+Event        3       23
+Project      2       15
+Work         1        8
+Other        1        8
+Blog         1        8
+Overdue      4       31</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -1916,7 +1918,7 @@ ColumnIndex ColumnName  ColumnType
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="Date">
           <maml:name>DueDate</maml:name>
           <maml:description>
             <maml:para>When is this task due? The default is 30 days.</maml:para>
@@ -2097,7 +2099,7 @@ ColumnIndex ColumnName  ColumnType
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="Date">
         <maml:name>DueDate</maml:name>
         <maml:description>
           <maml:para>When is this task due? The default is 30 days.</maml:para>

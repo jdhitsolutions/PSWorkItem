@@ -30,13 +30,15 @@ PS C:\> Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db
 
-Count Category PctTotal
------ -------- --------
-3     Personal       50
-1     Other          17
-1     Event          17
-1     Blog           17
-2     Overdue        33
+Category Count PctTotal
+-------- ----- --------
+Personal     5       38
+Event        3       23
+Project      2       15
+Work         1        8
+Other        1        8
+Blog         1        8
+Overdue      4       31
 ```
 
 ## PARAMETERS

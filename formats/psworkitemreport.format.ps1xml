@@ -15,14 +15,6 @@ https://github.com/jdhitsolutions/PSScriptTools
         <TypeName>PSWorkItemReport</TypeName>
       </ViewSelectedBy>
       <GroupBy>
-        <!--
-            You can also use a scriptblock to define a custom property name.
-            You must have a Label tag.
-            <ScriptBlock>$_.machinename.toUpper()</ScriptBlock>
-            <Label>Computername</Label>
-
-            Use <Label> to set the displayed value.
--->
         <PropertyName>Path</PropertyName>
         <Label>Path</Label>
       </GroupBy>
@@ -31,14 +23,14 @@ https://github.com/jdhitsolutions/PSScriptTools
         <AutoSize />
         <TableHeaders>
           <TableColumnHeader>
-            <Label>Count</Label>
-            <Width>8</Width>
-            <Alignment>left</Alignment>
-          </TableColumnHeader>
-          <TableColumnHeader>
             <Label>Category</Label>
             <Width>11</Width>
             <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Count</Label>
+            <Width>8</Width>
+            <Alignment>right</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
             <Label>PctTotal</Label>
@@ -49,15 +41,11 @@ https://github.com/jdhitsolutions/PSScriptTools
         <TableRowEntries>
           <TableRowEntry>
             <TableColumnItems>
-              <!--
-            By default the entries use property names, but you can replace them with scriptblocks.
-            <ScriptBlock>$_.foo /1mb -as [int]</ScriptBlock>
--->
-              <TableColumnItem>
-                <PropertyName>Count</PropertyName>
-              </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>Category</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Count</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>PctTotal</PropertyName>

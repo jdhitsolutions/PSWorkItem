@@ -56,7 +56,7 @@ Function Update-PSWorkItemDatabase {
             If ($PSCmdlet.ShouldProcess("table archive","Adding column ID")) {
                 $splat.query = "ALTER TABLE archive ADD id integer;"
                 Invoke-MySQLiteQuery @splat
-               
+
                 Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Updating archive table values"
                 $splat.query = "Select taskId,RowID from archive"
                 $items = Invoke-MySQLiteQuery @splat
@@ -64,34 +64,34 @@ Function Update-PSWorkItemDatabase {
                     $splat.query = "UPDATE archive set id = '0' Where taskid='{0}'" -f $item.taskid
                     Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($splat.query)"
                     Invoke-MySQLiteQuery @splat
-                }     
+                }
             } #WhatIf
         }
         #UPDATE TASKS TABLE
-         #test for column existence
-         Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Testing for column ID"
-         $splat.query = "pragma table_info('tasks')"
-         $test = Invoke-MySQLiteQuery @splat | Where-Object name -eq 'ID'
-         if ($test) {
-             Write-Warning "The column ID already exists in the tasks table. No further action needed."
-         }
-         else {
-             Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Adding the column ID"
-             If ($PSCmdlet.ShouldProcess("table tasks","Adding column ID")) {
-                 $splat.query = "ALTER TABLE tasks ADD id integer;"
-                 Invoke-MySQLiteQuery @splat
+        #test for column existence
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Testing for column ID"
+        $splat.query = "pragma table_info('tasks')"
+        $test = Invoke-MySQLiteQuery @splat | Where-Object name -eq 'ID'
+        if ($test) {
+            Write-Warning "The column ID already exists in the tasks table. No further action needed."
+        }
+        else {
+            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Adding the column ID"
+            If ($PSCmdlet.ShouldProcess("table tasks","Adding column ID")) {
+                $splat.query = "ALTER TABLE tasks ADD id integer;"
+                Invoke-MySQLiteQuery @splat
 
-                 #Update ID column with RowID
-                 Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Updating tasks table values"
-                 $splat.query = "Select taskId,RowID from tasks"
-                 $items = Invoke-MySQLiteQuery @splat
-                 Foreach ($item in $items) {
-                     $splat.query = "UPDATE tasks set id = '{0}' Where taskid='{1}'" -f $item.rowid,$item.taskid
-                     Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($splat.query)"
-                     Invoke-MySQLiteQuery @splat
-                 }               
-             } #WhatIf
-         }
+                #Update ID column with RowID
+                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Updating tasks table values"
+                $splat.query = "Select taskId,RowID from tasks"
+                $items = Invoke-MySQLiteQuery @splat
+                Foreach ($item in $items) {
+                    $splat.query = "UPDATE tasks set id = '{0}' Where taskid='{1}'" -f $item.rowid,$item.taskid
+                    Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($splat.query)"
+                    Invoke-MySQLiteQuery @splat
+                }
+            } #WhatIf
+        }
     } #process
 
     End {
@@ -100,7 +100,7 @@ Function Update-PSWorkItemDatabase {
         }
         If ($PassThru -AND (-Not $WhatIfPreference)) {
             Get-MySQLiteTable -Connection $dbConnection -Detail | Where-Object table -eq archive
-         }
+        }
         Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Closing database connection"
         Close-MySQLiteDB -Connection $dbConnection
         Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"

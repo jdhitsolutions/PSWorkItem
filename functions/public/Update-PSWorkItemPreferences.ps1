@@ -33,11 +33,9 @@ Function Update-PSWorkItemPreferences {
         if ($PAssthru -AND (Test-Path $FilePath) -AND (-Not $WhatIfPreference)) {
             Get-Item -path $FilePath
         }
-
     } #process
 
     End {
-
         Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
     } #end
 

@@ -1,6 +1,10 @@
 # used for culture debugging
 # write-host "Importing with culture $(Get-Culture)"
 
+Import-LocalizedData -BindingVariable strings -FileName strings.psd1
+
+# Write-Host $strings.testing -ForegroundColor cyan
+
 Get-ChildItem $PSScriptRoot\functions\*.ps1 -Recurse |
 ForEach-Object {
     . $_.FullName

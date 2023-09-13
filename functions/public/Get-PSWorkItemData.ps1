@@ -35,7 +35,6 @@ Function Get-PSWorkItemData {
             ErrorAction = "Stop"
         }
     } #begin
-
     Process {
         Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand):Getting raw table data for $Table from $Path "
         $splat.query = "Select *,RowID from $Table"

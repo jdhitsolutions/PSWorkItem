@@ -105,7 +105,7 @@ The default is 30 days.
 ```yaml
 Type: DateTime
 Parameter Sets: date
-Aliases:
+Aliases: Date
 
 Required: False
 Position: Named
