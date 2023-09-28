@@ -171,11 +171,11 @@ If you need to update a category, you can re-add it using `-Force`.
 > The category name is case-sensitive.
 
 ```powershell
-PS C:\> Add-PSWorkItemCategory -Category Work -Description "business related tasks" -PassThru -Force
+PS C:\> Add-PSWorkItemCategory -Category Work -Description "business-related tasks" -PassThru -Force
 
 Category Description
 -------- -----------
-Work     business related tasks
+Work     business-related tasks
 ```
 
 Or you can use `Remove-PSWorkItemCategory` and start all over.
@@ -212,7 +212,7 @@ The default behavior is to get tasks due within the next ten days
 
 If you are running the command in the PowerShell console or VSCode, overdue tasks will be highlighted in red. Tasks due within three days will be highlighted in yellow.
 
-Read the examples for [Get-PSWorkItem](docs/Get-PSWorkItem.md) for other ways to use this command including custom format views.
+Read the examples for [Get-PSWorkItem](docs/Get-PSWorkItem.md) for other ways to use this command, including custom format views.
 
 ### PSWorkItemCategory
 
@@ -233,7 +233,7 @@ $PSWorkItemCategory.Add("Event","`e[38;5;153m")
 
 The entry will have no effect unless the category is defined in the database. The category customizations last for the duration of your PowerShell session or until the module is removed. Add your customizations to your PowerShell profile script or use `Update-PSWorkItemPreference` to save the settings to a JSON file under $HOME.
 
-> Note that when you view the hashtable, you won't see any values because they escape sequences are non-printable.
+> Note that when you view the hashtable, you won't see any values because the escape sequences are non-printable.
 
 ![colorized categories](images/PSWorkItemcategory.png)
 
@@ -306,15 +306,15 @@ The percentages for each category are rounded. The percentage for Overdue items 
 
 ## TUI-Based Management Console
 
-Version 1.3.0 added a management console based the [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui) framework.
+Version 1.3.0 added a management console based on the [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui) framework.
 
 ![console management](images/psworkitemconsole.png)
 
-Run [`Open-PSWorkItemConsole`](docs\Open-PSWorkItemConsole.md) or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the Open Database command under Options. The file must end in `.db`. If you select a different database, you can use Options - Reset Form to reset to your default database.
+Run [`Open-PSWorkItemConsole`](docs\Open-PSWorkItemConsole.md) or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the Open Database command under Options. The file must end in `.db`. If you select a different database, you can use `Options - Reset Form` to reset to your default database.
 
-If you select an item from the table, it will populate the form fields. You can then update, complete, or remove the item. To create a new item, it is recommended that you first clear the form, (Options - Clear Form). Enter the PSWorkItem details and click the `Add PSWorkItem` button.
+If you select an item from the table, it will populate the form fields. You can then update, complete, or remove the item. To create a new item, it is recommended that you first clear the form (`Options - Clear Form`). Enter the PSWorkItem details and click the `Add PSWorkItem` button.
 
-__IMPORTANT__ This command relies on a specific version the Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like `Microsoft.PowerShell.ConsoleGuiTools``. You may need to load this module first in a new PowerShell session.
+__IMPORTANT__ This command relies on a specific version of the Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like `Microsoft.PowerShell.ConsoleGuiTools`. You may need to load this module first in a new PowerShell session.
 
 ## User Preferences
 
@@ -338,7 +338,7 @@ The next time you import the module, an entry will be made to $PSDefaultParamete
 $global:PSDefaultParameterValues["New-PSWorkItem:Category"] = $importPref.DefaultCategory
 ```
 
-Use `Get-PSWorkItemPreference`` to view.
+Use `Get-PSWorkItemPreference` to view.
 
 ```powershell
 PS C:\> Get-PSWorkItemPreference
