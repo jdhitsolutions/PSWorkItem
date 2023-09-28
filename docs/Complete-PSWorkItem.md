@@ -19,7 +19,7 @@ Complete-PSWorkItem [-ID] <Int32> [-Path <String>] [-CompletionDate <DateTime>] 
 
 ## DESCRIPTION
 
-When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Arhive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.
+When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Archive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.
 
 ## EXAMPLES
 
@@ -31,10 +31,18 @@ PS C:\> Complete-PSWorkItem -id 9 -PassThru
     Database: C:\Users\Jeff\PSWorkItem.db
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------
-6  Clean database             Other    7/30/2022 10:40:48 AM
+6  Clean database             Other    7/30/2023 10:40:48 AM
 ```
 
 Mark a PSWorkItem as completed and move it to the Archive table. The PSWorkItem will most likely get a new ID. The item will be deleted from the Tasks table.
+
+### Example 2
+
+```powershell
+PS C:\> Get-PSWorkItem -category Alpha | Complete-WorkItem
+```
+
+Complete all work items from the Alpha category.
 
 ## PARAMETERS
 
@@ -83,7 +91,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: $PSWorkItemPath
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -136,7 +144,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

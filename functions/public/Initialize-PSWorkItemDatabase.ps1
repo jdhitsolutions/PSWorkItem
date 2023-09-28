@@ -2,30 +2,31 @@ Function Initialize-PSWorkItemDatabase {
     [cmdletbinding(SupportsShouldProcess)]
     [OutputType("None","PSWorkItemDatabase")]
     Param(
-        [Parameter(Position = 0, HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(
+            Position = 0,
+            HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidatePattern("\.db$")]
-        [ValidateScript({
-            $parent = Split-Path -Path $_ -Parent
-            if (Test-Path $parent) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate the parent path $parent."
-                Return $False
-            }
-        })]
+        [ValidateScript(
+            {
+                $parent = Split-Path -Path $_ -Parent
+                Test-Path $parent
+            },
+            ErrorMessage = "Failed to validate the parent path."
+        )]
         [String]$Path = $PSWorkItemPath,
         [Switch]$PassThru,
         [Parameter(HelpMessage = "Force overwriting an existing file.")]
         [Switch]$Force
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
+        $PSDefaultParameterValues["_verbose:block"] = "Begin"
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
     } #begin
 
     Process {
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Initializing PSWorkItem database $Path "
+        $PSDefaultParameterValues["_verbose:block"] = "Process"
+        _verbose -message ($strings.InitializingDB -f $Path)
         Try {
             #using -f to accommodate culture with datetimes
             $comment = "PSWorkItem database created {0}." -f (Get-Date)
@@ -35,7 +36,7 @@ Function Initialize-PSWorkItemDatabase {
             Throw $_
         }
         if ($db) {
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Adding tables"
+            _verbose -message $strings.AddTables
             $props = [ordered]@{
                 taskid       = "text"
                 taskcreated  = "text"
@@ -49,19 +50,19 @@ Function Initialize-PSWorkItemDatabase {
                 id           = "integer"
             }
 
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): ...tasks"
+            _verbose -message $strings.AddTasks
             New-MySQLiteDBTable -Path $Path -TableName tasks -ColumnProperties $props -Force:$Force
 
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): ...archive"
+            _verbose -message $strings.AddArchive
             New-MySQLiteDBTable -Path $Path -TableName archive -ColumnProperties $props -force:$Force
 
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): ...categories"
+            _verbose -message $strings.AddCategories
             $props = [ordered]@{
                 category = "text"
                 description = "text"
             }
             New-MySQLiteDBTable -Path $Path -TableName categories -ColumnProperties $props -force:$force
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Adding default categories $($PSWorkItemDefaultCategories -join ',')"
+            _verbose -message ($strings.AddDefaultCategories -f $PSWorkItemDefaultCategories -join ',')
             #give the database a chance to close
             Start-Sleep -milliseconds 500
             Add-PSWorkItemCategory -Path $Path -Category $PSWorkItemDefaultCategories -Force
@@ -72,7 +73,8 @@ Function Initialize-PSWorkItemDatabase {
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
+        $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        _verbose -message $strings.Ending
     } #end
-
 }

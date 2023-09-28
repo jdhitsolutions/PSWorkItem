@@ -9,27 +9,28 @@ Function Update-PSWorkItemDatabase {
     [OutputType('none','MySQLiteTableDetail')]
     [alias('alias')]
     Param(
-        [Parameter(Position = 0, HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(
+            Position = 0,
+            HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
         [ValidatePattern("\.db$")]
-        [ValidateScript({
-            $parent = Split-Path -Path $_ -Parent
-            if (Test-Path $parent) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate the parent path $parent."
-                Return $False
-            }
-        })]
+        [ValidateScript(
+            {
+                $parent = Split-Path -Path $_ -Parent
+                Test-Path $parent
+            },
+            ErrorMessage = "Failed to validate the parent path."
+        )]
         [String]$Path = $PSWorkItemPath,
         [Switch]$PassThru
     )
 
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Running under PowerShell version $($PSVersionTable.PSVersion)"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Opening database connection to $Path"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        $PSDefaultParameterValues["_verbose:block"] = "Begin"
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingDB -f $path)
+
         $dbConnection = Open-MySQLiteDB -Path $Path
         $splat = @{
             Connection = $dbConnection
@@ -39,17 +40,18 @@ Function Update-PSWorkItemDatabase {
     } #begin
 
     Process {
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Processing $Path"
+        $PSDefaultParameterValues["_verbose:block"] = "Process"
+        _verbose -message ($strings.UsingDB -f $Path)
         #UPDATE ARCHIVE TABLE
         #test for column existence
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Testing for column ID"
+        _verbose -message ($strings.TestColumnID)
         $splat.Query = "pragma table_info('archive')"
         $test = Invoke-MySQLiteQuery @splat | Where-Object name -eq 'ID'
         if ($test) {
-            Write-Warning "The column ID already exists in the archive table. No further action needed."
+            Write-Warning $strings.IDColumnExists
         }
         else {
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Adding the column ID"
+            _verbose -message $strings.AddIDColumn
             #append the new column
             #It is impossible to set a value for the ID column in the archive table
             #since there is no way of knowing what the original ID was. Set the ID to 0.
@@ -57,37 +59,37 @@ Function Update-PSWorkItemDatabase {
                 $splat.query = "ALTER TABLE archive ADD id integer;"
                 Invoke-MySQLiteQuery @splat
 
-                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Updating archive table values"
+                _verbose -message $strings.UpdateArchiveTable
                 $splat.query = "Select taskId,RowID from archive"
                 $items = Invoke-MySQLiteQuery @splat
                 Foreach ($item in $items) {
                     $splat.query = "UPDATE archive set id = '0' Where taskid='{0}'" -f $item.taskid
-                    Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($splat.query)"
+                    _verbose -message $splat.query
                     Invoke-MySQLiteQuery @splat
                 }
             } #WhatIf
         }
         #UPDATE TASKS TABLE
         #test for column existence
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Testing for column ID"
+        _verbose -message $strings.TestingColumnID
         $splat.query = "pragma table_info('tasks')"
         $test = Invoke-MySQLiteQuery @splat | Where-Object name -eq 'ID'
         if ($test) {
-            Write-Warning "The column ID already exists in the tasks table. No further action needed."
+            Write-Warning $strings.IDColumnExists
         }
         else {
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Adding the column ID"
+            _verbose -message $strings.AddIDColumn
             If ($PSCmdlet.ShouldProcess("table tasks","Adding column ID")) {
                 $splat.query = "ALTER TABLE tasks ADD id integer;"
                 Invoke-MySQLiteQuery @splat
 
                 #Update ID column with RowID
-                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Updating tasks table values"
+                _verbose -message $strings.UpdateTaskTable
                 $splat.query = "Select taskId,RowID from tasks"
                 $items = Invoke-MySQLiteQuery @splat
                 Foreach ($item in $items) {
                     $splat.query = "UPDATE tasks set id = '{0}' Where taskid='{1}'" -f $item.rowid,$item.taskid
-                    Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($splat.query)"
+                    _verbose -message $splat.query
                     Invoke-MySQLiteQuery @splat
                 }
             } #WhatIf
@@ -95,15 +97,17 @@ Function Update-PSWorkItemDatabase {
     } #process
 
     End {
+        $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         If ($PassThru -AND (-Not $WhatIfPreference)) {
             Get-MySQLiteTable -Connection $dbConnection -KeepAlive -Detail | Where-Object table -eq archive
         }
         If ($PassThru -AND (-Not $WhatIfPreference)) {
             Get-MySQLiteTable -Connection $dbConnection -Detail | Where-Object table -eq archive
         }
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Closing database connection"
+        _verbose -message $strings.CloseDBConnection
         Close-MySQLiteDB -Connection $dbConnection
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
+        _verbose -message $strings.Ending
     } #end
 
 } #close Update-PSWorkItemDatabase

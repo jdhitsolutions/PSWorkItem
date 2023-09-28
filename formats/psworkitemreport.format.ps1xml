@@ -42,13 +42,34 @@ https://github.com/jdhitsolutions/PSScriptTools
           <TableRowEntry>
             <TableColumnItems>
               <TableColumnItem>
-                <PropertyName>Category</PropertyName>
+                <ScriptBlock>
+                if ($host.name -match 'console|code' -AND $_.Category -eq 'Overdue') {
+                    "{0}{1}{2}{3}" -f $psstyle.Foreground.brightred, $psstyle.italic,$_.Category, $psstyle.reset
+                }
+                else {
+                  $_.Category
+                }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>Count</PropertyName>
+                <ScriptBlock>
+                if ($host.name -match 'console|code' -AND $_.Category -eq 'Overdue') {
+                    "{0}{1}{2}{3}" -f $psstyle.Foreground.brightred, $psstyle.italic,$_.count, $psstyle.reset
+                }
+                else {
+                  $_.count
+                }
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>PctTotal</PropertyName>
+                <ScriptBlock>
+                if ($host.name -match 'console|code' -AND $_.Category -eq 'Overdue') {
+                    "{0}{1}{2}{3}" -f $psstyle.Foreground.brightred, $psstyle.italic,$_.PctTotal, $psstyle.reset
+                }
+                else {
+                  $_.PctTotal
+                }
+                </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

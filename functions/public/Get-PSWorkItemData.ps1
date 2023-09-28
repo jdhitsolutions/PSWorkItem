@@ -2,28 +2,28 @@
 #Get raw table data
 Function Get-PSWorkItemData {
     [cmdletbinding()]
-    [OutputType("PSCustomObject")]
+    [OutputType("System.Data.DataTable")]
     Param(
         [Parameter(Position = 0,HelpMessage = "Specify the table name. The default is Tasks")]
         [ValidateSet("Tasks", "Categories", "Archive")]
         [String]$Table = "Tasks",
 
-        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
-        [ValidatePattern("\.db$")]
-        [ValidateScript({
-            if (Test-Path $_) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate $_"
-                Return $False
-            }
-        })]
+        [Parameter(
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
+        )]
+        [ValidatePattern('\.db$')]
+        [ValidateScript(
+            {Test-Path $_},
+            ErrorMessage = "Could not validate the database path."
+        )]
         [String]$Path = $PSWorkItemPath
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        $PSDefaultParameterValues["_verbose:block"] = "Begin"
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingDB -f $path)
         Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
 
@@ -31,18 +31,22 @@ Function Get-PSWorkItemData {
         $splat = @{
             Query       = ""
             Path        = $Path
-            As          = "Object"
+            As          = "Datatable"
             ErrorAction = "Stop"
         }
     } #begin
+
     Process {
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand):Getting raw table data for $Table from $Path "
+        _verbose -message ($strings.GetRaw -f $Table,$Path)
         $splat.query = "Select *,RowID from $Table"
+        _verbose -message $splat.Query
         Invoke-MySQLiteQuery @splat
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
+        $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        _verbose -message $strings.Ending
     } #end
 
 } #close Get-PSWorkItemData

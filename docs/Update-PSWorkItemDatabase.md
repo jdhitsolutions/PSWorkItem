@@ -28,6 +28,7 @@ During the upgrade, a new table column called ID is added to the Tasks and Archi
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 PS C:\> New-PSWorkItem -Name "DOM1 backup" -DaysDue 3 -Category work
 WARNING: Cannot verify the tasks table column ID. Please run Update-PSWorkItemDatabase to update the table then try completing the command again. It is recommended that you backup your database before updating the table.
@@ -68,6 +69,7 @@ You can't change the database until you run Update-PSWorkItemDatabase.
 ## PARAMETERS
 
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
@@ -83,7 +85,6 @@ Accept wildcard characters: False
 ```
 
 ### -PassThru
-{{ Fill PassThru Description }}
 
 ```yaml
 Type: SwitchParameter
@@ -98,6 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
+
 The path to the PSWorkItem SQLite database file.
 It should end in .db
 
@@ -114,6 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -WhatIf
+
 Shows what would happen if the cmdlet runs.
 The cmdlet is not run.
 
@@ -130,6 +133,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS

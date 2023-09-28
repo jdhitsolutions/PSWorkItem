@@ -2,33 +2,26 @@ Function Get-PSWorkItemDatabase {
     [cmdletbinding()]
     [OutputType("PSWorkItemDatabase")]
     Param(
-        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
-        [ValidatePattern("\.db$")]
-        [ValidateScript({
-            if (Test-Path $_) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate $_"
-                Return $False
-            }
-            })]
+        [Parameter(
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
+        )]
+        [ValidatePattern('\.db$')]
+        [ValidateScript(
+            {Test-Path $_},
+            ErrorMessage = "Could not validate the database path."
+        )]
         [String]$Path = $PSWorkItemPath
     )
     Begin {
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
-        # Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): $($strings.Starting)"
-        #_verbose -block begin -message $strings.testing
         _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
         _verbose -message ($strings.UsingDB -f $path)
     } #begin
 
     Process {
         $PSDefaultParameterValues["_verbose:block"] = "Process"
-        #Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Getting database information from $Path"
-        # Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($strings.getData) from $Path"
         _verbose -message ($strings.GetData -f $Path)
         Try {
             $db = Get-MySQLiteDB -Path $Path -ErrorAction Stop
@@ -37,19 +30,14 @@ Function Get-PSWorkItemDatabase {
             Throw $_
         }
         if ($db) {
-            #Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($strings.OpenDBConnection)"
             _verbose -message $strings.OpenDBConnection
             $conn = Open-MySQLiteDB -Path $path
-            #Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($strings.TaskCount)"
             _verbose -message $strings.TaskCount
             $tasks = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from tasks" -ErrorAction Stop
-            #Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($strings.ArchiveCount)"
             _verbose -message $strings.ArchiveCount
             $archived = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from archive" -ErrorAction Stop
-            #Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($strings.CategoryCount)"
             _verbose -message $strings.CategoryCount
             $categories = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from categories" -ErrorAction Stop
-            #Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $($strings.CloseDBConnection)"
             _verbose -message $strings.CloseDBConnection
             Close-MySQLiteDB -Connection $conn
 
@@ -73,8 +61,8 @@ Function Get-PSWorkItemDatabase {
 
     End {
         $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         _verbose -message $strings.Ending
-        #Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): $($strings.Ending)"
     } #end
 
 } #close Get-PSWorkItemDatabase

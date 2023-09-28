@@ -16,13 +16,13 @@ Create a new PSWorkItem.
 ### date (Default)
 
 ```yaml
-New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DueDate <DateTime>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [[-Description] <String>] [-DueDate <DateTime>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [[-Category] <String>] [<CommonParameters>]
 ```
 
 ### days
 
 ```yaml
-New-PSWorkItem [-Name] <String> [-Category] <String> [-Description <String>] [-DaysDue <Int32>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [[-Description] <String>] [-DaysDue <Int32>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [[-Category] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,7 +34,7 @@ Use this command to add a new PSWorkItem to the database. It is assumed you have
 ### Example 1
 
 ```powershell
-PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog -PassThru
+PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2023 5:00PM" -Category Blog -PassThru
 ```
 
 Create a new PSWorkItem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.
@@ -51,14 +51,16 @@ Create a new PSWorkItem due in 3 days.
 
 ### -Category
 
-Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.
+Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
+
+If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -83,7 +85,7 @@ Accept wildcard characters: False
 
 ### -Description
 
-Add a comment or task description.
+Add a comment or task description. Do not include apostrophes.
 
 ```yaml
 Type: String
@@ -100,7 +102,7 @@ Accept wildcard characters: False
 ### -DueDate
 
 When is this task due?
-The default is 30 days.
+The default is the value of adding the number of days in $PSWorkItemDefaultDays to the current date. The module default is 30 days.
 
 ```yaml
 Type: DateTime
@@ -109,14 +111,14 @@ Aliases: Date
 
 Required: False
 Position: Named
-Default value: None
+Default value: $PSWorkItemDefaultDays from now
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Name
 
-The name of the work item.
+The name of the work item. Do not include apostrophes.
 
 ```yaml
 Type: String
@@ -196,7 +198,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -223,3 +225,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Complete-PSWorkItem](Complete-PSWorkItem.md)
 
 [Remove-PSWorkItem](Remove-PSWorkItem.md)
+
+[Open-PSWorkItemConsole](Open-PSWorkItemConsole.md)

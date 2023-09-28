@@ -14,12 +14,12 @@ Get defined PSWorkItem categories.
 ## SYNTAX
 
 ```yaml
-Get-PSWorkItemCategory [[-Category] <String[]>] [-Path <String>] [<CommonParameters>]
+Get-PSWorkItemCategory [[-Category] <String>] [-Path <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-When you create a PSWorkItem, you need to tag it with a category. The category must be defined before you can use it. Get-PSWorkItem category will display information about your categories.
+When you create a PSWorkItem, you need to tag it with a category. The category must be defined before you can use it. Get-PSWorkItemCategory will display information about your categories.
 
 ## EXAMPLES
 
@@ -39,7 +39,6 @@ Business    Corporate-related tasks
 Event       Conference, webinar, or other event
 Testing     Sample category for testing
 Training    Anything related to a training event
-Blog        Blog management or content
 ```
 
 Get all defined categories.
@@ -56,11 +55,31 @@ Blog     Blog management or content
 
 Get information about a single category.
 
+### Example 3
+
+```powershell
+PS C:\> Get-PSWorkItemCategory | Select-Object Category,ANSIString
+
+Category    ANSIString
+--------    ----------
+Work        `e[36m
+Customer
+Other       `e[38;5;204m
+Personal    `e[32m
+Project     `e[38;5;215m
+Business
+Event       `e[38;5;153m
+Testing
+Training    `e[94m
+```
+
+Display categories with their ANSI escape sequences.
+
 ## PARAMETERS
 
 ### -Category
 
-Specify the category name.
+Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String[]
@@ -69,7 +88,7 @@ Aliases: Name
 
 Required: False
 Position: 0
-Default value: None
+Default value: *
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
@@ -112,3 +131,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [Add-PSWorkItemCategory](Add-PSWorkItemCategory.md)
 
 [Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)
+
+[Update-PSWorkItemPreferences](Update-PSWorkItemPreferences.md)

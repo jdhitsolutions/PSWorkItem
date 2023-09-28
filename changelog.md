@@ -2,12 +2,28 @@
 
 ## [Unreleased]
 ### Added
+- Added a parameter set to `Set-PSWorkItem` to let the user clear the description field.
+- Added an option for the user to set the default number of days for a new PSWorkItem. The module default is 30 days, but the user can modify the global variable. The preference commands and format file have been updated to reflect this change.
+- Added parameter validation for `Name` and `Description` parameters to reject values with apostrophes. Apostrophes break SQLite syntax.
+- Added command `Open-PSWorkItemConsole` with an alias of `wic`. This will create a terminal user interface for managing PSWorkItems.
+- Added script property type extension for `PSWorkItemCategory`  called `ANSIString` to show the ANSI sequence.
+- Added command `Get-PSWorkItemPreference`.
 - Added localized string data for verbose, warning, and error messaging.
 - Added parameter alias `Date` to `DueDate` in `New-PSWorkItem`.
+- Updated module to let the user specify a default category for `New-PSWorkItem`. This default must be saved with `Update-PSWorkItemPreference`.
 
 ### Changed
+- Modified `Complete-PSWorkItem`, `Set-PSWorkItem`, and `Remove-PSWorkItem` to accept pipeline input from `Get-PSWorkItem`.
+- Converted the `-Category` parameter in commands to a dynamic parameter. This allows autocompletion of values if the user specifies an alternate database path. __This is a potential breaking change__.
+- Modified Path parameter in functions to use the newer PowerShell 7 compatible [ValidateScript()] attribute.
+- Raised minimum PowerShell version to 7.3. __This is a potential breaking change__.
+- Updated sample PSWorkItem database.
+- Modified `Get-PSWorkItemData` to write `System.Data.DataTable` output.
 - Moved verbose messaging to a private helper function.
 - Modified layout of the default view for `Get-PSWorkItemReport`.
+- Updated format file `psWorkItemPreference.format.ps1xml`.
+- Help updates.
+- Updated `README.md`
 
 ## [1.2.0] - 2023-07-26
 

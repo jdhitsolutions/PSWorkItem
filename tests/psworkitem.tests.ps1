@@ -1,4 +1,3 @@
-
 # test designed for Pester 5.x
 # Import the parent module to test
 
@@ -25,8 +24,8 @@ Describe 'ModuleStructure' {
         $mod.ExportedFunctions.keys | Where-Object { $_ -notmatch "^\w+\-\w+"} | Should -HaveCount 0
     }
 
-    It "Should export 4 format files" {
-        ( $mod.ExportedFormatFiles).count | Should -Be 4
+    It "Should export 5 format files" {
+        ( $mod.ExportedFormatFiles).count | Should -Be 5
     }
 
     It "Should export 2 type extension files" {
@@ -323,12 +322,12 @@ Describe Set-PSWorkItem {
 
 } -Tag function
 
-Describe Update-PSWorkItemPreferences {
+Describe Update-PSWorkItemPreference {
     It "Should have help documentation" {
-        (Get-Help Update-PSWorkItemPreferences).Description | Should -Not -BeNullOrEmpty
+        (Get-Help Update-PSWorkItemPreference).Description | Should -Not -BeNullOrEmpty
     }
     It "Should have a defined output type" {
-        (Get-Command -CommandType function -name Update-PSWorkItemPreferences).OutputType | Should -Not -BeNullOrEmpty
+        (Get-Command -CommandType function -name Update-PSWorkItemPreference).OutputType | Should -Not -BeNullOrEmpty
     }
     It "Should run without error" {
         <#
@@ -336,7 +335,7 @@ Describe Update-PSWorkItemPreferences {
         this test is marked as pending since it
         most likely needs to be refined
         #>
-        {Update-PSWorkItemPreferences} | Should -Not -Throw
+        {Update-PSWorkItemPreference} | Should -Not -Throw
     } -pending
     #insert additional command-specific tests
 
@@ -395,6 +394,26 @@ Describe Set-PSWorkItemCategory {
         most likely needs to be refined
         #>
         {Set-PSWorkItemCategory} | Should -Not -Throw
+    } -pending
+    #insert additional command-specific tests
+
+} -tag function
+
+
+Describe Get-PSWorkItemPreference {
+    It "Should have help documentation" {
+        (Get-Help Get-PSWorkItemPreference).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -name Get-PSWorkItemPreference).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        {Get-PSWorkItemPreference} | Should -Not -Throw
     } -pending
     #insert additional command-specific tests
 

@@ -11,7 +11,7 @@
     CompanyName            = 'JDH Information Technology Solutions, Inc.'
     Copyright              = '(c) JDH Information Technology Solutions, Inc. All rights reserved.'
     Description            = 'A PowerShell 7 module for managing work and personal tasks or to-do items. This module uses a SQLite database to store task and category information. The module is not a full-featured project management solution, but should be fine for personal needs. The module requires a 64-bit Windows platform.'
-    PowerShellVersion      = '7.2'
+    PowerShellVersion      = '7.3'
     DotNetFrameworkVersion = '4.6'
     ProcessorArchitecture  = 'Amd64'
     RequiredModules        = @(@{ModuleName = "mySQLite"; ModuleVersion = "0.9.2" })
@@ -23,7 +23,8 @@
         'formats\psworkitemdatabase.format.ps1xml',
         'formats\psworkitem.format.ps1xml',
         'formats\psworkitemreport.format.ps1xml',
-        'formats\psworkitemcategory.format.ps1xml'
+        'formats\psworkitemcategory.format.ps1xml',
+        'formats\psWorkItemPreference.format.ps1xml'
     )
     FunctionsToExport      = @(
         'Get-PSWorkItem',
@@ -40,13 +41,15 @@
         'Get-PSWorkItemDatabase',
         'Get-PSWorkItemData',
         'Get-PSWorkItemReport',
+        'Get-PSWorkItemPreference',
         'Update-PSWorkItemDatabase',
-        'Update-PSWorkItemPreferences',
-        'Set-PSWorkItemCategory'
+        'Update-PSWorkItemPreference',
+        'Set-PSWorkItemCategory',
+        'Open-PSWorkItemConsole'
     )
     CmdletsToExport        = @()
     VariablesToExport      = @()
-    AliasesToExport        = @('gwi', 'nwi', 'swi', 'rwi', 'cwi')
+    AliasesToExport        = @('gwi', 'nwi', 'swi', 'rwi', 'cwi','wic')
     PrivateData            = @{
         PSData = @{
             Tags           = @('database', 'sqlite', 'to-do', 'project-management', 'tasks')
@@ -60,8 +63,6 @@
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable
-
-    # HelpInfoURI = ''
     # DefaultCommandPrefix = ''
 
 }

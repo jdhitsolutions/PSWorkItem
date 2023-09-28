@@ -21,35 +21,66 @@ Function Get-PSWorkItemArchive {
         [String]$ID,
 
         [Parameter(
-            HelpMessage = 'Get all open tasks by category',
-            ParameterSetName = 'category'
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
         )]
-        [ValidateNotNullOrEmpty()]
-        [String]$Category,
-
-        [Parameter(HelpMessage = 'The path to the PSWorkItem SQLite database file. It should end in .db')]
-        [ValidateNotNullOrEmpty()]
         [ValidatePattern('\.db$')]
-        [ValidateScript({
-            if (Test-Path $_) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate $_"
-                Return $False
-            }
-        })]
+        [ValidateScript(
+            {Test-Path $_},
+            ErrorMessage = "Could not validate the database path."
+        )]
         [String]$Path = $PSWorkItemPath
     )
+    DynamicParam {
+        # Added 26 Sept 2023 to support dynamic categories based on path
+            if (-Not $PSBoundParameters.ContainsKey("Path")) {
+                $Path = $global:PSWorkItemPath
+            }
+            If (Test-Path $Path) {
+
+            $paramDictionary = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
+
+            # Defining parameter attributes
+            $attributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[System.Attribute]
+            $attributes = New-Object System.Management.Automation.ParameterAttribute
+            $attributes.ParameterSetName = 'Category'
+            $attributes.HelpMessage = 'Get all archived PSWorkItems by category'
+
+            # Adding ValidateSet parameter validation
+            #only get categories used in the Archive table
+            #It is possible categories might be entered in different cases in the database
+            [string[]]$values = (Get-PSWorkItemData -Table Archive -Path $Path).Category |
+            Foreach-Object { [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($_)} |
+            Select-Object -unique | Sort-Object
+            $v = New-Object System.Management.Automation.ValidateSetAttribute($values)
+            $AttributeCollection.Add($v)
+
+            # Adding ValidateNotNullOrEmpty parameter validation
+            $v = New-Object System.Management.Automation.ValidateNotNullOrEmptyAttribute
+            $AttributeCollection.Add($v)
+            $attributeCollection.Add($attributes)
+
+            # Defining the runtime parameter
+            $dynParam1 = New-Object -Type System.Management.Automation.RuntimeDefinedParameter('Category', [String], $attributeCollection)
+            $paramDictionary.Add('Category', $dynParam1)
+
+            return $paramDictionary
+        } # end if
+    } #end DynamicParam
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting "
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        $PSDefaultParameterValues["_verbose:block"] = "Begin"
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingDB -f $path)
     } #begin
 
     Process {
+        $Category = $PSBoundParameters["Category"]
+        $PSDefaultParameterValues["_verbose:block"] = "Process"
         #test if archive table has been updated to include the OriginalTaskID column
         $test = Invoke-MySQLiteQuery -Path $path -query "pragma table_info('archive')" | Where-Object name -eq 'id'
         if (-Not $test) {
-            Write-Warning "Cannot verify the archive table column ID. Please run Update-PSWorkItemDatabase to update the table then try completing the command again. It is recommended that you backup your database before updating the table."
+            Write-Warning $strings.CannotVerifyIDColumn
             Return
         }
         Switch ($PSCmdlet.ParameterSetName) {
@@ -67,10 +98,10 @@ Function Get-PSWorkItemArchive {
             }
         }
 
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): $query"
+        _verbose -message $query
         $tasks = Invoke-MySQLiteQuery -Query $query -Path $Path
         if ($tasks.count -gt 0) {
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Found $($tasks.count) matching archived tasks"
+            _verbose -message ($strings.FoundMatching -f $tasks.count)
             $results = foreach ($task in $tasks) {
                 $task | Out-String | Write-Debug
                 #March 10, 2023 PSWorkItemArchive is now a defined class
@@ -82,12 +113,14 @@ Function Get-PSWorkItemArchive {
             $results | Sort-Object -Property TaskModified
         }
         else {
-            Write-Warning 'Failed to find any matching archived tasks'
+            Write-Warning $strings.FailedToFindArchivedTasks
         }
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending."
+        $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        _verbose -message $strings.Ending
     } #end
 
 }

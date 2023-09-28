@@ -38,7 +38,7 @@ Work     Uncategorized work activities
 
 ### -Category
 
-Specify a case-sensitive category name.
+Specify a case-sensitive category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String

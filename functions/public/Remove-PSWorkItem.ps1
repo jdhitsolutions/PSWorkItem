@@ -12,43 +12,50 @@ Function Remove-PSWorkItem {
         [ValidateNotNullOrEmpty()]
         [int]$ID,
 
-        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
-        [ValidatePattern("\.db$")]
-        [ValidateScript({
-            if (Test-Path $_) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate $_"
-                Return $False
-            }
-        })]
+        [Parameter(
+            ValueFromPipelineByPropertyName,
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
+        )]
+        [ValidatePattern('\.db$')]
+        [ValidateScript(
+            {Test-Path $_},
+            ErrorMessage = "Could not validate the database path."
+        )]
         [String]$Path = $PSWorkItemPath
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
-        $PSBoundParameters | Out-String | Write-Verbose
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
-        Try {
-            $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
-            $conn | Out-String | Write-Debug
-        }
-        Catch {
-            Throw "$($MyInvocation.MyCommand): Failed to open the database $Path"
-        }
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        $PSDefaultParameterValues["_verbose:block"] = "Begin"
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        Write-Debug "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
+        $PSBoundParameters | Out-String | Write-Debug
 
         #parameters to splat to Invoke-MySQLiteQuery
         $splat = @{
-            Connection = $conn
+            Connection = $Null
             KeepAlive  = $true
             Query      = ""
         }
     } #begin
 
     Process {
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Removing task $ID"
+        $PSDefaultParameterValues["_verbose:block"] = "Process"
+        #28 Sept 2023 Move Path to the process block so the parameter can
+        #accept pipeline input by property name.
+        _verbose -message ($strings.UsingDB -f $Path)
+        if ($conn.state -ne 'Open') {
+            Try {
+                _verbose -message $strings.OpenDBConnection
+                $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
+                $conn | Out-String | Write-Debug
+                $splat.Connection = $conn
+            }
+            Catch {
+                Throw "$($MyInvocation.MyCommand): $($strings.FailToOpen -f $Path)"
+            }
+        }
+        _verbose -message ($strings.RemoveTaskID -f $ID)
         $splat.query = "SELECT * FROM tasks WHERE id = '$ID' collate nocase"
         $task = Invoke-MySQLiteQuery @splat
         $splat.query = "DELETE FROM tasks WHERE taskid = '$($task.taskid)'"
@@ -58,11 +65,12 @@ Function Remove-PSWorkItem {
     } #process
 
     End {
+        $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         if ($conn.state -eq 'Open') {
-            Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Closing database connection."
+            _verbose -message $strings.CloseDBConnection
             Close-MySQLiteDB -Connection $conn
         }
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending "
+        _verbose -message $strings.Ending
     } #end
-
 }

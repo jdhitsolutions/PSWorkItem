@@ -2,7 +2,7 @@ Function Set-PSWorkItemCategory {
     [cmdletbinding(SupportsShouldProcess)]
     [OutputType('None', 'PSWorkItemCategory')]
     Param(
-        [Parameter(
+<#         [Parameter(
             Position = 0,
             Mandatory,
             ValueFromPipeline,
@@ -10,7 +10,7 @@ Function Set-PSWorkItemCategory {
         )]
         [ValidateNotNullOrEmpty()]
         [Alias('Name')]
-        [string]$Category,
+        [string]$Category, #>
 
         [Parameter(
             HelpMessage = 'Specify a category comment or description.'
@@ -21,40 +21,81 @@ Function Set-PSWorkItemCategory {
         [ValidateNotNullOrEmpty()]
         [string]$NewName,
 
-        [Parameter(HelpMessage = 'The path to the PSWorkItem SQLite database file. It should end in .db')]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
+        )]
         [ValidatePattern('\.db$')]
-        [ValidateScript({
-                if (Test-Path $_) {
-                    Return $True
-                }
-                else {
-                    Throw "Failed to validate $_"
-                    Return $False
-                }
-            })]
+        [ValidateScript(
+            {Test-Path $_},
+            ErrorMessage = "Could not validate the database path."
+        )]
         [String]$Path = $PSWorkItemPath,
+
         [switch]$PassThru
     )
+    DynamicParam {
+        # Added 26 Sept 2023 to support dynamic categories based on path
+        if (-Not $PSBoundParameters.ContainsKey('Path')) {
+            $Path = $global:PSWorkItemPath
+        }
+        If (Test-Path $Path) {
+
+            $paramDictionary = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
+
+            # Defining parameter attributes
+            $attributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[System.Attribute]
+            $attributes = New-Object System.Management.Automation.ParameterAttribute
+            $attributes.ValueFromPipeline = $True
+            $attributes.Position = 0
+            $attributes.Mandatory = $True
+            $attributes.HelpMessage = 'Specify a case-sensitive category name'
+
+            # Adding ValidateSet parameter validation
+            #It is possible categories might be entered in different cases in the database
+            [string[]]$values = (Get-PSWorkItemData -Table Categories -Path $Path).Category |
+            ForEach-Object { [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($_) } |
+            Select-Object -Unique | Sort-Object
+            $v = [System.Management.Automation.ValidateSetAttribute]::New($values)
+            $AttributeCollection.Add($v)
+
+            # Adding ValidateNotNullOrEmpty parameter validation
+            $v = New-Object System.Management.Automation.ValidateNotNullOrEmptyAttribute
+            $AttributeCollection.Add($v)
+            $attributeCollection.Add($attributes)
+
+            # Adding a parameter alias
+            $dynAlias = New-Object System.Management.Automation.AliasAttribute -ArgumentList 'Name'
+            $attributeCollection.Add($dynAlias)
+
+            # Defining the runtime parameter
+            $dynParam1 = New-Object -Type System.Management.Automation.RuntimeDefinedParameter('Category', [String], $attributeCollection)
+            $dynParam1.Value = '*'
+            $paramDictionary.Add('Category', $dynParam1)
+
+            return $paramDictionary
+        } # end if
+    } #end DynamicParam
 
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Running under PowerShell version $($PSVersionTable.PSVersion)"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        $PSDefaultParameterValues["_verbose:block"] = "Begin"
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
         if ((-Not $PSBoundParameters.ContainsKey('Description')) -AND (-Not $PSBoundParameters.ContainsKey('NewName'))) {
-            Write-Warning 'You must specify either a description or a new name'
+            Write-Warning $strings.WarnDescriptionOrName
             Return
         }
         Write-Debug 'Using bound parameters'
         $PSBoundParameters | Out-String | Write-Debug
 
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
+        _verbose -message ($strings.UsingDB -f $path)
         Try {
             $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
             $conn | Out-String | Write-Debug
 
         }
         Catch {
-            Throw "$($MyInvocation.MyCommand): Failed to open the database $Path"
+            Throw "$($MyInvocation.MyCommand): $($strings.FailToOpen -f $Path)"
         }
 
         #parameters to splat to Invoke-MySQLiteQuery
@@ -69,16 +110,16 @@ Function Set-PSWorkItemCategory {
     } #begin
 
     Process {
-
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Processing $Category"
+        $PSDefaultParameterValues["_verbose:block"] = "Process"
+        _verbose -message ($strings.ProcessCategory -f $Category)
         if ($conn.state -eq 'open') {
-            Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Validating category $category"
+            _verbose -message ($strings.ValidateCategory -f $category)
             $splat.query = "SELECT * FROM categories WHERE category = '$Category' collate nocase"
             Try {
                 $cat = Invoke-MySQLiteQuery @splat
             }
             Catch {
-                Write-Warning "Failed to execute query $($splat.query)"
+                Write-Warning ($strings.FailedQuery -f $splat.query)
                 Close-MySQLiteDB -Connection $conn
                 Throw $_
             }
@@ -109,17 +150,20 @@ Function Set-PSWorkItemCategory {
             } #If category found
         } #IF connection open
         else {
-            Write-Warning "$($MyInvocation.MyCommand): The database connection is not open"
+            Write-Warning "$($MyInvocation.MyCommand): $($strings.DatabaseConnectionNotOpen)"
         }
 
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Closing the connection to $Path"
+        $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         if ($conn.state -eq 'open') {
+            _verbose -message ($strings.CloseDBConnection)
             Close-MySQLiteDB -Connection $conn
         }
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
+        _verbose -message $strings.Ending
+
     } #end
 
 } #close Set-PSWorkItemCategory

@@ -6,7 +6,7 @@ This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions
 
 ## Installation
 
-This module requires PowerShell 7.2 or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform__ until the dependency SQLite module supports non-Windows systems. You can install this module from the PowerShell Gallery.
+This module requires __PowerShell 7.3__ or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform__ until the dependency SQLite module supports non-Windows systems. You can install this module from the PowerShell Gallery.
 
 ```powershell
 Install-Module PSWorkItem [-scope CurrentUser]
@@ -31,6 +31,7 @@ Install-Module PSWorkItem [-scope CurrentUser]
 - [Get-PSWorkItemCategory](docs/Get-PSWorkItemCategory.md)
 - [Get-PSWorkItemData](docs/Get-PSWorkItemData.md)
 - [Get-PSWorkItemDatabase](docs/Get-PSWorkItemDatabase.md)
+- [Get-PSWorkItemPreference](docs/Get-PSWorkItemPreference.md)
 - [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md)
 - [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md)
 - [New-PSWorkItem](docs/New-PSWorkItem.md)
@@ -40,7 +41,7 @@ Install-Module PSWorkItem [-scope CurrentUser]
 - [Set-PSWorkItem](docs/Set-PSWorkItem.md)
 - [Set-PSWorkItemCategory](docs/Set-PSWorkItemCategory.md)
 - [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md)
-- [Update-PSWorkItemPreferences](docs/Update-PSWorkItemPreferences.md)
+- [Update-PSWorkItemPreference](docs/Update-PSWorkItemPreference.md)
 
 The module is based on three tables in a SQLite database file. The primary `Tasks` table is where active items are stored.
 
@@ -230,7 +231,7 @@ You can modify this hashtable as you would any other hashtable.
 $PSWorkItemCategory.Add("Event","`e[38;5;153m")
 ```
 
-The entry will have no effect unless the category is defined in the database. The category customizations last for the duration of your PowerShell session or until the module is removed. Add your customizations to your PowerShell profile script.
+The entry will have no effect unless the category is defined in the database. The category customizations last for the duration of your PowerShell session or until the module is removed. Add your customizations to your PowerShell profile script or use `Update-PSWorkItemPreference` to save the settings to a JSON file under $HOME.
 
 > Note that when you view the hashtable, you won't see any values because they escape sequences are non-printable.
 
@@ -303,6 +304,61 @@ Overdue      4       31
 
 The percentages for each category are rounded. The percentage for Overdue items is based on all open work items.
 
+## TUI-Based Management Console
+
+Version 1.3.0 added a management console based the [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui) framework.
+
+![console management](images/psworkitemconsole.png)
+
+Run [`Open-PSWorkItemConsole`](docs\Open-PSWorkItemConsole.md) or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the Open Database command under Options. The file must end in `.db`. If you select a different database, you can use Options - Reset Form to reset to your default database.
+
+If you select an item from the table, it will populate the form fields. You can then update, complete, or remove the item. To create a new item, it is recommended that you first clear the form, (Options - Clear Form). Enter the PSWorkItem details and click the `Add PSWorkItem` button.
+
+__IMPORTANT__ This command relies on a specific version the Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like `Microsoft.PowerShell.ConsoleGuiTools``. You may need to load this module first in a new PowerShell session.
+
+## User Preferences
+
+The module includes features for the user to save preferences. You might update ANSI sequences for some categories using `$PSWorkItemCategory`. You might have set a different default database path using `$PSWorkItemPath`. Or you might have specified a different value for the number of default days with `$PSWorkItemDefaultDays`. Instead of setting these values in your PowerShell profile, you can export them to a JSON file.
+
+```powershell
+Update-PSWorkItemPreference
+```
+
+This will create a JSON file in `$HOME` called `.psworkitempref.json`. The settings in this file will be used when importing the module.
+
+You can also specify a default category for `New-PSWorkItem`.
+
+```powershell
+Update-PSWorkItemPreference -DefaultCategory Work
+```
+
+The next time you import the module, an entry will be made to $PSDefaultParameterValues.
+
+```powershell
+$global:PSDefaultParameterValues["New-PSWorkItem:Category"] = $importPref.DefaultCategory
+```
+
+Use `Get-PSWorkItemPreference`` to view.
+
+```powershell
+PS C:\> Get-PSWorkItemPreference
+
+   Path: C:\Users\Jeff\PSWorkItem.db [Default Days: 7 Default Category: Work]
+
+Category    ANSIString
+--------    ----------
+Other       `e[38;5;204m
+Project     `e[38;5;215m
+Event       `e[38;5;153m
+Training    `e[94m
+Work        `e[36m
+Personal    `e[32m
+```
+
+The categories are only those where you have customized an ANSI sequence. On module import, these categories will be used to populate `$PSWorkItemCategory.` If you make any changes to your preference, re-run `Update-PSWorkItemPreference`.
+
+> It is possible you will need to manually delete the JSON preferences file if you uninstall the module.
+
 ## Database Backup
 
 This module has no specific commands for backing up or restoring a database file. But you can use the `Export-MySQLiteDB` command to export the PSWorkItem database file to a JSON file.
@@ -342,7 +398,6 @@ rowid        : 19
 ## Future Tasks or Commands
 
 - Password protection options.
-- A WPF and/or TUI form for entering new work items, although you could easily use `Show-Command`.
-- A WPF and/or TUI form for displaying and managing work items and categories
+- A TUI form for managing categories
 
 If you have an enhancement suggestion, please submit it as an [Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).

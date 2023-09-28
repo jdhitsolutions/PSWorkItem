@@ -13,13 +13,24 @@ Modify an existing PSWorkItem
 
 ## SYNTAX
 
+### set (Default)
+
 ```yaml
-Set-PSWorkItem [-ID] <Int32> [-Name <String>] [-Description <String>] [-DueDate <DateTime>] [-Category <String>] [-Progress <Int32>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-PSWorkItem [-ID] <Int32> [-Name <String>] [-Description <String>]
+[-DueDate <DateTime>] [-Category <String>] [-Progress <Int32>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### clear
+
+```yaml
+Set-PSWorkItem [-ID] <Int32> [-Path <String>] [-PassThru] [-ClearDescription] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
 When you need to update a task, use Set-PSWorkItem. You need to use the PSWorkItem ID to identify the item to be updated. You can then update the Name, Description, DueDate, Category, and Progress.
+
+If you want to clear the Description, use the -ClearDescription parameter. All other properties will remain untouched.
 
 ## EXAMPLES
 
@@ -40,21 +51,29 @@ PS C:\> Get-PSWorkItem -Category blog | Set-PSWorkItem -Category Other -PassThru
 
 ID Name              Description         DueDate             Category Pct
 -- ----              -----------         -------             -------- ---
- 9 Clean database                        8/2/2022 9:34:35 AM Other      0
- 5 revise blog pages essentials and tips 8/7/2022 5:00:00 PM Other      0
- ```
+ 9 Clean database                        8/2/2023 9:34:35 AM Other      0
+ 5 revise blog pages essentials and tips 8/7/2023 5:00:00 PM Other      0
+```
 
- Modify multiple PSWorkItems at the same time.
+Modify multiple PSWorkItems at the same time.
+
+### Example 3
+
+```powershell
+PS C:\ Set-PSWorkItem -id 5 -ClearDescription
+```
+
+Clear the description property for the PSWorkItem with the ID of 5.
 
 ## PARAMETERS
 
 ### -Category
 
-Specify an updated category. There should be tab-completion for this parameter.
+Specify an updated category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: set
 Aliases:
 
 Required: False
@@ -82,11 +101,11 @@ Accept wildcard characters: False
 
 ### -Description
 
-Specify an updated description.
+Specify an updated description. Do not include apostrophes.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: set
 Aliases:
 
 Required: False
@@ -102,7 +121,7 @@ Specify an updated due date.
 
 ```yaml
 Type: DateTime
-Parameter Sets: (All)
+Parameter Sets: set
 Aliases:
 
 Required: False
@@ -130,11 +149,11 @@ Accept wildcard characters: False
 
 ### -Name
 
-The updated name of the PSWorkItem.
+The updated name of the PSWorkItem. Do not include apostrophes.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: set
 Aliases: task
 
 Required: False
@@ -171,7 +190,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: $PSWorkItemPath
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -181,7 +200,7 @@ Specify a percentage complete.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: set
 Aliases:
 
 Required: False
@@ -208,9 +227,25 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ClearDescription
+
+Clear the description field. All other fields will remain untouched.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: clear
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 
-This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

@@ -31,6 +31,14 @@ PS C:\> Remove-PSWorkItem -ID 10
 
 Remove the PSWorkItem with an ID of 10.
 
+### Example 2
+
+```powershell
+PS C:\> Get-PSWorkItem -Category Testing | Remove-PSWorkItem
+```
+
+Remove all work items in the Test category.
+
 ## PARAMETERS
 
 ### -Confirm
@@ -78,7 +86,7 @@ Aliases:
 Required: False
 Position: Named
 Default value: $PSWorkItemPath
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

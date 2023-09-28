@@ -33,7 +33,7 @@ Get-PSWorkItemArchive [-Category <String>] [-Path <String>] [<CommonParameters>]
 
 ## DESCRIPTION
 
-Completed PSWorkItems are moved to the Archive table. Using this command to view completed tasks.
+Completed PSWorkItems are moved to the Archive table. Using this command to view completed items.
 
 ## EXAMPLES
 
@@ -46,12 +46,12 @@ PS C:\> Get-PSWorkItemArchive
 
 ID Name               Description                          Category Completed
 -- ----               -----------                          -------- ---------
-1  upgrade prep                                            Temp     7/29/2022 10:35:42 AM
-2  Order dog food                                          Personal 7/30/2022 10:09:09 AM
-3  Update-PSScripting update scripting and toolmaking book Project  7/30/2022 10:13:45 AM
-4  car inspection                                          Personal 7/30/2022 10:35:03 AM
-6  Clean database                                          Other    7/30/2022 10:40:48 AM
-5  weekly report                                           work     8/1/2022 8:30:00 AM
+1  upgrade prep                                            Temp     7/29/2023 10:35:42 AM
+2  Order dog food                                          Personal 7/30/2023 10:09:09 AM
+3  Update-PSScripting update scripting and toolmaking book Project  7/30/2023 10:13:45 AM
+4  car inspection                                          Personal 7/30/2023 10:35:03 AM
+6  Clean database                                          Other    7/30/2023 10:40:48 AM
+5  weekly report                                           work     8/1/2023 8:30:00 AM
 ```
 
 Get all archived PSWorkItems.
@@ -65,8 +65,8 @@ PS C:\> Get-PSWorkItemArchive -Category Personal
 
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------
-2  Order dog food             Personal 7/30/2022 10:09:09 AM
-4  car inspection             Personal 7/30/2022 10:35:03 AM
+2  Order dog food             Personal 7/30/2023 10:09:09 AM
+4  car inspection             Personal 7/30/2023 10:35:03 AM
 ```
 
 Get archived PSWorkItems by category.
@@ -75,7 +75,7 @@ Get archived PSWorkItems by category.
 
 ### -Category
 
-Get all open tasks by category. There should be tab-completion for this parameter.
+Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String

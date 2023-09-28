@@ -2,26 +2,27 @@ Function Get-PSWorkItemReport {
     [cmdletbinding()]
     [OutputType("PSWorkItemReport")]
     Param(
-        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
-        [ValidatePattern("\.db$")]
-        [ValidateScript({
-                if (Test-Path $_) {
-                    Return $True
-                }
-                else {
-                    Throw "Failed to validate $_"
-                    Return $False
-                }
-            })]
+        [Parameter(
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
+        )]
+        [ValidatePattern('\.db$')]
+        [ValidateScript(
+            {Test-Path $_},
+            ErrorMessage = "Could not validate the database path."
+        )]
         [String]$Path = $PSWorkItemPath
     )
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
+        $PSDefaultParameterValues["_verbose:block"] = "Begin"
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingDB -f $path)
     } #begin
 
     Process {
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Getting work item report from $Path"
+        $PSDefaultParameterValues["_verbose:block"] = "Process"
+        _verbose -message ($strings.GetReport -f $Path)
         Get-PSWorkItem -Path $Path -All -OutVariable all |
         Group-Object category -NoElement |
         Sort-Object count, name -Descending | ForEach-Object {
@@ -46,7 +47,8 @@ Function Get-PSWorkItemReport {
     } #process
 
     End {
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
+        $PSDefaultParameterValues["_verbose:block"] = "End"
+        _verbose -message $strings.Ending -command $myInvocation.MyCommand
     } #end
 
 } #close Get-PSWorkItemReport

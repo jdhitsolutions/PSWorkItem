@@ -19,7 +19,7 @@ Get-PSWorkItemData [[-Table] <String>] [-Path <String>] [<CommonParameters>]
 
 ## DESCRIPTION
 
-Most of the time you will use commands like Get-PSWorkItem to get data from the PSWorkItem database. Get-PSWorkItemData can be used to query the database directly and skip creating custom objects. This could  be a helpful command for troubleshooting or debugging.
+Most of the time you will use commands like Get-PSWorkItem to get data from the PSWorkItem database. Get-PSWorkItemData can be used to query the database directly and skip creating custom objects. This could be a helpful command for troubleshooting or debugging.
 
 ## EXAMPLES
 
@@ -95,7 +95,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PSCustomObject
+### System.Data.DataTable
 
 ## NOTES
 
@@ -105,4 +105,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 [Get-PSWorkItemDatabase](Get-PSWorkItemDatase.md)
 
-[Invoke-MySQLiteQuery]()
+[Invoke-MySQLiteQuery](https://bit.ly/3B6YcOW)

@@ -33,7 +33,7 @@ Remove-PSWorkItemArchive [[-Name] <String>] [-Path <String>] [-WhatIf] [-Confirm
 
 ## DESCRIPTION
 
-Completed work items are moved to the Archive table in the PSWorkItem database. At some point, you may wish to clear out old archived tasks. There is no technical reason you would need to do this, but if you want to, use Remove-PSWorkItemArchive. You can remove archived items by ID, category, or name.
+Completed work items are moved to the Archive table in the PSWorkItem database. At some point, you may wish to clear out old archived PSWorkItems. There is no technical reason you would need to do this, but if you want to, use Remove-PSWorkItemArchive. You can remove archived PSWorkItems by ID, category, or name.
 
 ## EXAMPLES
 
@@ -83,7 +83,7 @@ Remove archived items where the name end in 'report'.
 
 ### -Category
 
-A PSWorkItem category.
+A PSWorkItem category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String

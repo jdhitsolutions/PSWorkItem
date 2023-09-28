@@ -1,102 +1,131 @@
 Function Remove-PSWorkItemArchive {
-    [cmdletbinding(SupportsShouldProcess,DefaultParameterSetName = "id")]
-    [alias("rwi")]
-    [outputType("None")]
+    [cmdletbinding(SupportsShouldProcess, DefaultParameterSetName = 'id')]
+    [alias('rwi')]
+    [outputType('None')]
     Param(
         [Parameter(
             Position = 0,
             Mandatory,
-            HelpMessage = "The archive work item ID.",
+            HelpMessage = 'The archive work item ID.',
             ValueFromPipelineByPropertyName,
-            ParameterSetName = "id"
+            ParameterSetName = 'id'
         )]
         [ValidateNotNullOrEmpty()]
         [int]$ID,
 
         [Parameter(
-            Position = 0,
-            Mandatory,
-            HelpMessage = "A PSWorkItem category",
-            ParameterSetName = "category"
-        )]
-        [ValidateNotNullOrEmpty()]
-        [string]$Category,
-
-        [Parameter(
-            Position = 0,
-            HelpMessage = "The name of the archive work item. Wildcards are supported.",
-            ParameterSetName = "name"
+            HelpMessage = 'The name of the archive work item. Wildcards are supported.',
+            ParameterSetName = 'name'
         )]
         [ValidateNotNullOrEmpty()]
         [SupportsWildcards()]
-        [alias("task")]
+        [alias('task')]
         [String]$Name,
 
-        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
-        [ValidatePattern("\.db$")]
-        [ValidateScript({
-            if (Test-Path $_) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate $_"
-                Return $False
-            }
-        })]
+        [Parameter(
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
+        )]
+        [ValidatePattern('\.db$')]
+        [ValidateScript(
+            { Test-Path $_ },
+            ErrorMessage = 'Could not validate the database path.'
+        )]
         [String]$Path = $PSWorkItemPath
     )
+    DynamicParam {
+        # Added 26 Sept 2023 to support dynamic categories based on path
+        if (-Not $PSBoundParameters.ContainsKey('Path')) {
+            $Path = $global:PSWorkItemPath
+        }
+        If (Test-Path $Path) {
+
+            $paramDictionary = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
+
+            # Defining parameter attributes
+            $attributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[System.Attribute]
+            $attributes = New-Object System.Management.Automation.ParameterAttribute
+            $attributes.ParameterSetName = 'Category'
+            $attributes.Mandatory = $True
+            $attributes.HelpMessage = 'Removed archived PSWorkItems by the selected category'
+
+            # Adding ValidateSet parameter validation
+            #only get categories used in the Archive table
+            #It is possible categories might be entered in different cases in the database
+            [string[]]$value = (Get-PSWorkItemData -Table Categories -Path $Path).Category |
+            ForEach-Object { [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($_) } |
+            Select-Object -Unique | Sort-Object
+            $v = New-Object System.Management.Automation.ValidateSetAttribute($value)
+            $AttributeCollection.Add($v)
+
+            # Adding ValidateNotNullOrEmpty parameter validation
+            $v = New-Object System.Management.Automation.ValidateNotNullOrEmptyAttribute
+            $AttributeCollection.Add($v)
+            $attributeCollection.Add($attributes)
+
+            # Defining the runtime parameter
+            $dynParam1 = New-Object -Type System.Management.Automation.RuntimeDefinedParameter('Category', [String], $attributeCollection)
+            $paramDictionary.Add('Category', $dynParam1)
+
+            return $paramDictionary
+        } # end if
+    } #end DynamicParam
+
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
-        $PSBoundParameters | Out-String | Write-Verbose
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
+        $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
+        $PSDefaultParameterValues['_verbose:block'] = 'Begin'
+        _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingDB -f $path)
+        Write-Debug "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
+        $PSBoundParameters | Out-String | Write-Debug
+        _verbose $strings.OpenDBConnection
         Try {
             $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
             $conn | Out-String | Write-Debug
         }
         Catch {
-            Throw "$($MyInvocation.MyCommand): Failed to open the database $Path"
+            Throw "$($MyInvocation.MyCommand): $($strings.FailToOpen -f $Path)"
         }
 
         #parameters to splat to Invoke-MySQLiteQuery
         $splat = @{
             Connection = $conn
             KeepAlive  = $true
-            Query      = ""
+            Query      = ''
         }
     } #begin
 
     Process {
         Switch ($PSCmdlet.ParameterSetName) {
-            "id" {
-                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Removing archived task $ID"
+            'id' {
+                _verbose -message ($strings.RemoveArchivedTask -f $ID)
                 $splat.query = "SELECT * FROM archive WHERE id = '$ID'"
-                $warn = "Failed to find an archived work item with an ID of $id"
+                $warn = ($strings.FailedToFindArchiveID -f $ID)
             }
-            "category" {
-                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Removing archived tasks in the $category category"
+            'category' {
+                $Category = $PSBoundParameters['Category']
+                _verbose -message ($strings.RemoveArchivedTaskCategory -f $Category)
                 $splat.query = "SELECT * FROM archive WHERE category = '$Category' collate nocase"
-                $warn = "Failed to find matching archived work items in the $Category category"
+                $warn = ($strings.FailedToFindArchiveCategory -f $Category)
             }
-            "name" {
-                Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Removing archived tasks by name $Name"
-                if ($Name -match "\*") {
-                    $Name = $name.replace("*", "%")
+            'name' {
+                _verbose -message ($strings.RemoveArchivedTaskName -f $Name)
+                if ($Name -match '\*') {
+                    $Name = $name.replace('*', '%')
                 }
                 $splat.query = "SELECT * FROM archive WHERE name like '$name' collate nocase"
-                $warn = "Failed to find any archived work items called $name"
+                $warn = ($strings.FailedToFindArchiveName -f $Name)
             }
         }
 
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($splat.query)"
+        _verbose -message $splat.query
         $tasks = Invoke-MySQLiteQuery @splat
         if ($tasks.taskid) {
             #An older database that was upgraded might have multiple items
             #with the same ID
             foreach ($task in $tasks) {
                 $splat.query = "DELETE FROM archive WHERE taskid = '$($task.taskid)'"
-                if ($PSCmdlet.ShouldProcess($task.taskid, "Remove-PSWorkItemArchive")) {
+                if ($PSCmdlet.ShouldProcess($task.taskid, 'Remove-PSWorkItemArchive')) {
                     Invoke-MySQLiteQuery @splat
                 }
             } #foreach
@@ -107,11 +136,13 @@ Function Remove-PSWorkItemArchive {
     } #process
 
     End {
+        $PSDefaultParameterValues['_verbose:block'] = 'End'
+        $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         if ($conn.state -eq 'Open') {
-            Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Closing database connection."
+            _verbose -message $strings.CloseDBConnection
             Close-MySQLiteDB -Connection $conn
         }
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending "
+        _verbose -message $strings.Ending
     } #end
 
 }

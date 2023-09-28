@@ -266,7 +266,7 @@ Blog     blog management and content</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Arhive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.</maml:para>
+      <maml:para>When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Archive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -294,7 +294,7 @@ Blog     blog management and content</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
             <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
@@ -367,7 +367,7 @@ Blog     blog management and content</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
           <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
@@ -458,9 +458,16 @@ Blog     blog management and content</dev:code>
     Database: C:\Users\Jeff\PSWorkItem.db
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------
-6  Clean database             Other    7/30/2022 10:40:48 AM</dev:code>
+6  Clean database             Other    7/30/2023 10:40:48 AM</dev:code>
         <dev:remarks>
           <maml:para>Mark a PSWorkItem as completed and move it to the Archive table. The PSWorkItem will most likely get a new ID. The item will be deleted from the Tasks table.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PSWorkItem -category Alpha | Complete-WorkItem</dev:code>
+        <dev:remarks>
+          <maml:para>Complete all work items from the Alpha category.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -501,7 +508,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>All</maml:name>
           <maml:description>
-            <maml:para>Get all open tasks.</maml:para>
+            <maml:para>Get all open PSWorkItems.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -527,7 +534,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Get all open tasks by category. There should be tab-completion for this parameter.</maml:para>
+            <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you are specifying an alternate path, specify the path before using this parameter.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -554,7 +561,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>DaysDue</maml:name>
           <maml:description>
-            <maml:para>Get open tasks due in the number of days between 1 and 365.</maml:para>
+            <maml:para>Get open PSWorkItems due in the number of days between 1 and 365.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -608,7 +615,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
           <maml:name>Name</maml:name>
           <maml:description>
-            <maml:para>The name of the work item. Wilcards are supported.</maml:para>
+            <maml:para>The name of the PSWorkItem. Wildcards are supported.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -635,7 +642,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>All</maml:name>
         <maml:description>
-          <maml:para>Get all open tasks.</maml:para>
+          <maml:para>Get all open PSWorkItems.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -647,7 +654,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Get all open tasks by category. There should be tab-completion for this parameter.</maml:para>
+          <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you are specifying an alternate path, specify the path before using this parameter.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -659,7 +666,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>DaysDue</maml:name>
         <maml:description>
-          <maml:para>Get open tasks due in the number of days between 1 and 365.</maml:para>
+          <maml:para>Get open PSWorkItems due in the number of days between 1 and 365.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -683,7 +690,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
         <maml:name>Name</maml:name>
         <maml:description>
-          <maml:para>The name of the work item. Wilcards are supported.</maml:para>
+          <maml:para>The name of the PSWorkItem. Wildcards are supported.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -740,9 +747,9 @@ ID Name           Description Category Completed
 
 ID Name              Description         DueDate              Category Pct
 -- ----              -----------         -------              -------- ---
- 6 new server prep   SQL02               8/3/2022 5:00:00 PM  Work      45
- 7 password report                       8/5/2022 12:00:00 PM Work      10
- 5 revise blog pages essentials and tips 8/7/2022 5:00:00 PM  Other      0</dev:code>
+ 6 new server prep   SQL02               8/3/2023 5:00:00 PM  Work      45
+ 7 password report                       8/5/2023 12:00:00 PM Work      10
+ 5 revise blog pages essentials and tips 8/7/2023 5:00:00 PM  Other      0</dev:code>
         <dev:remarks>
           <maml:para>Get all items due in the next 10 days.</maml:para>
         </dev:remarks>
@@ -755,12 +762,12 @@ ID Name              Description         DueDate              Category Pct
 
 ID Name              Description         DueDate               Category Pct
 -- ----              -----------         -------               -------- ---
- 6 new server prep   SQL02               8/3/2022 5:00:00 PM   Work      45
- 7 password report                       8/5/2022 12:00:00 PM  Work      10
- 5 revise blog pages essentials and tips 8/7/2022 5:00:00 PM   Other      0
- 1 update data                           8/28/2022 10:35:02 AM Temp       0
- 9 Prep vacation                         11/1/2022 5:00:00 PM  Personal   0
- 8 Year end backup                       12/31/2022 5:00:00 PM Work       0</dev:code>
+ 6 new server prep   SQL02               8/3/2023 5:00:00 PM   Work      45
+ 7 password report                       8/5/2023 12:00:00 PM  Work      10
+ 5 revise blog pages essentials and tips 8/7/2023 5:00:00 PM   Other      0
+ 1 update data                           8/28/2023 10:35:02 AM Temp       0
+ 9 Prep vacation                         11/1/2023 5:00:00 PM  Personal   0
+ 8 Year end backup                       12/31/2023 5:00:00 PM Work       0</dev:code>
         <dev:remarks>
           <maml:para>Get all open tasks.</maml:para>
         </dev:remarks>
@@ -773,9 +780,9 @@ ID Name              Description         DueDate               Category Pct
 
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
- 6 new server prep SQL02       8/3/2022 5:00:00 PM   Work      45
- 7 password report             8/5/2022 12:00:00 PM  Work      10
- 8 Year end backup             12/31/2022 5:00:00 PM Work       0</dev:code>
+ 6 new server prep SQL02       8/3/2023 5:00:00 PM   Work      45
+ 7 password report             8/5/2023 12:00:00 PM  Work      10
+ 8 Year end backup             12/31/2023 5:00:00 PM Work       0</dev:code>
         <dev:remarks>
           <maml:para>Get tasks from the Work category.</maml:para>
         </dev:remarks>
@@ -788,7 +795,7 @@ ID Name            Description DueDate               Category Pct
 
 ID Name          Description DueDate              Category Pct
 -- ----          ----------- -------              -------- ---
- 9 Prep vacation             11/1/2022 5:00:00 PM Personal   0</dev:code>
+ 9 Prep vacation             11/1/2023 5:00:00 PM Personal   0</dev:code>
         <dev:remarks>
           <maml:para>Get a PSWorkItem by its ID.</maml:para>
         </dev:remarks>
@@ -801,8 +808,8 @@ ID Name          Description DueDate              Category Pct
 
 ID Name            Description DueDate              Category Pct
 -- ----            ----------- -------              -------- ---
- 7 password report             8/5/2022 12:00:00 PM Work      10
- 9 Prep vacation               11/1/2022 5:00:00 PM Personal   0</dev:code>
+ 7 password report             8/5/2023 12:00:00 PM Work      10
+ 9 Prep vacation               11/1/2023 5:00:00 PM Personal   0</dev:code>
         <dev:remarks>
           <maml:para>Get PSWorkItems with a name that begins with P.</maml:para>
         </dev:remarks>
@@ -813,9 +820,9 @@ ID Name            Description DueDate              Category Pct
 
 ID Name              Description         DueDate              TimeRemaining
 -- ----              -----------         -------              -------------
-6  new server prep   SQL02               8/3/2022 5:00:00 PM     4.05:20:31
-7  password report                       8/5/2022 12:00:00 PM    6.00:20:31
-5  revise blog pages essentials and tips 8/7/2022 5:00:00 PM     8.05:20:31</dev:code>
+6  new server prep   SQL02               8/3/2023 5:00:00 PM     4.05:20:31
+7  password report                       8/5/2023 12:00:00 PM    6.00:20:31
+5  revise blog pages essentials and tips 8/7/2023 5:00:00 PM     8.05:20:31</dev:code>
         <dev:remarks>
           <maml:para>The PSWorkItem has a named table view called Countdown.</maml:para>
         </dev:remarks>
@@ -828,9 +835,9 @@ ID Name              Description         DueDate              TimeRemaining
 
 ID Name                Description DueDate               Category Pct
 -- ----                ----------- -------               -------- ---
-13 extend car warranty             6/1/2022 4:00:00 PM   Personal   0
-11 update resume                   7/12/2022 12:00:00 PM Work       0
- 7 password report                 7/15/2022 5:00:00 PM  Work      10</dev:code>
+13 extend car warranty             6/1/2023 4:00:00 PM   Personal   0
+11 update resume                   7/12/2023 12:00:00 PM Work       0
+ 7 password report                 7/15/2023 5:00:00 PM  Work      10</dev:code>
         <dev:remarks>
           <maml:para>Get all overdue PSWorkItems.</maml:para>
         </dev:remarks>
@@ -843,21 +850,21 @@ ID Name                Description DueDate               Category Pct
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-5     revise blog pages    essentials and tips       8/7/2022 5:00:00 PM       0
+5     revise blog pages    essentials and tips       8/7/2023 5:00:00 PM       0
 
    Category: Personal
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-13    extend car warranty                            6/1/2022 4:00:00 PM       0
-10    car wash                                       8/2/2022 11:54:31 AM      0
-9     Prep vacation                                  11/1/2022 5:00:00 PM      0
+13    extend car warranty                            6/1/2023 4:00:00 PM       0
+10    car wash                                       8/2/2023 11:54:31 AM      0
+9     Prep vacation                                  11/1/2023 5:00:00 PM      0
 
    Category: Project
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-12    Publish PSWorkItem                             8/2/2022 12:05:44 PM      0
+12    Publish PSWorkItem                             8/2/2023 12:05:44 PM      0
 ...</dev:code>
         <dev:remarks>
           <maml:para>Get PSWorkItems sorted by category and display using the Category table view.</maml:para>
@@ -889,6 +896,10 @@ ID    Name                 Description               DueDate                 Pct
         <maml:linkText>Set-PSWorkItem</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Open-PSWorkItemConsole</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
@@ -901,7 +912,7 @@ ID    Name                 Description               DueDate                 Pct
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Completed PSWorkItems are moved to the Archive table. Using this command to view completed tasks.</maml:para>
+      <maml:para>Completed PSWorkItems are moved to the Archive table. Using this command to view completed items.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -909,7 +920,7 @@ ID    Name                 Description               DueDate                 Pct
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Get all open tasks by category. There should be tab-completion for this parameter.</maml:para>
+            <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -990,7 +1001,7 @@ ID    Name                 Description               DueDate                 Pct
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Get all open tasks by category. There should be tab-completion for this parameter.</maml:para>
+          <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1070,12 +1081,12 @@ ID    Name                 Description               DueDate                 Pct
 
 ID Name               Description                          Category Completed
 -- ----               -----------                          -------- ---------
-1  upgrade prep                                            Temp     7/29/2022 10:35:42 AM
-2  Order dog food                                          Personal 7/30/2022 10:09:09 AM
-3  Update-PSScripting update scripting and toolmaking book Project  7/30/2022 10:13:45 AM
-4  car inspection                                          Personal 7/30/2022 10:35:03 AM
-6  Clean database                                          Other    7/30/2022 10:40:48 AM
-5  weekly report                                           work     8/1/2022 8:30:00 AM</dev:code>
+1  upgrade prep                                            Temp     7/29/2023 10:35:42 AM
+2  Order dog food                                          Personal 7/30/2023 10:09:09 AM
+3  Update-PSScripting update scripting and toolmaking book Project  7/30/2023 10:13:45 AM
+4  car inspection                                          Personal 7/30/2023 10:35:03 AM
+6  Clean database                                          Other    7/30/2023 10:40:48 AM
+5  weekly report                                           work     8/1/2023 8:30:00 AM</dev:code>
         <dev:remarks>
           <maml:para>Get all archived PSWorkItems.</maml:para>
         </dev:remarks>
@@ -1088,8 +1099,8 @@ ID Name               Description                          Category Completed
 
 ID Name           Description Category Completed
 -- ----           ----------- -------- ---------
-2  Order dog food             Personal 7/30/2022 10:09:09 AM
-4  car inspection             Personal 7/30/2022 10:35:03 AM</dev:code>
+2  Order dog food             Personal 7/30/2023 10:09:09 AM
+4  car inspection             Personal 7/30/2023 10:35:03 AM</dev:code>
         <dev:remarks>
           <maml:para>Get archived PSWorkItems by category.</maml:para>
         </dev:remarks>
@@ -1120,7 +1131,7 @@ ID Name           Description Category Completed
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>When you create a PSWorkItem, you need to tag it with a category. The category must be defined before you can use it. Get-PSWorkItem category will display information about your categories.</maml:para>
+      <maml:para>When you create a PSWorkItem, you need to tag it with a category. The category must be defined before you can use it. Get-PSWorkItemCategory will display information about your categories.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1128,14 +1139,14 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify the category name.</maml:para>
+            <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>*</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Path</maml:name>
@@ -1155,14 +1166,14 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify the category name.</maml:para>
+          <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>*</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Path</maml:name>
@@ -1217,8 +1228,7 @@ Project     Module or assigned work
 Business    Corporate-related tasks
 Event       Conference, webinar, or other event
 Testing     Sample category for testing
-Training    Anything related to a training event
-Blog        Blog management or content</dev:code>
+Training    Anything related to a training event</dev:code>
         <dev:remarks>
           <maml:para>Get all defined categories.</maml:para>
         </dev:remarks>
@@ -1232,6 +1242,25 @@ Category Description
 Blog     Blog management or content</dev:code>
         <dev:remarks>
           <maml:para>Get information about a single category.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PSWorkItemCategory | Select-Object Category,ANSIString
+
+Category    ANSIString
+--------    ----------
+Work        `e[36m
+Customer
+Other       `e[38;5;204m
+Personal    `e[32m
+Project     `e[38;5;215m
+Business
+Event       `e[38;5;153m
+Testing
+Training    `e[94m</dev:code>
+        <dev:remarks>
+          <maml:para>Display categories with their ANSI escape sequences.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1248,6 +1277,10 @@ Blog     Blog management or content</dev:code>
         <maml:linkText>Remove-PSWorkItemCategory</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Update-PSWorkItemPreferences</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
@@ -1260,7 +1293,7 @@ Blog     Blog management or content</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Most of the time you will use commands like Get-PSWorkItem to get data from the PSWorkItem database. Get-PSWorkItemData can be used to query the database directly and skip creating custom objects. This could  be a helpful command for troubleshooting or debugging.</maml:para>
+      <maml:para>Most of the time you will use commands like Get-PSWorkItem to get data from the PSWorkItem database. Get-PSWorkItemData can be used to query the database directly and skip creating custom objects. This could be a helpful command for troubleshooting or debugging.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1335,7 +1368,7 @@ Blog     Blog management or content</dev:code>
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>PSCustomObject</maml:name>
+          <maml:name>System.Data.DataTable</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>
@@ -1383,7 +1416,7 @@ Event       Conference, webinar, or other event     12</dev:code>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Invoke-MySQLiteQuery</maml:linkText>
-        <maml:uri></maml:uri>
+        <maml:uri>https://bit.ly/3B6YcOW</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1464,7 +1497,7 @@ Event       Conference, webinar, or other event     12</dev:code>
 
 Created              LastModified          Tasks Archived Categories
 -------              ------------          ----- -------- ----------
-7/29/2022 9:59:59 AM 7/30/2022 11:20:17 AM     6        6          5</dev:code>
+7/29/2023 9:59:59 AM 7/30/2023 11:20:17 AM     6        6          5</dev:code>
         <dev:remarks>
           <maml:para>The default summary.</maml:para>
         </dev:remarks>
@@ -1474,8 +1507,8 @@ Created              LastModified          Tasks Archived Categories
         <dev:code>PS C:\&gt; Get-PSWorkItemDatabase | Format-List
 
 Path          : C:\Users\Jeff\PSWorkItem.db
-Created       : 7/29/2022 9:59:59 AM
-LastModified  : 7/30/2022 11:20:17 AM
+Created       : 7/29/2023 9:59:59 AM
+LastModified  : 7/30/2023 11:20:17 AM
 Size          : 32768
 TaskCount     : 6
 CategoryCount : 5
@@ -1511,6 +1544,76 @@ PageSize      : 4096</dev:code>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-PSWorkItemData</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PSWorkItemPreference</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PSWorkItemPreference</command:noun>
+      <maml:description>
+        <maml:para>Get saved PSWorkItem preferences</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>You can use Update-PSWorkItemPreference to export the $PSWorkitemCategory and your default database to a settings file in $HOME. Use Get-PSWorkItemPreferences to view the file.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PSWorkItemPreference</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>psWorkItemPreference</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PSWorkItemPreference
+
+   Path: C:\Users\Jeff\PSWorkItem.db [Default Days: 7 Default Category: Work]
+
+Category    ANSIString
+--------    ----------
+Personal    `e[32m
+Work        `e[36m
+Event       `e[38;5;153m
+Training    `e[94m
+Project     `e[38;5;215m
+Other       `e[38;5;204m</dev:code>
+        <dev:remarks>
+          <maml:para>The category will be displayed using the ANSI color sequence.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Update-PSWorkItemPreference</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -1874,7 +1977,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
           <maml:name>Name</maml:name>
           <maml:description>
-            <maml:para>The name of the work item.</maml:para>
+            <maml:para>The name of the work item. Do not include apostrophes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1883,10 +1986,11 @@ ColumnIndex ColumnName  ColumnType
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
+            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1898,7 +2002,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="comment">
           <maml:name>Description</maml:name>
           <maml:description>
-            <maml:para>Add a comment or task description.</maml:para>
+            <maml:para>Add a comment or task description. Do not include apostrophes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1921,14 +2025,14 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="Date">
           <maml:name>DueDate</maml:name>
           <maml:description>
-            <maml:para>When is this task due? The default is 30 days.</maml:para>
+            <maml:para>When is this task due? The default is the value of adding the number of days in $PSWorkItemDefaultDays to the current date. The module default is 30 days.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>$PSWorkItemDefaultDays from now</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>PassThru</maml:name>
@@ -1970,7 +2074,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
           <maml:name>Name</maml:name>
           <maml:description>
-            <maml:para>The name of the work item.</maml:para>
+            <maml:para>The name of the work item. Do not include apostrophes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1979,10 +2083,11 @@ ColumnIndex ColumnName  ColumnType
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
+            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1994,7 +2099,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="comment">
           <maml:name>Description</maml:name>
           <maml:description>
-            <maml:para>Add a comment or task description.</maml:para>
+            <maml:para>Add a comment or task description. Do not include apostrophes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2063,10 +2168,11 @@ ColumnIndex ColumnName  ColumnType
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter.</maml:para>
+          <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2090,7 +2196,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="comment">
         <maml:name>Description</maml:name>
         <maml:description>
-          <maml:para>Add a comment or task description.</maml:para>
+          <maml:para>Add a comment or task description. Do not include apostrophes.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2102,19 +2208,19 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="Date">
         <maml:name>DueDate</maml:name>
         <maml:description>
-          <maml:para>When is this task due? The default is 30 days.</maml:para>
+          <maml:para>When is this task due? The default is the value of adding the number of days in $PSWorkItemDefaultDays to the current date. The module default is 30 days.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>$PSWorkItemDefaultDays from now</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="task">
         <maml:name>Name</maml:name>
         <maml:description>
-          <maml:para>The name of the work item.</maml:para>
+          <maml:para>The name of the work item. Do not include apostrophes.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2209,7 +2315,7 @@ ColumnIndex ColumnName  ColumnType
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2022 5:00PM" -Category Blog -PassThru</dev:code>
+        <dev:code>PS C:\&gt; New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2023 5:00PM" -Category Blog -PassThru</dev:code>
         <dev:remarks>
           <maml:para>Create a new PSWorkItem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.</maml:para>
         </dev:remarks>
@@ -2241,6 +2347,116 @@ ColumnIndex ColumnName  ColumnType
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Remove-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Open-PSWorkItemConsole</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Open-PSWorkItemConsole</command:name>
+      <command:verb>Open</command:verb>
+      <command:noun>PSWorkItemConsole</command:noun>
+      <maml:description>
+        <maml:para>Open the PSWorkItem management console</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This command will launch a terminal-based console for managing PSWorkItems. You can select items from the table which will populate the entry forms. You can then modify the work item and click Set-PSWorkItem, or you can mark the item as complete or remove it. To enter a new PSWorkItem, use Options - Clear Form. Enter your new item, selecting a category from the list, and click the Add New PSWorkItem button. You cannot set a progress value when creating a new work item.</maml:para>
+      <maml:para>You can also enter a different database path by entering the path in the Database field, or using Options - Open database. Use the Reset Form option to reset the form with your default settings.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Open-PSWorkItemConsole</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>The path to the PSWorkItem SQLite database file. It must end in .db</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Path</maml:name>
+        <maml:description>
+          <maml:para>The path to the PSWorkItem SQLite database file. It must end in .db</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>You cannot specify a completion date using this tool. You must manage categories using the module commands.</maml:para>
+        <maml:para>If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting.</maml:para>
+        <maml:para>IMPORTANT: This command relies on a specific version of Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like Microsoft.PowerShell.ConsoleGuiTools. You may need to load this module first in a new PowerShell session.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Open-PSWorkItemConsole</dev:code>
+        <dev:remarks>
+          <maml:para>Open the management console using the default $PSWorkItemPath variable. You can also use the wic alias.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\ OpenPSWorkItemConsole c:\work\personal.db</dev:code>
+        <dev:remarks>
+          <maml:para>Open the management console using an alternate database.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Get-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Set-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Remove-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Complete-PSWorkItem</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
@@ -2283,7 +2499,7 @@ ColumnIndex ColumnName  ColumnType
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
             <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
@@ -2333,7 +2549,7 @@ ColumnIndex ColumnName  ColumnType
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
           <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
@@ -2392,6 +2608,13 @@ ColumnIndex ColumnName  ColumnType
           <maml:para>Remove the PSWorkItem with an ID of 10.</maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PSWorkItem -Category Testing | Remove-PSWorkItem</dev:code>
+        <dev:remarks>
+          <maml:para>Remove all work items in the Test category.</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
@@ -2426,7 +2649,7 @@ ColumnIndex ColumnName  ColumnType
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Completed work items are moved to the Archive table in the PSWorkItem database. At some point, you may wish to clear out old archived tasks. There is no technical reason you would need to do this, but if you want to, use Remove-PSWorkItemArchive. You can remove archived items by ID, category, or name.</maml:para>
+      <maml:para>Completed work items are moved to the Archive table in the PSWorkItem database. At some point, you may wish to clear out old archived PSWorkItems. There is no technical reason you would need to do this, but if you want to, use Remove-PSWorkItemArchive. You can remove archived PSWorkItems by ID, category, or name.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2434,7 +2657,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>A PSWorkItem category.</maml:para>
+            <maml:para>A PSWorkItem category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2581,7 +2804,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>A PSWorkItem category.</maml:para>
+          <maml:para>A PSWorkItem category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2742,7 +2965,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>If you make a mistake entering a category or want to remove one of the default PSWorkItem categories, use Remove-PSWorkItemCategory.</maml:para>
+      <maml:para>If you make a mistake entering a category or want to remove one of the default PSWorkItem categories, use Remove-PSWorkItemCategory. If you are specifying an alternate database, specify the path first, then the category parameter, if you want auto-completion.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2750,7 +2973,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify the category name. This is case-sensitive.</maml:para>
+            <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
@@ -2799,7 +3022,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify the category name. This is case-sensitive.</maml:para>
+          <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
@@ -2909,6 +3132,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
     </command:details>
     <maml:description>
       <maml:para>When you need to update a task, use Set-PSWorkItem. You need to use the PSWorkItem ID to identify the item to be updated. You can then update the Name, Description, DueDate, Category, and Progress.</maml:para>
+      <maml:para>If you want to clear the Description, use the -ClearDescription parameter. All other properties will remain untouched.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2928,7 +3152,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify an updated category. There should be tab-completion for this parameter.</maml:para>
+            <maml:para>Specify an updated category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2951,7 +3175,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Description</maml:name>
           <maml:description>
-            <maml:para>Specify an updated description.</maml:para>
+            <maml:para>Specify an updated description. Do not include apostrophes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2975,7 +3199,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="task">
           <maml:name>Name</maml:name>
           <maml:description>
-            <maml:para>The updated name of the PSWorkItem.</maml:para>
+            <maml:para>The updated name of the PSWorkItem. Do not include apostrophes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2995,7 +3219,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
             <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
@@ -3031,12 +3255,83 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Set-PSWorkItem</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
+          <maml:name>ID</maml:name>
+          <maml:description>
+            <maml:para>The work item ID. This is how you identify the PSWorkItem you want to update.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the command.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PassThru</maml:name>
+          <maml:description>
+            <maml:para></maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Path</maml:name>
+          <maml:description>
+            <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$PSWorkItemPath</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the command runs. The command is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ClearDescription</maml:name>
+          <maml:description>
+            <maml:para>Clear the description field. All other fields will remain untouched.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
     </command:syntax>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify an updated category. There should be tab-completion for this parameter.</maml:para>
+          <maml:para>Specify an updated category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -3060,7 +3355,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Description</maml:name>
         <maml:description>
-          <maml:para>Specify an updated description.</maml:para>
+          <maml:para>Specify an updated description. Do not include apostrophes.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -3096,7 +3391,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="task">
         <maml:name>Name</maml:name>
         <maml:description>
-          <maml:para>The updated name of the PSWorkItem.</maml:para>
+          <maml:para>The updated name of the PSWorkItem. Do not include apostrophes.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -3117,7 +3412,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
           <maml:para>The path to the PSWorkItem SQLite database file. It should end in .db</maml:para>
@@ -3145,6 +3440,18 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <maml:name>WhatIf</maml:name>
         <maml:description>
           <maml:para>Shows what would happen if the command runs. The command is not run.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ClearDescription</maml:name>
+        <maml:description>
+          <maml:para>Clear the description field. All other fields will remain untouched.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -3204,10 +3511,17 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
 
 ID Name              Description         DueDate             Category Pct
 -- ----              -----------         -------             -------- ---
- 9 Clean database                        8/2/2022 9:34:35 AM Other      0
- 5 revise blog pages essentials and tips 8/7/2022 5:00:00 PM Other      0</dev:code>
+ 9 Clean database                        8/2/2023 9:34:35 AM Other      0
+ 5 revise blog pages essentials and tips 8/7/2023 5:00:00 PM Other      0</dev:code>
         <dev:remarks>
           <maml:para>Modify multiple PSWorkItems at the same time.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\ Set-PSWorkItem -id 5 -ClearDescription</dev:code>
+        <dev:remarks>
+          <maml:para>Clear the description property for the PSWorkItem with the ID of 5.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3252,7 +3566,7 @@ ID Name              Description         DueDate             Category Pct
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify a case-sensitive category name.</maml:para>
+            <maml:para>Specify a case-sensitive category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -3336,7 +3650,7 @@ ID Name              Description         DueDate             Category Pct
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify a case-sensitive category name.</maml:para>
+          <maml:para>Specify a case-sensitive category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -3526,7 +3840,7 @@ Work     Uncategorized work activities</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>PassThru</maml:name>
           <maml:description>
-            <maml:para>{{ Fill PassThru Description }}</maml:para>
+            <maml:para></maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -3563,7 +3877,7 @@ Work     Uncategorized work activities</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>PassThru</maml:name>
         <maml:description>
-          <maml:para>{{ Fill PassThru Description }}</maml:para>
+          <maml:para></maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -3683,19 +3997,21 @@ ID Name        Description DueDate               Category Pct
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Update-PSWorkItemPreferences</command:name>
+      <command:name>Update-PSWorkItemPreference</command:name>
       <command:verb>Update</command:verb>
-      <command:noun>PSWorkItemPreferences</command:noun>
+      <command:noun>PSWorkItemPreference</command:noun>
       <maml:description>
         <maml:para>Update or create a preference file</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Use this command to export your preferences for the PSWorkitem module to file. This file will be used when importing the module to set the database path and customized highlighting sequences for $PSWorkItemCategory. The file will be stored in $HOME.</maml:para>
+      <maml:para>Use this command to export your preferences for the PSWorkitem module to a JSON file. This file, .psworkitempref.json, will be used when importing the module to set the database path and customized highlighting sequences for $PSWorkItemCategory. The file will be stored in $HOME.</maml:para>
+      <maml:para>If you define a default category and later want to remove it, you can re-run this command without specifying a category. It is recommended that you restart PowerShell and re-import the module to reset PSDefaultParameterValues.</maml:para>
+      <maml:para>You may need to manually delete the preferences JSON file if you uninstall the module.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Update-PSWorkItemPreferences</maml:name>
+        <maml:name>Update-PSWorkItemPreference</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
           <maml:description>
@@ -3728,6 +4044,18 @@ ID Name        Description DueDate               Category Pct
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>DefaultCategory</maml:name>
+          <maml:description>
+            <maml:para>Specify the default category for new PSWorkItems. This must be a valid category in the PSWorkItems database.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -3768,6 +4096,18 @@ ID Name        Description DueDate               Category Pct
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>DefaultCategory</maml:name>
+        <maml:description>
+          <maml:para>Specify the default category for new PSWorkItems. This must be a valid category in the PSWorkItems database.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes>
       <command:inputType>
@@ -3805,9 +4145,16 @@ ID Name        Description DueDate               Category Pct
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; Update-PSWorkItemPreferences</dev:code>
+        <dev:code>PS C:\&gt; Update-PSWorkItemPreference</dev:code>
         <dev:remarks>
           <maml:para>This assumes you've customized category settings or the database path.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Update-PSWorkItemPreference -DefaultCategory Work</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3818,6 +4165,10 @@ ID Name        Description DueDate               Category Pct
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-PSWorkItemCategory</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Get-PSWorkItemPreference</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>

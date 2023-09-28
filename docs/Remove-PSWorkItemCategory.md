@@ -14,12 +14,12 @@ Remove a PSWorkItem category.
 ## SYNTAX
 
 ```yaml
-Remove-PSWorkItemCategory [[-Category] <String[]>] [-Path <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-PSWorkItemCategory [[-Category] <String>] [-Path <String>] [-WhatIf] [-Confirm]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-If you make a mistake entering a category or want to remove one of the default PSWorkItem categories, use Remove-PSWorkItemCategory.
+If you make a mistake entering a category or want to remove one of the default PSWorkItem categories, use Remove-PSWorkItemCategory. If you are specifying an alternate database, specify the path first, then the category parameter, if you want auto-completion.
 
 ## EXAMPLES
 
@@ -33,7 +33,7 @@ PS C:\> Remove-PSWorkItemCategory Temp
 
 ### -Category
 
-Specify the category name. This is case-sensitive.
+Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String[]
@@ -99,7 +99,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

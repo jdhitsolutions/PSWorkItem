@@ -37,10 +37,10 @@ Get-PSWorkItem [-ID <String>] [-Path <String>] [<CommonParameters>]
 Get-PSWorkItem [-All] [-Path <String>] [<CommonParameters>]
 ```
 
-### category
+### Category
 
 ```yaml
-Get-PSWorkItem [-Category <String>] [-Path <String>] [<CommonParameters>]
+Get-PSWorkItem [-Path <String>] [-Category <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,9 +58,9 @@ PS C:\> Get-PSWorkItem
 
 ID Name              Description         DueDate              Category Pct
 -- ----              -----------         -------              -------- ---
- 6 new server prep   SQL02               8/3/2022 5:00:00 PM  Work      45
- 7 password report                       8/5/2022 12:00:00 PM Work      10
- 5 revise blog pages essentials and tips 8/7/2022 5:00:00 PM  Other      0
+ 6 new server prep   SQL02               8/3/2023 5:00:00 PM  Work      45
+ 7 password report                       8/5/2023 12:00:00 PM Work      10
+ 5 revise blog pages essentials and tips 8/7/2023 5:00:00 PM  Other      0
 ```
 
 Get all items due in the next 10 days.
@@ -74,12 +74,12 @@ PS C:\> Get-PSWorkItem -all
 
 ID Name              Description         DueDate               Category Pct
 -- ----              -----------         -------               -------- ---
- 6 new server prep   SQL02               8/3/2022 5:00:00 PM   Work      45
- 7 password report                       8/5/2022 12:00:00 PM  Work      10
- 5 revise blog pages essentials and tips 8/7/2022 5:00:00 PM   Other      0
- 1 update data                           8/28/2022 10:35:02 AM Temp       0
- 9 Prep vacation                         11/1/2022 5:00:00 PM  Personal   0
- 8 Year end backup                       12/31/2022 5:00:00 PM Work       0
+ 6 new server prep   SQL02               8/3/2023 5:00:00 PM   Work      45
+ 7 password report                       8/5/2023 12:00:00 PM  Work      10
+ 5 revise blog pages essentials and tips 8/7/2023 5:00:00 PM   Other      0
+ 1 update data                           8/28/2023 10:35:02 AM Temp       0
+ 9 Prep vacation                         11/1/2023 5:00:00 PM  Personal   0
+ 8 Year end backup                       12/31/2023 5:00:00 PM Work       0
 ```
 
 Get all open tasks.
@@ -93,9 +93,9 @@ PS C:\> Get-PSWorkItem -Category Work
 
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
- 6 new server prep SQL02       8/3/2022 5:00:00 PM   Work      45
- 7 password report             8/5/2022 12:00:00 PM  Work      10
- 8 Year end backup             12/31/2022 5:00:00 PM Work       0
+ 6 new server prep SQL02       8/3/2023 5:00:00 PM   Work      45
+ 7 password report             8/5/2023 12:00:00 PM  Work      10
+ 8 Year end backup             12/31/2023 5:00:00 PM Work       0
 ```
 
 Get tasks from the Work category.
@@ -109,7 +109,7 @@ PS C:\> Get-PSWorkItem -id 9
 
 ID Name          Description DueDate              Category Pct
 -- ----          ----------- -------              -------- ---
- 9 Prep vacation             11/1/2022 5:00:00 PM Personal   0
+ 9 Prep vacation             11/1/2023 5:00:00 PM Personal   0
 ```
 
 Get a PSWorkItem by its ID.
@@ -123,8 +123,8 @@ PS C:\> Get-PSWorkItem -Name p*
 
 ID Name            Description DueDate              Category Pct
 -- ----            ----------- -------              -------- ---
- 7 password report             8/5/2022 12:00:00 PM Work      10
- 9 Prep vacation               11/1/2022 5:00:00 PM Personal   0
+ 7 password report             8/5/2023 12:00:00 PM Work      10
+ 9 Prep vacation               11/1/2023 5:00:00 PM Personal   0
 ```
 
 Get PSWorkItems with a name that begins with P.
@@ -136,9 +136,9 @@ PS C:\> Get-PSWorkItem | Format-Table -View countdown
 
 ID Name              Description         DueDate              TimeRemaining
 -- ----              -----------         -------              -------------
-6  new server prep   SQL02               8/3/2022 5:00:00 PM     4.05:20:31
-7  password report                       8/5/2022 12:00:00 PM    6.00:20:31
-5  revise blog pages essentials and tips 8/7/2022 5:00:00 PM     8.05:20:31
+6  new server prep   SQL02               8/3/2023 5:00:00 PM     4.05:20:31
+7  password report                       8/5/2023 12:00:00 PM    6.00:20:31
+5  revise blog pages essentials and tips 8/7/2023 5:00:00 PM     8.05:20:31
 ```
 
 The PSWorkItem has a named table view called Countdown.
@@ -152,9 +152,9 @@ PS C:\> Get-PSWorkItem | Where Overdue
 
 ID Name                Description DueDate               Category Pct
 -- ----                ----------- -------               -------- ---
-13 extend car warranty             6/1/2022 4:00:00 PM   Personal   0
-11 update resume                   7/12/2022 12:00:00 PM Work       0
- 7 password report                 7/15/2022 5:00:00 PM  Work      10
+13 extend car warranty             6/1/2023 4:00:00 PM   Personal   0
+11 update resume                   7/12/2023 12:00:00 PM Work       0
+ 7 password report                 7/15/2023 5:00:00 PM  Work      10
 ```
 
 Get all overdue PSWorkItems.
@@ -168,21 +168,21 @@ PS C:\> Get-PSWorkItem -all | Sort-Object category | Format-Table -view category
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-5     revise blog pages    essentials and tips       8/7/2022 5:00:00 PM       0
+5     revise blog pages    essentials and tips       8/7/2023 5:00:00 PM       0
 
    Category: Personal
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-13    extend car warranty                            6/1/2022 4:00:00 PM       0
-10    car wash                                       8/2/2022 11:54:31 AM      0
-9     Prep vacation                                  11/1/2022 5:00:00 PM      0
+13    extend car warranty                            6/1/2023 4:00:00 PM       0
+10    car wash                                       8/2/2023 11:54:31 AM      0
+9     Prep vacation                                  11/1/2023 5:00:00 PM      0
 
    Category: Project
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-12    Publish PSWorkItem                             8/2/2022 12:05:44 PM      0
+12    Publish PSWorkItem                             8/2/2023 12:05:44 PM      0
 ...
 ```
 
@@ -192,7 +192,7 @@ Get PSWorkItems sorted by category and display using the Category table view.
 
 ### -All
 
-Get all open tasks.
+Get all open PSWorkItems.
 
 ```yaml
 Type: SwitchParameter
@@ -208,11 +208,11 @@ Accept wildcard characters: False
 
 ### -Category
 
-Get all open tasks by category. There should be tab-completion for this parameter.
+Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you are specifying an alternate path, specify the path before using this parameter.
 
 ```yaml
 Type: String
-Parameter Sets: category
+Parameter Sets: Category
 Aliases:
 
 Required: False
@@ -224,7 +224,7 @@ Accept wildcard characters: False
 
 ### -DaysDue
 
-Get open tasks due in the number of days between 1 and 365.
+Get open PSWorkItems due in the number of days between 1 and 365.
 
 ```yaml
 Type: Int32
@@ -256,8 +256,8 @@ Accept wildcard characters: False
 
 ### -Name
 
-The name of the work item.
-Wilcards are supported.
+The name of the PSWorkItem.
+Wildcards are supported.
 
 ```yaml
 Type: String
@@ -290,7 +290,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -317,3 +317,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 [New-PSWorkItem](New-PSWorkItem.md)
 
 [Set-PSWorkItem](Set-PSWorkItem.md)
+
+[Open-PSWorkItemConsole](Open-PSWorkItemConsole.md)

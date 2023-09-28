@@ -11,7 +11,7 @@ Function Add-PSWorkItemCategory {
         )]
         [ValidateNotNullOrEmpty()]
         [alias("Name")]
-        [string[]]$Category,
+        [string]$Category,
 
         [Parameter(
             Position = 1,
@@ -20,18 +20,14 @@ Function Add-PSWorkItemCategory {
         )]
         [String]$Description,
 
-        [Parameter(HelpMessage = "The path to the PSWorkItem SQLite database file. It should end in .db")]
-        [ValidateNotNullOrEmpty()]
-        [ValidatePattern("\.db$")]
-        [ValidateScript({
-            if (Test-Path $_) {
-                Return $True
-            }
-            else {
-                Throw "Failed to validate $_"
-                Return $False
-            }
-        })]
+        [Parameter(
+            HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
+        )]
+        [ValidatePattern('\.db$')]
+        [ValidateScript(
+            {Test-Path $_},
+            ErrorMessage = "Could not validate the database path."
+        )]
         [String]$Path = $PSWorkItemPath,
 
         [Parameter(HelpMessage = "Force overwriting an existing category")]
@@ -43,19 +39,17 @@ Function Add-PSWorkItemCategory {
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
+        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
         _verbose -message ($strings.UsingDB -f $path)
-        #Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Starting"
-        #Write-Debug "Using bound parameters"
+        Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
 
-        #Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): Opening a connection to $Path"
         _verbose -message $strings.OpenDBConnection
         Try {
             $conn = Open-MySQLiteDB -Path $Path -ErrorAction Stop
             $conn | Out-String | Write-Debug
         }
         Catch {
-            #Throw "$($MyInvocation.MyCommand): Failed to open the database $Path"
             Throw "$($MyInvocation.MyCommand): $($strings.FailToOpen -f $Path)"
         }
 
@@ -76,12 +70,10 @@ Function Add-PSWorkItemCategory {
                 $splat.Query = "SELECT * FROM categories WHERE category = '$item' collate nocase"
                 $test = Invoke-MySQLiteQuery @splat
                 if ($test.category -eq $item -AND (-Not $Force)) {
-                    #Write-Warning "$($MyInvocation.MyCommand): The category $item already exists"
                     Write-Warning "$($MyInvocation.MyCommand): $($strings.CategoryExists -f $item)"
                     $ok = $false
                 }
                 elseif ($test.category -eq $item -AND $Force) {
-                    #Write-Verbose "$($MyInvocation.MyCommand): The category $item already exists and will be overwritten"
                     _verbose -message ($strings.CategoryExistsOverwrite -f $item)
                     $splat.Query = "DELETE FROM categories WHERE category = '$item' collate nocase"
                     if ($PSCmdlet.ShouldProcess($item, "Remove category")) {
@@ -95,7 +87,6 @@ Function Add-PSWorkItemCategory {
 
                 Write-Debug "$($MyInvocation.MyCommand): Connection state is $($conn.state)"
                 if ($ok) {
-                    #Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $($MyInvocation.MyCommand): Adding category $Item"
                     _verbose -message ($strings.AddCategory -f $Item)
                     $splat.query = "INSERT INTO categories (category,description) VALUES ('$item','$Description')"
                     If ($PSCmdlet.ShouldProcess($item)) {
@@ -114,10 +105,9 @@ Function Add-PSWorkItemCategory {
 
     End {
         $PSDefaultParameterValues["_verbose:block"] = "End"
-        #Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Closing the connection to $Path"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         _verbose -message ($strings.CloseDBConnection -f $path)
         Close-MySQLiteDB -Connection $conn
-        # Write-Verbose "[$((Get-Date).TimeOfDay) END    ] $($MyInvocation.MyCommand): Ending"
         _verbose -message $strings.Ending
     } #end
 }

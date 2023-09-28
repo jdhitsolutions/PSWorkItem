@@ -32,7 +32,7 @@ PS C:\> Get-PSWorkItemDatabase
 
 Created              LastModified          Tasks Archived Categories
 -------              ------------          ----- -------- ----------
-7/29/2022 9:59:59 AM 7/30/2022 11:20:17 AM     6        6          5
+7/29/2023 9:59:59 AM 7/30/2023 11:20:17 AM     6        6          5
 ```
 
 The default summary.
@@ -43,8 +43,8 @@ The default summary.
 PS C:\> Get-PSWorkItemDatabase | Format-List
 
 Path          : C:\Users\Jeff\PSWorkItem.db
-Created       : 7/29/2022 9:59:59 AM
-LastModified  : 7/30/2022 11:20:17 AM
+Created       : 7/29/2023 9:59:59 AM
+LastModified  : 7/30/2023 11:20:17 AM
 Size          : 32768
 TaskCount     : 6
 CategoryCount : 5

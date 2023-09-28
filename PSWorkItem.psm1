@@ -1,14 +1,70 @@
+
 # used for culture debugging
 # write-host "Importing with culture $(Get-Culture)"
 
-Import-LocalizedData -BindingVariable strings -FileName strings.psd1
+if ((Get-Culture).Name -match "\w+") {
+    Import-LocalizedData -BindingVariable strings -FileName strings.psd1
+}
+else {
+    #force using En-US if no culture found, which might happen on non-Windows systems.
+    Import-LocalizedData -BindingVariable strings -FileName strings.psd1 -BaseDirectory .\en-us
+}
 
-# Write-Host $strings.testing -ForegroundColor cyan
+if (-Not $ISWindows) {
+    Write-Warning $Strings.WindowsOnly
+    #bail out
+    Return
+}
 
 Get-ChildItem $PSScriptRoot\functions\*.ps1 -Recurse |
 ForEach-Object {
     . $_.FullName
 }
+
+#testing localization
+#Write-Host $strings.Testing -fore cyan
+
+#region assembly loading
+
+#there may be version conflicts
+
+#required versions
+[version]$NStackVersion = "1.0.7"
+[version]$TerminalGuiVersion = "1.14.0"
+
+$dlls = "$PSScriptRoot\assemblies\NStack.dll","$PSScriptRoot\assemblies\Terminal.Gui.dll"
+foreach ($dll in $dlls) {
+    $name = Split-Path -path $dll -leaf
+    #write-host "Loading $dll" -fore yellow
+    Try {
+        Add-Type -Path $dll -ErrorAction Stop
+    }
+    Catch {
+        $msg = ($strings.WarnAssemblyLoaded -f $Name)
+        Write-Warning $msg
+
+        #$verMessage = "Detected version $($PSStyle.Foreground.Red){0}$($PSStyle.Reset) which is less than the expected version of $($PSStyle.Foreground.Green){1}$($PSStyle.Reset). $($PSStyle.Italic)There may be unexpected behavior$($PSStyle.Reset). You may need to start a new PowerShell session and load this module first."
+        Switch ($Name) {
+            "NStack.dll" {
+                #get currently loaded version
+                $ver = [System.Reflection.Assembly]::GetAssembly([nstack.ustring]).GetName().version
+                if ($ver -lt $NStackVersion) {
+                    $Detail = $strings.WarnDetected -f $ver,$NStackVersion,$PSStyle.Foreground.Red,$PSStyle.Foreground.Green,$PSStyle.Italic,$PSStyle.Reset
+                }
+            }
+            "Terminal.Gui.dll" {
+                $ver = [System.Reflection.Assembly]::GetAssembly([Terminal.Gui.Application]).GetName().version
+                if ($ver -lt $TerminalGuiVersion) {
+                    $Detail = $strings.WarnDetected -f $ver,$TerminalGuiVersion,$PSStyle.Foreground.Red,$PSStyle.Foreground.Green,$PSStyle.Italic,$PSStyle.Reset
+                }
+            }
+        } #switch
+        if ($Detail) {
+            Write-Warning $Detail
+        }
+    }
+}
+#endregion
 
 #region class definitions
 <#
@@ -72,44 +128,43 @@ class PSWorkItemDatabase {
 
 #endregion
 
+#region type extensions
+
+Update-TypeData -TypeName PSWorkItemCategory -MemberType ScriptProperty -MemberName ANSIString -Value { $PSWorkItemCategory[$this.Category] -replace "`e",
+"``e" } -force
+#endregion
+
 #region settings and configuration
-
-#a global hashtable used for formatting PSWorkItems
-$global:PSWorkItemCategory = @{
-    "Work"     = $PSStyle.Foreground.Cyan
-    "Personal" = $PSStyle.Foreground.Green
-}
-
-#import and use the preference file if found
-$PreferencePath = Join-Path -Path $HOME -ChildPath ".psworkitempref.json"
-If (Test-Path $PreferencePath) {
-    $importPref = Get-Content $PreferencePath | ConvertFrom-Json
-    $global:PSWorkItemPath = $importPref.Path
-    $importPref.categories.foreach({$PSWorkItemCategory[$_.category]=$_.ansi})
-}
-else {
-    #make this variable global instead of exporting so that I don't have to use Export-ModuleMember 7/28/2022 JDH
-    $global:PSWorkItemPath = Join-Path -Path $HOME -ChildPath "PSWorkItem.db"
-}
-
 <#
 Default categories when creating a new database file.
 This will be a module-scoped variable, not exposed to the user
 #>
 
-$PSWorkItemDefaultCategories = "Work", "Personal", "Project", "Other"
+$PSWorkItemDefaultCategories = 'Work', 'Personal', 'Project', 'Other'
 
-Register-ArgumentCompleter -CommandName New-PSWorkItem, Get-PSWorkItem, Set-PSWorkItem, Get-PSWorkItemArchive,Remove-PSWorkItemArchive -ParameterName Category -ScriptBlock {
-    param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
-    #PowerShell code to populate $WordToComplete
-    Get-PSWorkItemCategory | Where-Object { $_.category -Like "$wordToComplete*" } |
-    Select-Object -Property Category, @{Name = "Description"; Expression = {
-            $_.description -match "\w+" ? $_.description : "no description" }
-    } |
-    ForEach-Object {
-        # completion text,ListItem text,result type,Tooltip
-        [System.Management.Automation.CompletionResult]::new($_.category, $_.category, 'ParameterValue', $_.description)
+#a global hashtable used for formatting PSWorkItems
+$global:PSWorkItemCategory = @{
+    'Work'     = $PSStyle.Foreground.Cyan
+    'Personal' = $PSStyle.Foreground.Green
+}
+
+#import and use the preference file if found
+$PreferencePath = Join-Path -Path $HOME -ChildPath '.psworkitempref.json'
+If (Test-Path $PreferencePath) {
+    $importPref = Get-Content $PreferencePath | ConvertFrom-Json
+    $global:PSWorkItemPath = $importPref.Path
+    $importPref.categories.foreach({ $PSWorkItemCategory[$_.category] = $_.ansi })
+    if ($importPref.DefaultDays) {
+        $global:PSWorkItemDefaultDays = $importPref.DefaultDays
     }
+    If ($importPref.DefaultCategory) {
+        $global:PSDefaultParameterValues["New-PSWorkItem:Category"] = $importPref.DefaultCategory
+    }
+}
+else {
+    #make this variable global instead of exporting so that I don't have to use Export-ModuleMember 7/28/2022 JDH
+    $global:PSWorkItemPath = Join-Path -Path $HOME -ChildPath 'PSWorkItem.db'
+    $global:PSWorkItemDefaultDays = 30
 }
 
 #endregion

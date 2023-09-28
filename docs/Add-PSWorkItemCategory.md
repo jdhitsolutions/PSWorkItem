@@ -14,7 +14,8 @@ Add a new PSWorkItem category
 ## SYNTAX
 
 ```yaml
-Add-PSWorkItemCategory [-Category] <String[]> [[-Description] <String>] [-Path <String>] [-Force] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Add-PSWorkItemCategory [-Category] <String> [[-Description] <String>]
+[-Path <String>] [-Force] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

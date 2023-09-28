@@ -1,0 +1,69 @@
+<!--
+Format type data generated 09/21/2023 18:11:29 by PROSPERO\Jeff
+
+This file was created using the New-PSFormatXML command that is part
+of the PSScriptTools module.
+
+https://github.com/jdhitsolutions/PSScriptTools
+-->
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <!--Created 09/21/2023 18:11:29 by PROSPERO\Jeff-->
+      <Name>default</Name>
+      <ViewSelectedBy>
+        <TypeName>psWorkItemPreference</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <ScriptBlock>
+          $prefPath = (Join-Path -path $HOME -childPath .psWorkItemPref.json)
+
+          If (Test-Path -path $prefPath ) {
+            $pref = Get-Content -path $PrefPath | ConvertFrom-JSON
+            <!-- get default number of days preference-->
+            "{0} [Default Days: {1} Default Category: {2}]" -f $_.Path,$pref.DefaultDays,$pref.DefaultCategory
+          }
+          Else {
+            $_.Path
+          }
+        </ScriptBlock>
+        <Label>Path</Label>
+      </GroupBy>
+      <TableControl>
+        <!--Delete the AutoSize node if you want to use the defined widths.-->
+        <AutoSize />
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Category</Label>
+            <Width>11</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>ANSIString</Label>
+            <Width>18</Width>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <ScriptBlock>
+                if ($host.name -match "code|console") {
+                  "{0}{1}{2}" -f $_.ANSI,$_.Category,"$([char]27)[0m"
+                }
+                else {
+                  $_.Category
+                }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ANSIString</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>
