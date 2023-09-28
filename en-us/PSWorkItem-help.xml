@@ -1613,6 +1613,10 @@ Other       `e[38;5;204m</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/3LEQb8s</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Update-PSWorkItemPreference</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
@@ -2443,6 +2447,10 @@ ColumnIndex ColumnName  ColumnType
       </command:example>
     </command:examples>
     <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://bit.ly/48zfOB8</maml:uri>
+      </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-PSWorkItem</maml:linkText>
         <maml:uri></maml:uri>

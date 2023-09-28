@@ -1,7 +1,11 @@
 # Changelog for PSWorkItem
 
 ## [Unreleased]
+
+## [1.3.0] - 2023-09-28
+
 ### Added
+
 - Added a parameter set to `Set-PSWorkItem` to let the user clear the description field.
 - Added an option for the user to set the default number of days for a new PSWorkItem. The module default is 30 days, but the user can modify the global variable. The preference commands and format file have been updated to reflect this change.
 - Added parameter validation for `Name` and `Description` parameters to reject values with apostrophes. Apostrophes break SQLite syntax.
@@ -13,6 +17,7 @@
 - Updated module to let the user specify a default category for `New-PSWorkItem`. This default must be saved with `Update-PSWorkItemPreference`.
 
 ### Changed
+
 - Modified `Complete-PSWorkItem`, `Set-PSWorkItem`, and `Remove-PSWorkItem` to accept pipeline input from `Get-PSWorkItem`.
 - Converted the `-Category` parameter in commands to a dynamic parameter. This allows autocompletion of values if the user specifies an alternate database path. __This is a potential breaking change__.
 - Modified Path parameter in functions to use the newer PowerShell 7 compatible [ValidateScript()] attribute.
@@ -223,7 +228,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.2.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.0..HEAD
+[1.3.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.2.0..v1.3.0
 [1.2.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.1.0..v1.2.0
 [1.1.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.1..v1.1.0
 [1.0.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.0..v1.0.1
