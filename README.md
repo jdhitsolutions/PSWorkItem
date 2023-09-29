@@ -6,7 +6,9 @@ This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions
 
 ## Installation
 
-This module requires __PowerShell 7.3__ or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform__ until the dependency SQLite module supports non-Windows systems. You can install this module from the PowerShell Gallery.
+This module requires __PowerShell 7.3__ or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform__ until the dependency SQLite module [supports non-Windows systems](https://github.com/jdhitsolutions/MySQLite/issues/21).
+
+Install the PSWorkItem module from the PowerShell Gallery.
 
 ```powershell
 Install-Module PSWorkItem [-scope CurrentUser]

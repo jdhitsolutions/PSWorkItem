@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.3.1] - 2023-09-29
+
+### Changed
+
+- Updated `README.md`.
+- Removed minimum version for the MySQLite dependency.
+
 ## [1.3.0] - 2023-09-28
 
 ### Added
@@ -79,8 +86,8 @@ This is a major update with significant changes. If this is your first time inst
 
 ### Changed
 
-- Modified module to add an `ID` property that will be the same in both the `Tasks` and `Archive` tables. Commands have been modified to use the `RowID` for the `ID` property for the first task. After that, the next ID will be one more than the highest ID found in the tasks or archive table. **This is a major breaking change**. [Issue #7](https://github.com/jdhitsolutions/PSWorkItem/issues/7)
-- Modified the class definitions into distinct items so that the `PSWorkItemArchive` doesn't inherit properties like `Overdue` that don't belong. **This is a potential breaking change**. [Issue #8](https://github.com/jdhitsolutions/PSWorkItem/issues/8)
+- Modified module to add an `ID` property that will be the same in both the `Tasks` and `Archive` tables. Commands have been modified to use the `RowID` for the `ID` property for the first task. After that, the next ID will be one more than the highest ID found in the tasks or archive table. _This is a major breaking change_. [Issue #7](https://github.com/jdhitsolutions/PSWorkItem/issues/7)
+- Modified the class definitions into distinct items so that the `PSWorkItemArchive` doesn't inherit properties like `Overdue` that don't belong. _This is a potential breaking change_. [Issue #8](https://github.com/jdhitsolutions/PSWorkItem/issues/8)
 - updated the sample PSWorkItem database.
 - General code cleanup.
 - help updates.
@@ -228,7 +235,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.1..HEAD
+[1.3.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.0..v1.3.1
 [1.3.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.2.0..v1.3.0
 [1.2.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.1.0..v1.2.0
 [1.1.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.0.1..v1.1.0

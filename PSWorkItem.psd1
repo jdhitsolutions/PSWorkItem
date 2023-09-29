@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '1.3.0'
+    ModuleVersion          = '1.3.1'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -14,7 +14,7 @@
     PowerShellVersion      = '7.3'
     DotNetFrameworkVersion = '4.6'
     ProcessorArchitecture  = 'Amd64'
-    RequiredModules        = @(@{ModuleName = "mySQLite"; ModuleVersion = "0.9.2" })
+    RequiredModules        = "mySQLite"
     TypesToProcess = @(
         'types\psworkitem.types.ps1xml',
         'types\psworkitemarchive.types.ps1xml'
