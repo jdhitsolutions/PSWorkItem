@@ -142,7 +142,7 @@ PS C:\> Get-PSWorkItemDatabase
 
 Created              LastModified         Tasks Archived Categories
 -------              ------------         ----- -------- ----------
-7/30/2022 1:55:02 PM 9/12/2023 1:05:26 PM    13       35         12
+7/30/2023 1:55:02 PM 9/12/2023 1:05:26 PM    13       35         12
 ```
 
 ## Categories
@@ -246,13 +246,13 @@ Category highlighting is only available in the default view.
 Use [Set-PSWorkItem](docs/Set-PSWorkItem.md) or its alias `swi` to update a task based on its ID.
 
 ```powershell
-PS C:\> Set-PSWorkItem -id 7 -Progress 30 -DueDate "8/15/2022 12:00PM" -PassThru
+PS C:\> Set-PSWorkItem -id 7 -Progress 30 -DueDate "8/15/2023 12:00PM" -PassThru
 
   Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
- 7 password report             8/15/2022 12:00:00 PM Work      30
+ 7 password report             8/15/2023 12:00:00 PM Work      30
 ```
 
 ## Completing Tasks
@@ -385,11 +385,11 @@ Most of the commands in this module create custom objects derived from PowerShel
 PS C:\> Get-PSWorkItemData
 
 taskid       : 2196617b-b818-415d-b9cc-52b0c649a77e
-taskcreated  : 07/28/2022 16:56:25
-taskmodified : 07/30/2022 14:01:09
+taskcreated  : 07/28/2023 16:56:25
+taskmodified : 07/30/2023 14:01:09
 name         : Update PSWorkItem module
 description  : v0.6.0
-duedate      : 12/31/2022 12:00:00
+duedate      : 12/31/2023 12:00:00
 category     : Other
 progress     : 10
 completed    : 0

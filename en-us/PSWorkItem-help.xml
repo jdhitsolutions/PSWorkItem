@@ -18,7 +18,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify the category name</maml:para>
+            <maml:para>Specify the category name.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
@@ -101,7 +101,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify the category name</maml:para>
+          <maml:para>Specify the category name.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>

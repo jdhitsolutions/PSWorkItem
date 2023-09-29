@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2023-09-29
+
+### Changed
+
+- Help updates.
+- Updated `README.md.`
+
+### Fixed
+
+- Fixed bug in `Add-PSWorkItemCategory` and `Initialize-PSWorkItemDatabase` that was causing errors using the default categories.
+
 ## [1.3.1] - 2023-09-29
 
 ### Changed
@@ -235,7 +246,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.1..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.4.0..HEAD
+[1.4.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.1..v1.4.0
 [1.3.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.0..v1.3.1
 [1.3.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.2.0..v1.3.0
 [1.2.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.1.0..v1.2.0

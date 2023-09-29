@@ -11,7 +11,7 @@ Function Add-PSWorkItemCategory {
         )]
         [ValidateNotNullOrEmpty()]
         [alias("Name")]
-        [string]$Category,
+        [string[]]$Category,
 
         [Parameter(
             Position = 1,

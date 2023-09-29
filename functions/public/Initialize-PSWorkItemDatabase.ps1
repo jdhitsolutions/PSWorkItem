@@ -28,7 +28,7 @@ Function Initialize-PSWorkItemDatabase {
         $PSDefaultParameterValues["_verbose:block"] = "Process"
         _verbose -message ($strings.InitializingDB -f $Path)
         Try {
-            #using -f to accommodate culture with datetimes
+            #using -f to accommodate culture with date times
             $comment = "PSWorkItem database created {0}." -f (Get-Date)
             $db = New-MySQLiteDB -Path $Path -PassThru -force:$Force -comment $comment -ErrorAction stop
         }
@@ -62,10 +62,10 @@ Function Initialize-PSWorkItemDatabase {
                 description = "text"
             }
             New-MySQLiteDBTable -Path $Path -TableName categories -ColumnProperties $props -force:$force
-            _verbose -message ($strings.AddDefaultCategories -f $PSWorkItemDefaultCategories -join ',')
+            _verbose -message ($strings.AddDefaultCategories -f $($script:PSWorkItemDefaultCategories -join ','))
             #give the database a chance to close
             Start-Sleep -milliseconds 500
-            Add-PSWorkItemCategory -Path $Path -Category $PSWorkItemDefaultCategories -Force
+            Add-PSWorkItemCategory -Path $Path -Category $script:PSWorkItemDefaultCategories -Force
             if ($PassThru) {
                 Get-mySQLiteTable -Path $Path -Detail
             }

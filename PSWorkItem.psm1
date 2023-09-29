@@ -140,7 +140,7 @@ Default categories when creating a new database file.
 This will be a module-scoped variable, not exposed to the user
 #>
 
-$PSWorkItemDefaultCategories = 'Work', 'Personal', 'Project', 'Other'
+$script:PSWorkItemDefaultCategories = 'Work', 'Personal', 'Project', 'Other'
 
 #a global hashtable used for formatting PSWorkItems
 $global:PSWorkItemCategory = @{

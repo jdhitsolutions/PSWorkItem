@@ -14,7 +14,7 @@ Add a new PSWorkItem category
 ## SYNTAX
 
 ```yaml
-Add-PSWorkItemCategory [-Category] <String> [[-Description] <String>]
+Add-PSWorkItemCategory [-Category] <String[]> [[-Description] <String>]
 [-Path <String>] [-Force] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -38,7 +38,7 @@ Blog     blog management and content
 
 ### -Category
 
-Specify the category name
+Specify the category name.
 
 ```yaml
 Type: String[]
@@ -150,7 +150,7 @@ Accept wildcard characters: False
 
 ### CommonParameters
 
-This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -159,6 +159,7 @@ This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariabl
 ### System.String
 
 ## OUTPUTS
+
 
 ### None
 
