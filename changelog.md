@@ -1,6 +1,19 @@
 # Changelog for PSWorkItem
 
 ## [Unreleased]
+### Added
+- Added a feature in `Open-PSWorkItemConsole` to allow the user to right-click on a table row and display PSWorkItem details in a pop-up window.
+- Added menu choices in Open-PSWorkItemConsole` to manage categories.
+- Added additional verbose output.
+
+### Changed
+- Modified private helper functions to support Verbose output.
+- Renamed localized string data file to match module name.
+
+### Fixed
+- Fixed typo in strings file
+- Fixed `Open-PSWorkItemConsole` to refresh report table when modifiying or removing PSWorkItems.
+- Fixed bug in `Remove-PSWorkItemCategory` that wasn't detecting the category value from the dynamic parameter.
 
 ## [1.4.0] - 2023-09-29
 

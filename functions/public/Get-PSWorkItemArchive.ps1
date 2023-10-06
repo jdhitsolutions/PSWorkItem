@@ -32,45 +32,46 @@ Function Get-PSWorkItemArchive {
     )
     DynamicParam {
         # Added 26 Sept 2023 to support dynamic categories based on path
-            if (-Not $PSBoundParameters.ContainsKey("Path")) {
-                $Path = $global:PSWorkItemPath
-            }
-            If (Test-Path $Path) {
+        if (-Not $PSBoundParameters.ContainsKey("Path")) {
+            $Path = $global:PSWorkItemPath
+        }
+        If (Test-Path $Path) {
 
-            $paramDictionary = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
+        $paramDictionary = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
 
-            # Defining parameter attributes
-            $attributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[System.Attribute]
-            $attributes = New-Object System.Management.Automation.ParameterAttribute
-            $attributes.ParameterSetName = 'Category'
-            $attributes.HelpMessage = 'Get all archived PSWorkItems by category'
+        # Defining parameter attributes
+        $attributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[System.Attribute]
+        $attributes = New-Object System.Management.Automation.ParameterAttribute
+        $attributes.ParameterSetName = 'Category'
+        $attributes.HelpMessage = 'Get all archived PSWorkItems by category'
 
-            # Adding ValidateSet parameter validation
-            #only get categories used in the Archive table
-            #It is possible categories might be entered in different cases in the database
-            [string[]]$values = (Get-PSWorkItemData -Table Archive -Path $Path).Category |
-            Foreach-Object { [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($_)} |
-            Select-Object -unique | Sort-Object
-            $v = New-Object System.Management.Automation.ValidateSetAttribute($values)
-            $AttributeCollection.Add($v)
+        # Adding ValidateSet parameter validation
+        #only get categories used in the Archive table
+        #It is possible categories might be entered in different cases in the database
+        [string[]]$values = (Get-PSWorkItemData -Table Archive -Path $Path).Category |
+        Foreach-Object { [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($_)} |
+        Select-Object -unique | Sort-Object
+        $v = New-Object System.Management.Automation.ValidateSetAttribute($values)
+        $AttributeCollection.Add($v)
 
-            # Adding ValidateNotNullOrEmpty parameter validation
-            $v = New-Object System.Management.Automation.ValidateNotNullOrEmptyAttribute
-            $AttributeCollection.Add($v)
-            $attributeCollection.Add($attributes)
+        # Adding ValidateNotNullOrEmpty parameter validation
+        $v = New-Object System.Management.Automation.ValidateNotNullOrEmptyAttribute
+        $AttributeCollection.Add($v)
+        $attributeCollection.Add($attributes)
 
-            # Defining the runtime parameter
-            $dynParam1 = New-Object -Type System.Management.Automation.RuntimeDefinedParameter('Category', [String], $attributeCollection)
-            $paramDictionary.Add('Category', $dynParam1)
+        # Defining the runtime parameter
+        $dynParam1 = New-Object -Type System.Management.Automation.RuntimeDefinedParameter('Category', [String], $attributeCollection)
+        $paramDictionary.Add('Category', $dynParam1)
 
-            return $paramDictionary
-        } # end if
+        return $paramDictionary
+    } # end if
     } #end DynamicParam
     Begin {
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
         _verbose -message ($strings.UsingDB -f $path)
     } #begin
 

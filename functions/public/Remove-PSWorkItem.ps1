@@ -28,6 +28,7 @@ Function Remove-PSWorkItem {
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
         Write-Debug "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
         $PSBoundParameters | Out-String | Write-Debug
 

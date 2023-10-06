@@ -73,7 +73,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-You cannot specify a completion date using this tool. You must manage categories using the module commands.
+You cannot specify a PSWorkItem completion date using this tool.
 
 If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting.
 
@@ -88,3 +88,9 @@ IMPORTANT: This command relies on a specific version of Terminal.Gui assembly. Y
 [Remove-PSWorkItem](Remove-PSWorkItem.md)
 
 [Complete-PSWorkItem](Complete-PSWorkItem.md)
+
+[Add-PSWorkItemCategory](Add-PSWorkItemCategory.md)
+
+[Set-PSWorkItemCategory](Set-PSWorkItemCategory.md)
+
+[Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)

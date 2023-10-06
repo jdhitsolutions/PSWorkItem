@@ -20,7 +20,9 @@ Add-PSWorkItemCategory [-Category] <String[]> [[-Description] <String>]
 
 ## DESCRIPTION
 
-When you setup a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force. Or if you need to update a category description you can re-add it with -Force. If the category name needs to be edited, remove the category and re-add it.
+When you setup a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force.
+
+It is recommended that you use proper casing for your category names and that they be single words.
 
 ## EXAMPLES
 
@@ -159,7 +161,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### System.String
 
 ## OUTPUTS
-
 
 ### None
 

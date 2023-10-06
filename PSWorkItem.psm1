@@ -3,11 +3,11 @@
 # write-host "Importing with culture $(Get-Culture)"
 
 if ((Get-Culture).Name -match "\w+") {
-    Import-LocalizedData -BindingVariable strings -FileName strings.psd1
+    Import-LocalizedData -BindingVariable strings
 }
 else {
     #force using En-US if no culture found, which might happen on non-Windows systems.
-    Import-LocalizedData -BindingVariable strings -FileName strings.psd1 -BaseDirectory .\en-us
+    Import-LocalizedData -BindingVariable strings -FileName PSWorkItem.psd1 -BaseDirectory .\en-us
 }
 
 if (-Not $ISWindows) {

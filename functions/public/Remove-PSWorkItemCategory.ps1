@@ -2,7 +2,6 @@ Function Remove-PSWorkItemCategory {
     [cmdletbinding(SupportsShouldProcess)]
     [OutputType("None")]
     Param(
-
         [Parameter(
             HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
         )]
@@ -60,6 +59,7 @@ Function Remove-PSWorkItemCategory {
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
         _verbose -message ($strings.UsingDB -f $path)
         Write-Debug "Using bound parameters"
         $PSBoundParameters | Out-String | Write-Debug
@@ -75,14 +75,19 @@ Function Remove-PSWorkItemCategory {
 
     Process {
         $PSDefaultParameterValues["_verbose:block"] = "Process"
+        $Category = $PSBoundParameters['Category']
         if ($conn.state -eq 'open') {
             foreach ($item in $Category ) {
                 _verbose -message ($strings.RemoveCategory -f $item)
                 $query = "DELETE FROM categories WHERE category = '$item'"
+                _verbose -message $query
                 if ($PSCmdlet.ShouldProcess($item)) {
                     Invoke-MySQLiteQuery -Query $query -Connection $conn -KeepAlive
                 }
             }
+        }
+        else {
+            Write-Warning $strings.DatabaseConnectionNotOpen
         }
     } #process
 

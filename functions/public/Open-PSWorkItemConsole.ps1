@@ -71,7 +71,13 @@ Function Open-PSWorkItemConsole {
 
     $MenuBarItem1 = [Terminal.Gui.MenuBarItem]::New('_Help', @($MenuItem4, $MenuItem7,$MenuItem5, $MenuItem6, $MenuItem3))
 
-    $MenuBar = [Terminal.Gui.MenuBar]::New(@($MenuBarItem0, $MenuBarItem1))
+    #3 Oct 2023 - add menu bar to manage categories
+    $MenuItem8 = [Terminal.Gui.MenuItem]::New('Add Category', '', { AddCategory })
+    $MenuItem9 = [Terminal.Gui.MenuItem]::New('Remove Category', '', { RemoveCategory })
+    $MenuItem10 = [Terminal.Gui.MenuItem]::New('Set Category', '', { SetCategory })
+    $MenuBarItem2 = [Terminal.Gui.MenuBarItem]::New('_Categories', @($MenuItem8, $MenuItem10,$MenuItem9))
+
+    $MenuBar = [Terminal.Gui.MenuBar]::New(@($MenuBarItem0, $MenuBarItem2,$MenuBarItem1))
 
     $Window.Add($MenuBar)
 
@@ -174,7 +180,7 @@ Function Open-PSWorkItemConsole {
 
     $dropCategory.Add_SelectedItemChanged({
         if ($chkFilterTable.Checked) {
-            RefreshTable -FilterCategory $script:CatList[$dropCategory.SelectedItem]
+            RefreshTable -FilterCategory $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
         }
     })
 
@@ -264,7 +270,7 @@ Function Open-PSWorkItemConsole {
 
     $chkFilterTable.Add_Toggled({
         if ($chkFilterTable.Checked) {
-            RefreshTable -FilterCategory $script:CatList[$dropCategory.SelectedItem]
+            RefreshTable -FilterCategory $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
         }
         else {
             RefreshTable
@@ -282,51 +288,52 @@ Function Open-PSWorkItemConsole {
     }
 
     $btnAdd.Add_Clicked({
-            if ($txtTaskName.Text.ToString() -match '\w+') {
-                if ($chkWhatIf.Checked) {
-                    ShowWhatIf -Command New
-                    Return
-                }
-                $r = @{
-                    Name        = $txtTaskName.Text.ToString()
-                    Category    = $script:CatList[$dropCategory.SelectedItem]
-                    Path        = $txtPath.Text.ToString()
-                    ErrorAction = 'Stop'
-                }
-                if ($txtDescription.text.ToString() -match '\w+') {
-                    $r.Add('Description', $txtDescription.text.ToString())
-                }
+        if ($txtTaskName.Text.ToString() -match '\w+') {
+            if ($chkWhatIf.Checked) {
+                ShowWhatIf -Command New
+                Return
+            }
+            $r = @{
+                Name        = $txtTaskName.Text.ToString()
+                Category    = $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
+                Path        = $txtPath.Text.ToString()
+                ErrorAction = 'Stop'
+            }
+            if ($txtDescription.text.ToString() -match '\w+') {
+                $r.Add('Description', $txtDescription.text.ToString())
+            }
 
-                if ($txtDays.Enabled) {
-                    $r.Add('DaysDue', $txtDays.Text.ToString())
-                }
-                else {
-                    $r.Add('DueDate', $txtDueDate.Text.ToString())
-                }
-
-                $StatusBar.Items[3].Title = "Creating PSWorkItem $($txtTaskName.Text.ToString()) in $($r.Path)"
-                $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 1000
-                Try {
-                    New-PSWorkItem @r
-                    ClearForm
-                    RefreshTable
-                    [Terminal.Gui.Application]::Refresh()
-                }
-                Catch {
-                    [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
-                }
+            if ($txtDays.Enabled) {
+                $r.Add('DaysDue', $txtDays.Text.ToString())
             }
             else {
-                $StatusBar.Items[3].Title = 'Oops! You forgot to specify a name for your PSWorkItem.'
-                $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 2000
-                $StatusBar.Items[3].Title = 'Ready'
+                $r.Add('DueDate', $txtDueDate.Text.ToString())
+            }
+
+            $StatusBar.Items[3].Title = "Creating PSWorkItem $($txtTaskName.Text.ToString()) in $($r.Path)"
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 1000
+            Try {
+                New-PSWorkItem @r
+                ClearForm
+                UpdateReport
+                RefreshTable
                 [Terminal.Gui.Application]::Refresh()
             }
-        })
+            Catch {
+                [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+            }
+        }
+        else {
+            $StatusBar.Items[3].Title = 'Oops! You forgot to specify a name for your PSWorkItem.'
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 2000
+            $StatusBar.Items[3].Title = 'Ready'
+            [Terminal.Gui.Application]::Refresh()
+        }
+    })
 
     $controls += $btnSet = [Terminal.Gui.Button]@{
         X    = $btnAdd.Frame.Width + 2
@@ -365,7 +372,7 @@ Function Open-PSWorkItemConsole {
                 $r = @{
                     ID          = $TableView.table.rows[$TableView.SelectedRow].ID
                     Name        = $txtTaskName.Text.ToString()
-                    Category    = $script:CatList[$dropCategory.SelectedItem]
+                    Category    = $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
                     Path        = $txtPath.Text.ToString()
                     ErrorAction = 'Stop'
                 }
@@ -392,6 +399,7 @@ Function Open-PSWorkItemConsole {
                 Set-PSWorkItem @r
                 Populate
                 RefreshTable
+                UpdateReport
                 $StatusBar.Items[3].Title = "Ready"
                 $StatusBar.SetChildNeedsDisplay()
                 [Terminal.Gui.Application]::Refresh()
@@ -437,6 +445,7 @@ Function Open-PSWorkItemConsole {
             Try {
                 Complete-PSWorkItem @r
                 ClearForm
+                UpdateReport
                 RefreshTable
                 [Terminal.Gui.Application]::Refresh()
             }
@@ -488,6 +497,7 @@ Function Open-PSWorkItemConsole {
                 [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
             }
             ClearForm
+            UpdateReport
             RefreshTable
             [Terminal.Gui.Application]::Refresh()
         }
@@ -522,8 +532,38 @@ Function Open-PSWorkItemConsole {
     $TableView.Style.ShowHorizontalHeaderUnderline = $True
     $TableView.Style.ShowVerticalHeaderLines = $False
 
-    #event handler
+    #event handlers
     $TableView.Add_SelectedCellChanged({Populate})
+
+    $TableView.Add_MouseClick({
+        Param ($Mouse)
+
+        $item = $TableView.table.rows[$TableView.SelectedRow]
+
+        if ($Mouse.mouseEvent.Flags -eq [Terminal.Gui.MouseFlags]::Button3Clicked)  {
+            $Detail = Get-PSWorkItem -Path $txtPath.Text.ToString() -ID $item.ID |
+            Select-Object -Property ID,Overdue,Description,Progress,Category,TaskCreated,TaskModified,Age,Due,TimeRemaining |
+            Out-String
+
+            $DetailDialog = [Terminal.Gui.Dialog]@{
+                Title = $item.name
+                X = [Terminal.Gui.Pos]::Center()
+                Y = [Terminal.Gui.Pos]::Center()
+                Width = 50
+                Height = 20
+                TextAlignment = 'Left'
+                Text = $Detail
+            }
+            $ok = [Terminal.Gui.Button]@{
+                Text = 'OK'
+            }
+            $ok.Add_Clicked({ $DetailDialog.RequestStop() })
+            $DetailDialog.AddButton($ok)
+
+            [Terminal.Gui.Application]::Run($DetailDialog)
+        }
+
+    })
 
     $window.Add($TableView)
 
@@ -550,6 +590,7 @@ Function Open-PSWorkItemConsole {
     #refresh data
     RefreshTable
     RefreshCategoryList
+    UpdateReport
     $txtTaskName.SetFocus()
     #set a timer to update the status bar every 15 seconds
     $TimerToken = [Terminal.Gui.Application]::MainLoop.AddTimeout((New-TimeSpan -Seconds 15), { UpdateStatusTime })

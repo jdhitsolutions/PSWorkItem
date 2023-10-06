@@ -29,6 +29,7 @@ Function Update-PSWorkItemDatabase {
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
         _verbose -message ($strings.UsingDB -f $path)
 
         $dbConnection = Open-MySQLiteDB -Path $Path

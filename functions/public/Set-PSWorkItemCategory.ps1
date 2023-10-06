@@ -2,16 +2,6 @@ Function Set-PSWorkItemCategory {
     [cmdletbinding(SupportsShouldProcess)]
     [OutputType('None', 'PSWorkItemCategory')]
     Param(
-<#         [Parameter(
-            Position = 0,
-            Mandatory,
-            ValueFromPipeline,
-            HelpMessage = 'Specify a case-sensitive category name.'
-        )]
-        [ValidateNotNullOrEmpty()]
-        [Alias('Name')]
-        [string]$Category, #>
-
         [Parameter(
             HelpMessage = 'Specify a category comment or description.'
         )]
@@ -81,6 +71,7 @@ Function Set-PSWorkItemCategory {
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
         if ((-Not $PSBoundParameters.ContainsKey('Description')) -AND (-Not $PSBoundParameters.ContainsKey('NewName'))) {
             Write-Warning $strings.WarnDescriptionOrName
             Return
@@ -111,6 +102,7 @@ Function Set-PSWorkItemCategory {
 
     Process {
         $PSDefaultParameterValues["_verbose:block"] = "Process"
+        $Category = $PSBoundParameters['Category']
         _verbose -message ($strings.ProcessCategory -f $Category)
         if ($conn.state -eq 'open') {
             _verbose -message ($strings.ValidateCategory -f $category)
