@@ -10,7 +10,8 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>When you setup a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force. Or if you need to update a category description you can re-add it with -Force. If the category name needs to be edited, remove the category and re-add it.</maml:para>
+      <maml:para>When you setup a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force.</maml:para>
+      <maml:para>It is recommended that you use proper casing for your category names and that they be single words.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2365,11 +2366,13 @@ ColumnIndex ColumnName  ColumnType
       <command:verb>Open</command:verb>
       <command:noun>PSWorkItemConsole</command:noun>
       <maml:description>
-        <maml:para>Open the PSWorkItem management console</maml:para>
+        <maml:para>Open the PSWorkItem management TUI-based console</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
       <maml:para>This command will launch a terminal-based console for managing PSWorkItems. You can select items from the table which will populate the entry forms. You can then modify the work item and click Set-PSWorkItem, or you can mark the item as complete or remove it. To enter a new PSWorkItem, use Options - Clear Form. Enter your new item, selecting a category from the list, and click the Add New PSWorkItem button. You cannot set a progress value when creating a new work item.</maml:para>
+      <maml:para>You can right-click a task in the table to show detailed information.</maml:para>
+      <maml:para>Use the category menu options to add, set, or remove a category.</maml:para>
       <maml:para>You can also enter a different database path by entering the path in the Database field, or using Options - Open database. Use the Reset Form option to reset the form with your default settings.</maml:para>
     </maml:description>
     <command:syntax>
@@ -2425,8 +2428,8 @@ ColumnIndex ColumnName  ColumnType
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>You cannot specify a completion date using this tool. You must manage categories using the module commands.</maml:para>
-        <maml:para>If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting.</maml:para>
+        <maml:para>You cannot specify a PSWorkItem completion date using this tool.</maml:para>
+        <maml:para>If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting. The TUI color scheme is also influenced by the Windows Terminal color scheme. It will have a different appearance under different Windows Terminal color schemes.</maml:para>
         <maml:para>IMPORTANT: This command relies on a specific version of Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like Microsoft.PowerShell.ConsoleGuiTools. You may need to load this module first in a new PowerShell session.</maml:para>
       </maml:alert>
     </maml:alertSet>
@@ -2452,6 +2455,10 @@ ColumnIndex ColumnName  ColumnType
         <maml:uri>https://bit.ly/48zfOB8</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
+        <maml:linkText>New-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
         <maml:linkText>Get-PSWorkItem</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
@@ -2465,6 +2472,18 @@ ColumnIndex ColumnName  ColumnType
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Complete-PSWorkItem</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Add-PSWorkItemCategory</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Set-PSWorkItemCategory</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Remove-PSWorkItemCategory</maml:linkText>
         <maml:uri></maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>

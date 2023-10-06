@@ -316,6 +316,16 @@ Run [`Open-PSWorkItemConsole`](docs\Open-PSWorkItemConsole.md) or its alias *`wi
 
 If you select an item from the table, it will populate the form fields. You can then update, complete, or remove the item. To create a new item, it is recommended that you first clear the form (`Options - Clear Form`). Enter the PSWorkItem details and click the `Add PSWorkItem` button.
 
+You can also manage categories.
+
+![add category](images/tui-addcategory.png)
+
+![set category](images/tui-setcategory.png)
+
+You can right-click a task in the table to get detailed information.
+
+![task details](images/tui-taskdetail.png)
+
 __IMPORTANT__ This command relies on a specific version of the Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like `Microsoft.PowerShell.ConsoleGuiTools`. You may need to load this module first in a new PowerShell session.
 
 ## User Preferences
@@ -400,6 +410,6 @@ rowid        : 19
 ## Future Tasks or Commands
 
 - Password protection options.
-- A TUI form for managing categories
+- Update the TUI management console to show database details
 
 If you have an enhancement suggestion, please submit it as an [Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).

@@ -1,18 +1,24 @@
 # Changelog for PSWorkItem
 
 ## [Unreleased]
+
+## [1.5.0] - 2023-10-06
+
 ### Added
+
 - Added a feature in `Open-PSWorkItemConsole` to allow the user to right-click on a table row and display PSWorkItem details in a pop-up window.
-- Added menu choices in Open-PSWorkItemConsole` to manage categories.
+- Added menu choices in `Open-PSWorkItemConsole` to manage categories.
 - Added additional verbose output.
 
 ### Changed
+
 - Modified private helper functions to support Verbose output.
 - Renamed localized string data file to match module name.
 
 ### Fixed
+
 - Fixed typo in strings file
-- Fixed `Open-PSWorkItemConsole` to refresh report table when modifiying or removing PSWorkItems.
+- Fixed `Open-PSWorkItemConsole` to refresh report table when modifying or removing PSWorkItems.
 - Fixed bug in `Remove-PSWorkItemCategory` that wasn't detecting the category value from the dynamic parameter.
 
 ## [1.4.0] - 2023-09-29
@@ -259,7 +265,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.4.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..HEAD
+[1.5.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.4.0..v1.5.0
 [1.4.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.1..v1.4.0
 [1.3.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.0..v1.3.1
 [1.3.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.2.0..v1.3.0
