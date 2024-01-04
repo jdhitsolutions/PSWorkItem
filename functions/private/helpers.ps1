@@ -1,5 +1,17 @@
 #private helper functions
 
+Function StartTimer {
+    $script:timer = [System.Diagnostics.Stopwatch]::new()
+    $script:timer.Start()
+}
+
+Function StopTimer {
+    if ($script:timer.IsRunning) {
+        $script:timer.Stop()
+    }
+    $script:timer.Elapsed
+}
+
 function _newWorkItem {
     [cmdletbinding()]
     Param([object]$data, [String]$path)
@@ -72,17 +84,12 @@ function _verbose {
     param(
         [Parameter(Position = 0)]
         [string]$Message,
-        [string]$Block,
+        [string]$Block = "Process",
         [string]$Command
     )
 
-    Switch ($Block) {
-        'begin' { $BlockString = 'BEGIN  ' }
-        'process' { $BlockString = 'PROCESS' }
-        'end' { $BlockString = 'END    ' }
-        Default { $BlockString = $Block}
-    }
+    $BlockString = $Block.ToUpper()
 
     Write-Verbose "[$((Get-Date).TimeOfDay) $BlockString] $([char]27)[1m$($command)$([char]27)[0m: $([char]27)[3m$message$([char]27)[0m"
 
-}1
+}

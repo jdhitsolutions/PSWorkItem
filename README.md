@@ -14,11 +14,17 @@ Install the PSWorkItem module from the PowerShell Gallery.
 Install-Module PSWorkItem [-scope CurrentUser]
 ```
 
+Or if you are using the PSResourceGet module.
+
+```powershell
+Install-PSResource PSWorkItem
+```
+
 :heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery.
 
 ## PSWorkItem Database Change
 
-**If you were using a version of this module prior to v1.0.0, this note applies to you.**
+**If you were using a version of this module older than 1.0.0, this note applies to you.**
 
 >Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. You should back up your database file before running this command.
 > Alternatively, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
@@ -37,6 +43,7 @@ Install-Module PSWorkItem [-scope CurrentUser]
 - [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md)
 - [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md)
 - [New-PSWorkItem](docs/New-PSWorkItem.md)
+- [Open-PSWorkItemConsole](docs/Open-PSWorkItemConsole.md)
 - [Remove-PSWorkItem](docs/Remove-PSWorkItem.md)
 - [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md)
 - [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md)
@@ -142,7 +149,21 @@ PS C:\> Get-PSWorkItemDatabase
 
 Created              LastModified         Tasks Archived Categories
 -------              ------------         ----- -------- ----------
-7/30/2023 1:55:02 PM 9/12/2023 1:05:26 PM    13       35         12
+7/30/2022 1:55:10 PM 10/6/2023 8:47:22 AM    15       49         12
+
+PS C:\> Get-PSWorkItemDatabase | Format-List
+
+Path          : C:\Users\Jeff\PSWorkItem.db
+Created       : 7/30/2022 1:55:10 PM
+LastModified  : 10/6/2023 8:47:22 AM
+Size          : 45056
+TaskCount     : 15
+CategoryCount : 12
+ArchiveCount  : 49
+Encoding      : UTF-8
+PageCount     : 11
+PageSize      : 4096
+ModifiedAge   : 00:46:29.3572634
 ```
 
 ## Categories
@@ -312,7 +333,7 @@ Version 1.3.0 added a management console based on the [Terminal.Gui](https://git
 
 ![console management](images/psworkitemconsole.png)
 
-Run [`Open-PSWorkItemConsole`](docs\Open-PSWorkItemConsole.md) or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the Open Database command under Options. The file must end in `.db`. If you select a different database, you can use `Options - Reset Form` to reset to your default database.
+Run [`Open-PSWorkItemConsole`](docs\Open-PSWorkItemConsole.md) or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the `Open Database`` command under Options. The file must end in `.db`. If you select a different database, you can use `Options - Reset Form` to reset to your default database.
 
 If you select an item from the table, it will populate the form fields. You can then update, complete, or remove the item. To create a new item, it is recommended that you first clear the form (`Options - Clear Form`). Enter the PSWorkItem details and click the `Add PSWorkItem` button.
 
@@ -379,7 +400,7 @@ This module has no specific commands for backing up or restoring a database file
 Export-MySQLiteDB -path $PSWorkItemPath -Destination d:\backups\pwi.json
 ```
 
-Use `Import-MySQLiteDB` to import the file and rebuild the database file. When restoring a database file, you should restore the file to a new location, verify the database, then copy the file to `$PSWorkItemPath`.
+Use `Import-MySQLiteDB` to import the file and rebuild the database file. When restoring a database file, you should restore the file to a new location, verify the database, and then copy the file to `$PSWorkItemPath`.
 
 ## Database Sample
 
@@ -410,6 +431,6 @@ rowid        : 19
 ## Future Tasks or Commands
 
 - Password protection options.
-- Update the TUI management console to show database details
+- enhancements to the TUI management console
 
 If you have an enhancement suggestion, please submit it as an [Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).

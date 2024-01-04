@@ -28,11 +28,11 @@ Use this command to get a summary of the PSWorkItem database file. You can not m
 ```powershell
 PS C:\> Get-PSWorkItemDatabase
 
-   Path: C:\Users\Jeff\PSWorkItem.db [32KB]
+   Path: C:\Users\Jeff\PSWorkItem.db [44KB]
 
-Created              LastModified          Tasks Archived Categories
--------              ------------          ----- -------- ----------
-7/29/2023 9:59:59 AM 7/30/2023 11:20:17 AM     6        6          5
+Created              LastModified         Tasks Archived Categories
+-------              ------------         ----- -------- ----------
+7/30/2022 1:55:10 PM 10/6/2023 8:47:22 AM    15       49         12
 ```
 
 The default summary.
@@ -43,18 +43,19 @@ The default summary.
 PS C:\> Get-PSWorkItemDatabase | Format-List
 
 Path          : C:\Users\Jeff\PSWorkItem.db
-Created       : 7/29/2023 9:59:59 AM
-LastModified  : 7/30/2023 11:20:17 AM
-Size          : 32768
-TaskCount     : 6
-CategoryCount : 5
-ArchiveCount  : 6
+Created       : 7/30/2022 1:55:10 PM
+LastModified  : 10/6/2023 8:47:22 AM
+Size          : 45056
+TaskCount     : 15
+CategoryCount : 12
+ArchiveCount  : 49
 Encoding      : UTF-8
-PageCount     : 8
+PageCount     : 11
 PageSize      : 4096
+ModifiedAge   : 00:46:29.3572634
 ```
 
-There are additional properties.
+There are additional properties. The ModifiedAge property is a time span that shows how long ago the database was last modified.
 
 ## PARAMETERS
 

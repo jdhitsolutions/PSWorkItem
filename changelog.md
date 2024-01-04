@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2024-01-04
+
+### Added
+- Added private helper functions to create and use a stopwatch. Modified functions to display a verbose message at the end of the command showing how long the function took to run.
+- Added menu option in `Open-PSWorkItemConsole` to display database details.
+
+### Changed
+
+- Updated `Open-PSWorkItemConsole` to highlight labels of required values in magenta.
+- Updated `Open-PSWorkItemConsole` to use string data.
+- Updated the TUI console to display tooltips in the status bar on mouseovers.
+- Modified `Open-PSWorkItemConsole` to export internal variables to the global scope when using `-Debug`. After closing the window you can use `$wicWindow` and `$wicControls` to help debug, troubleshoot, or develop the TUI form.
+- Modified category report in `Open-PSWorkItemConsole` to use a TextView control in place of a label so that it doesn't lay on the top of other controls.
+- Updated Terminal.Gui assembly to version 1.14.1
+- Revised the command help displayed in `Open-PSWorkItemConsole`.
+- Modified the `Created` property of the `PSWorkItemDatabase` class to use the value from the database metadata instead of relying on the file creation age.
+- Modified `PSWorkItemDatabase` class to show additional information. The default formatting won't change, but you'll see additional properties if you pipe to `Select-Object` and select all properties.
+- Updated `README.md`.
+
 ## [1.5.0] - 2023-10-06
 
 ### Added
@@ -265,7 +284,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.6.0..HEAD
+[1.6.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..v1.6.0
 [1.5.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.4.0..v1.5.0
 [1.4.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.1..v1.4.0
 [1.3.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.0..v1.3.1

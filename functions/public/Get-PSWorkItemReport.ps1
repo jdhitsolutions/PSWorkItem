@@ -13,6 +13,7 @@ Function Get-PSWorkItemReport {
         [String]$Path = $PSWorkItemPath
     )
     Begin {
+        StartTimer
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
@@ -49,7 +50,9 @@ Function Get-PSWorkItemReport {
 
     End {
         $PSDefaultParameterValues["_verbose:block"] = "End"
+        $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         _verbose -message $strings.Ending -command $myInvocation.MyCommand
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 
 } #close Get-PSWorkItemReport

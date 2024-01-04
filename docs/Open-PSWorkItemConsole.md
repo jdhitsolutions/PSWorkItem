@@ -79,7 +79,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 You cannot specify a PSWorkItem completion date using this tool.
 
-If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting. The TUI color scheme is also influenced by the Windows Terminal color scheme. It will have a different appearance under different Windows Terminal color schemes.
+If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting. The TUI color scheme is also influenced by the Windows Terminal color scheme. It will have a different appearance under different Windows Terminal color schemes. You may also have to adjust the zoom level in Windows Terminal to see the entire form.
 
 IMPORTANT: This command relies on a specific version of Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like Microsoft.PowerShell.ConsoleGuiTools. You may need to load this module first in a new PowerShell session.
 

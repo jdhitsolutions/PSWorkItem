@@ -24,6 +24,7 @@ Function Remove-PSWorkItem {
         [String]$Path = $PSWorkItemPath
     )
     Begin {
+        StartTimer
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
@@ -73,5 +74,6 @@ Function Remove-PSWorkItem {
             Close-MySQLiteDB -Connection $conn
         }
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 }

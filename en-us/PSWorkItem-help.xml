@@ -1494,11 +1494,11 @@ Event       Conference, webinar, or other event     12</dev:code>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-PSWorkItemDatabase
 
-   Path: C:\Users\Jeff\PSWorkItem.db [32KB]
+   Path: C:\Users\Jeff\PSWorkItem.db [44KB]
 
-Created              LastModified          Tasks Archived Categories
--------              ------------          ----- -------- ----------
-7/29/2023 9:59:59 AM 7/30/2023 11:20:17 AM     6        6          5</dev:code>
+Created              LastModified         Tasks Archived Categories
+-------              ------------         ----- -------- ----------
+7/30/2022 1:55:10 PM 10/6/2023 8:47:22 AM    15       49         12</dev:code>
         <dev:remarks>
           <maml:para>The default summary.</maml:para>
         </dev:remarks>
@@ -1508,17 +1508,18 @@ Created              LastModified          Tasks Archived Categories
         <dev:code>PS C:\&gt; Get-PSWorkItemDatabase | Format-List
 
 Path          : C:\Users\Jeff\PSWorkItem.db
-Created       : 7/29/2023 9:59:59 AM
-LastModified  : 7/30/2023 11:20:17 AM
-Size          : 32768
-TaskCount     : 6
-CategoryCount : 5
-ArchiveCount  : 6
+Created       : 7/30/2022 1:55:10 PM
+LastModified  : 10/6/2023 8:47:22 AM
+Size          : 45056
+TaskCount     : 15
+CategoryCount : 12
+ArchiveCount  : 49
 Encoding      : UTF-8
-PageCount     : 8
-PageSize      : 4096</dev:code>
+PageCount     : 11
+PageSize      : 4096
+ModifiedAge   : 00:46:29.3572634</dev:code>
         <dev:remarks>
-          <maml:para>There are additional properties.</maml:para>
+          <maml:para>There are additional properties. The ModifiedAge property is a time span that shows how long ago the database was last modified.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2429,7 +2430,7 @@ ColumnIndex ColumnName  ColumnType
     <maml:alertSet>
       <maml:alert>
         <maml:para>You cannot specify a PSWorkItem completion date using this tool.</maml:para>
-        <maml:para>If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting. The TUI color scheme is also influenced by the Windows Terminal color scheme. It will have a different appearance under different Windows Terminal color schemes.</maml:para>
+        <maml:para>If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting. The TUI color scheme is also influenced by the Windows Terminal color scheme. It will have a different appearance under different Windows Terminal color schemes. You may also have to adjust the zoom level in Windows Terminal to see the entire form.</maml:para>
         <maml:para>IMPORTANT: This command relies on a specific version of Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like Microsoft.PowerShell.ConsoleGuiTools. You may need to load this module first in a new PowerShell session.</maml:para>
       </maml:alert>
     </maml:alertSet>

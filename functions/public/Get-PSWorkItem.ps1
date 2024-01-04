@@ -81,6 +81,7 @@ Function Get-PSWorkItem {
         } # end if
     } #end DynamicParam
     Begin {
+        StartTimer
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         $PSDefaultParameterValues['_verbose:block'] = 'Begin'
         _verbose -message $strings.Starting
@@ -154,5 +155,6 @@ Function Get-PSWorkItem {
         $PSDefaultParameterValues['_verbose:block'] = 'End'
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 }

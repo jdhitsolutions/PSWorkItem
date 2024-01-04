@@ -19,6 +19,7 @@ Function Initialize-PSWorkItemDatabase {
         [Switch]$Force
     )
     Begin {
+        StartTimer
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
@@ -77,5 +78,6 @@ Function Initialize-PSWorkItemDatabase {
         $PSDefaultParameterValues["_verbose:block"] = "End"
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 }

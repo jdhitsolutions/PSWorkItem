@@ -55,6 +55,7 @@ Function Get-PSWorkItemCategory {
         } # end if
     } #end DynamicParam
     Begin {
+        StartTimer
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         $PSDefaultParameterValues['_verbose:block'] = 'Begin'
         _verbose -message $strings.Starting
@@ -103,5 +104,6 @@ Function Get-PSWorkItemCategory {
         $PSDefaultParameterValues['_verbose:block'] = 'End'
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 }

@@ -25,6 +25,7 @@ Function Update-PSWorkItemDatabase {
     )
 
     Begin {
+        StartTimer
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
@@ -109,6 +110,7 @@ Function Update-PSWorkItemDatabase {
         _verbose -message $strings.CloseDBConnection
         Close-MySQLiteDB -Connection $dbConnection
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 
 } #close Update-PSWorkItemDatabase

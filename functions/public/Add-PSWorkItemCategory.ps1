@@ -36,6 +36,7 @@ Function Add-PSWorkItemCategory {
         [Switch]$PassThru
     )
     Begin {
+        StartTimer
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
@@ -110,5 +111,6 @@ Function Add-PSWorkItemCategory {
         _verbose -message ($strings.CloseDBConnection -f $path)
         Close-MySQLiteDB -Connection $conn
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 }

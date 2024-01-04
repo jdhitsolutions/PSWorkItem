@@ -55,6 +55,7 @@ Function Remove-PSWorkItemCategory {
         } # end if
     } #end DynamicParam
     Begin {
+        StartTimer
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
@@ -99,5 +100,6 @@ Function Remove-PSWorkItemCategory {
             Close-MySQLiteDB -Connection $conn
         }
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 }

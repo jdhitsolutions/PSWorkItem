@@ -101,13 +101,43 @@ Function ShowHelp {
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
 
     $title = 'Open-PSWorkItemConsole'
-    $help = (Get-Help Open-PSWorkItemConsole).Description.Text | Out-String
+    $getHelp = Get-Help Open-PSWorkItemConsole
+    #(Get-Help Open-PSWorkItemConsole).Description.Text | Out-String
+    #$(($getHelp.Description.Text | Out-String).Trim())
+    #$(($getHelp.AlertSet.Alert | Out-String).Trim())
+    $help = @"
 
+  This command will launch a terminal-based console for managing
+  PSWorkItems. You can select items from the table which will
+  populate the entry forms. You can then modify the work item and
+  click Set-PSWorkItem, or you can mark the item as complete or
+  remove it. To enter a new PSWorkItem, use Options - Clear Form.
+  Enter your new item, selecting a category from the list, and
+  click the Add New PSWorkItem button. You cannot set a progress
+  value when creating a new work item. Use the category menu options
+  to add, set, or remove a category.
+
+  You can right-click a task in the table to show detailed information.
+
+  You can also enter a different database path by entering the path in
+  the Database field, or using Options - Open database. Use the
+  Reset Form option to reset the form with your default settings.
+
+  You cannot specify a PSWorkItem completion date using this tool.
+
+  If you have difficulty seeing the cursor in text fields, and you are
+  running in Windows Terminal, you might try changing the cursor in
+  your Windows Terminal profile setting. The TUI color scheme is
+  also influenced by the Windows Terminal color scheme. You may also
+  have to adjust the zoom level in Windows Terminal to see the entire
+  form.
+
+"@
     $dialog = [Terminal.Gui.Dialog]@{
         Title         = 'Help Open-PSWorkItemConsole'
         TextAlignment = 'Left'
         Width         = 75
-        Height        = 20
+        Height        = 30
         Text          = $help
     }
     $ok = [Terminal.Gui.Button]@{
@@ -629,7 +659,7 @@ Function SetCategory {
     Param()
 
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
-    
+
     #cache current categories
     $catHash = Get-PSWorkItemCategory -Path $txtPath.Text.ToString() | Group-Object -Property Category -AsHashTable -AsString
 
@@ -800,6 +830,31 @@ Path = $($txtPath.Text.ToString())
     $subDropCategory.SelectedItem = 0
 
     [Terminal.Gui.Application]::Run($subWin)
+
+    Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Ending $($MyInvocation.MyCommand)"
+}
+
+Function ShowDatabaseDetail {
+    [CmdletBinding()]
+    Param()
+    Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
+
+    $info = Get-PSWorkItemDatabase -Path $txtPath.Text.ToString() | Format-List | Out-String
+
+    $dialog = [Terminal.Gui.Dialog]@{
+        Title         = 'PSWorkItem Database Details'
+        TextAlignment = 'Left'
+        Width         = 50
+        Height        = 20
+        Text          = $info
+    }
+    $ok = [Terminal.Gui.Button]@{
+        Text = 'OK'
+    }
+    $ok.Add_Clicked({ $dialog.RequestStop() })
+    $dialog.AddButton($ok)
+    Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Invoking dialog"
+    [Terminal.Gui.Application]::Run($dialog)
 
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Ending $($MyInvocation.MyCommand)"
 }

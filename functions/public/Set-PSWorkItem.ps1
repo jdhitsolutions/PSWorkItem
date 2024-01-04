@@ -90,13 +90,15 @@ Function Set-PSWorkItem {
         return $paramDictionary
     } # end if
     } #end DynamicParam
+
     Begin {
+        StartTimer
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         $PSDefaultParameterValues['_verbose:block'] = 'Begin'
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
         _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
-        _verbose -message ($strings.UsingDB -f $path)
+
         Write-Debug "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
         $PSBoundParameters | Out-String | Write-Debug
 
@@ -203,5 +205,6 @@ Function Set-PSWorkItem {
             Close-MySQLiteDB -Connection $conn
         }
         _verbose -message $strings.Ending
+        _verbose -message ($strings.RunTime -f (StopTimer))
     } #end
 }
