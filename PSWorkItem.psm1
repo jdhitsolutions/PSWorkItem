@@ -1,17 +1,16 @@
+
 # used for culture debugging
 # write-host "Importing with culture $(Get-Culture)"
 
 if ((Get-Culture).Name -match "\w+") {
-    #write-host "Using culture $(Get-Culture)" -ForegroundColor yellow
     Import-LocalizedData -BindingVariable strings
 }
 else {
     #force using En-US if no culture found, which might happen on non-Windows systems.
-    #write-host "Loading $PSScriptRoot/en-us/PSWorkItem.psd1" -ForegroundColor yellow
-    Import-LocalizedData -BindingVariable strings -FileName PSWorkItem.psd1 -BaseDirectory $PSScriptRoot/en-us
+    Import-LocalizedData -BindingVariable strings -FileName PSWorkItem.psd1 -BaseDirectory .\en-us
 }
 
-if (-Not $IsWindows) {
+if (-Not $ISWindows) {
     Write-Warning $Strings.WindowsOnly
     #bail out
     Return
@@ -125,15 +124,12 @@ class PSWorkItemDatabase {
     [String]$Encoding
     [int32]$PageCount
     [int32]$PageSize
-    [version]$SQLiteVersion
-    [string]$CreatedBy
 }
 
 #endregion
 
 #region type extensions
 
-Update-TypeData -TypeName PSWorkItemDatabase -MemberType ScriptProperty -MemberName ModifiedAge -Value {New-TimeSpan -start $this.LastModified -end (Get-Date)} -Force
 Update-TypeData -TypeName PSWorkItemCategory -MemberType ScriptProperty -MemberName ANSIString -Value { $PSWorkItemCategory[$this.Category] -replace "`e",
 "``e" } -force
 #endregion
