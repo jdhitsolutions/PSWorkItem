@@ -19,21 +19,23 @@ Function Get-PSWorkItemDatabase {
         _verbose -message $strings.Starting
         _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
         _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
-        _verbose -message ($strings.UsingDB -f $path)
+        #convert path
+        $cPath = Convert-Path $path
+        _verbose -message ($strings.UsingDB -f $cPath)
     } #begin
 
     Process {
         $PSDefaultParameterValues["_verbose:block"] = "Process"
-        _verbose -message ($strings.GetData -f $Path)
+        _verbose -message ($strings.GetData -f $cPath)
         Try {
-            $db = Get-MySQLiteDB -Path $Path -ErrorAction Stop
+            $db = Get-MySQLiteDB -Path $cPath -ErrorAction Stop
         }
         Catch {
             Throw $_
         }
         if ($db) {
             _verbose -message $strings.OpenDBConnection
-            $conn = Open-MySQLiteDB -Path $path
+            $conn = Open-MySQLiteDB -Path $cPath
             _verbose -message $strings.TaskCount
             $tasks = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from tasks" -ErrorAction Stop
             _verbose -message $strings.ArchiveCount

@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [1.7.0] - 2024-01-07
+
+### Changed
+
+- Updated the sample PSWorkItem database.
+- Revised format file for PSWorkItems to show due date with leading zeros and no seconds.
+- Updated `Open-PSWorkItemConsole` to format due dates with leading zeros and no seconds.
+- Updated `Open-PSWorkItemConsole` to display overdue items in the table in Red and items due within 5 days in Cyan.
+- Updated table layout in `Open-PSWorkItemConsole`. Added a RepresentationGetter to display progress value with a % sign. Hiding the `Overdue` column to give more space to the `Name` and `Description` columns.
+
+### Fixed
+
+- Update the TUI form which was hiding the `Clear` checkbox
+- Fixed missing properties in the PSWorkItemDatabase class.
+
 ## [1.5.0] - 2023-10-06
 
 ### Added
@@ -265,7 +280,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.7.0..HEAD
+[1.7.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..v1.7.0
 [1.5.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.4.0..v1.5.0
 [1.4.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.1..v1.4.0
 [1.3.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.0..v1.3.1

@@ -95,7 +95,7 @@ Function Open-PSWorkItemConsole {
 
     $controls += $txtDescription = [Terminal.Gui.TextField]@{
         X       = $lblDescription.Frame.Width + 2
-        Width   = 40
+        Width   = 30
         Y       = 4
         TabStop = $True
     }
@@ -103,6 +103,7 @@ Function Open-PSWorkItemConsole {
     $txtDescription.Add_MouseEnter({
         $tip = $strings.tipDescription
         $StatusBar.Items[3].Title = $tip
+        [Terminal.Gui.Application]::Refresh()
     })
 
     $txtDescription.Add_MouseLeave({
@@ -112,11 +113,22 @@ Function Open-PSWorkItemConsole {
 
     $controls += $chkClearDescription = [Terminal.Gui.CheckBox]@{
         Text    = 'C_lear'
-        X       = $txtDescription.X + $txtDescription.Frame.Width + 2
+        X       = $txtDescription.X + ($txtDescription.Frame.Width + 2)
         Y       = 4
         TabStop = $False
         Visible = $False
     }
+
+    $chkClearDescription.Add_MouseEnter({
+        $tip = $strings.tipClear
+        $StatusBar.Items[3].Title = $tip
+        [Terminal.Gui.Application]::Refresh()
+    })
+
+    $chkClearDescription.Add_MouseLeave({
+        $StatusBar.Items[3].Title = 'Ready'
+        [Terminal.Gui.Application]::Refresh()
+    })
 
     $controls += $lblPath = [Terminal.Gui.Label]@{
         Text    = 'Database:'
@@ -156,7 +168,7 @@ Function Open-PSWorkItemConsole {
 
         #4 Jan 2024 Show required fields in a different color
         $cs = [Terminal.Gui.ColorScheme]::new()
-        $cs.Normal = [Terminal.Gui.Attribute]::new('BrightMagenta', 'Blue')
+        $cs.Normal = [Terminal.Gui.Attribute]::new('BrightYellow', 'Blue')
     $controls += $lblTaskName = [Terminal.Gui.Label]@{
         Text    = '*Name:'
         X       = 1
@@ -167,7 +179,7 @@ Function Open-PSWorkItemConsole {
 
     $controls += $txtTaskName = [Terminal.Gui.TextField]@{
         X        = $lblDescription.Frame.Width + 2
-        Width    = 31
+        Width    = 25
         Y        = 2
         TabIndex = 0
         TabStop  = $True
@@ -236,22 +248,11 @@ Function Open-PSWorkItemConsole {
 
     $cs = [Terminal.Gui.ColorScheme]::new()
     <#
-    Black
-    Blue
-    Green
-    Cyan
-    Red
-    Magenta
-    Brown
-    Gray
-    DarkGray
-    BrightBlue
-    BrightGreen
-    BrightCyan
-    BrightRed
-    BrightMagenta
-    BrightYellow
-    White
+    Black     Blue     Green     Cyan
+    Red    Magenta     Brown     Gray
+    DarkGray     BrightBlue     BrightGreen
+    BrightCyan    BrightRed     BrightMagenta
+    BrightYellow    White
     #>
     $fg= "BrightYellow"
     $bg = $window.ColorScheme.Normal.Background #"Blue"
@@ -395,52 +396,52 @@ Function Open-PSWorkItemConsole {
     }
 
     $btnAdd.Add_Clicked({
-            if ($txtTaskName.Text.ToString() -match '\w+') {
-                if ($chkWhatIf.Checked) {
-                    ShowWhatIf -Command New
-                    Return
-                }
-                $r = @{
-                    Name        = $txtTaskName.Text.ToString()
-                    Category    = $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
-                    Path        = $txtPath.Text.ToString()
-                    ErrorAction = 'Stop'
-                }
-                if ($txtDescription.text.ToString() -match '\w+') {
-                    $r.Add('Description', $txtDescription.text.ToString())
-                }
+        if ($txtTaskName.Text.ToString() -match '\w+') {
+            if ($chkWhatIf.Checked) {
+                ShowWhatIf -Command New
+                Return
+            }
+            $r = @{
+                Name        = $txtTaskName.Text.ToString()
+                Category    = $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
+                Path        = $txtPath.Text.ToString()
+                ErrorAction = 'Stop'
+            }
+            if ($txtDescription.text.ToString() -match '\w+') {
+                $r.Add('Description', $txtDescription.text.ToString())
+            }
 
-                if ($txtDays.Enabled) {
-                    $r.Add('DaysDue', $txtDays.Text.ToString())
-                }
-                else {
-                    $r.Add('DueDate', $txtDueDate.Text.ToString())
-                }
-
-                $StatusBar.Items[3].Title = "Creating PSWorkItem $($txtTaskName.Text.ToString()) in $($r.Path)"
-                $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 1000
-                Try {
-                    New-PSWorkItem @r
-                    ClearForm
-                    UpdateReport
-                    RefreshTable
-                    [Terminal.Gui.Application]::Refresh()
-                }
-                Catch {
-                    [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
-                }
+            if ($txtDays.Enabled) {
+                $r.Add('DaysDue', $txtDays.Text.ToString())
             }
             else {
-                $StatusBar.Items[3].Title = $strings.MissingName
-                $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 2000
-                $StatusBar.Items[3].Title = 'Ready'
+                $r.Add('DueDate', $txtDueDate.Text.ToString())
+            }
+
+            $StatusBar.Items[3].Title = "Creating PSWorkItem $($txtTaskName.Text.ToString()) in $($r.Path)"
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 1000
+            Try {
+                New-PSWorkItem @r
+                ClearForm
+                UpdateReport
+                RefreshTable
                 [Terminal.Gui.Application]::Refresh()
             }
-        })
+            Catch {
+                [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+            }
+        }
+        else {
+            $StatusBar.Items[3].Title = $strings.MissingName
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 2000
+            $StatusBar.Items[3].Title = 'Ready'
+            [Terminal.Gui.Application]::Refresh()
+        }
+    })
 
     $controls += $btnSet = [Terminal.Gui.Button]@{
         X    = $btnAdd.Frame.Width + 2
@@ -449,81 +450,81 @@ Function Open-PSWorkItemConsole {
     }
 
     $btnSet.Add_Clicked({
-            if ($txtTaskName.Text.ToString() -match '\w+') {
-                if ($chkWhatIf.Checked -AND $chkClearDescription.Checked) {
-                    #save the current description
-                    $SavedDescription = $txtDescription.Text.ToString()
-                    #clear the field for the ShowWhatIt function
-                    $txtDescription.Text = ''
-                    [Terminal.Gui.Application]::Refresh()
-                    ShowWhatIf -command Set -id $TableView.table.rows[$TableView.SelectedRow].ID
-                    #reset the text field
-                    $txtDescription.Text = $SavedDescription
-                    [Terminal.Gui.Application]::Refresh()
-                    Return
-                }
-                elseif ($chkWhatIf.Checked) {
-                    ShowWhatIf -command Set -id $TableView.table.rows[$TableView.SelectedRow].ID
-                    Return
-                }
-
-                if ($chkClearDescription.Checked) {
-                    $r = @{
-                        ID               = $TableView.table.rows[$TableView.SelectedRow].ID
-                        Path             = $txtPath.Text.ToString()
-                        ClearDescription = $True
-                        ErrorAction      = 'Stop'
-                    }
-                }
-                else {
-                    $r = @{
-                        ID          = $TableView.table.rows[$TableView.SelectedRow].ID
-                        Name        = $txtTaskName.Text.ToString()
-                        Category    = $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
-                        Path        = $txtPath.Text.ToString()
-                        ErrorAction = 'Stop'
-                    }
-                    if ($txtDescription.text.ToString() -match '\w+') {
-                        $r.Add('Description', $txtDescription.text.ToString())
-                    }
-                    if ($txtProgress.text.ToString() -match '\d') {
-                        $r.Add('Progress', $txtProgress.text.ToString())
-                    }
-                    if ($txtDays.Enabled) {
-                        #calculate Date
-                        $due = (Get-Date).AddDays( $txtDays.Text.ToString())
-                        $r.Add('DueDate', $due)
-                    }
-                    else {
-                        $r.Add('DueDate', $txtDueDate.Text.ToString())
-                    }
-                } #else normal set
-                $StatusBar.Items[3].Title = "Updating PSWorkItem $($r.ID) in $($r.Path)"
-                $StatusBar.SetChildNeedsDisplay()
+        if ($txtTaskName.Text.ToString() -match '\w+') {
+            if ($chkWhatIf.Checked -AND $chkClearDescription.Checked) {
+                #save the current description
+                $SavedDescription = $txtDescription.Text.ToString()
+                #clear the field for the ShowWhatIF function
+                $txtDescription.Text = ''
                 [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 1000
-                Try {
-                    Set-PSWorkItem @r
-                    Populate
-                    RefreshTable
-                    UpdateReport
-                    $StatusBar.Items[3].Title = 'Ready'
-                    $StatusBar.SetChildNeedsDisplay()
-                    [Terminal.Gui.Application]::Refresh()
-                }
-                Catch {
-                    [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+                ShowWhatIf -command Set -id $TableView.table.rows[$TableView.SelectedRow].ID
+                #reset the text field
+                $txtDescription.Text = $SavedDescription
+                [Terminal.Gui.Application]::Refresh()
+                Return
+            }
+            elseif ($chkWhatIf.Checked) {
+                ShowWhatIf -command Set -id $TableView.table.rows[$TableView.SelectedRow].ID
+                Return
+            }
+
+            if ($chkClearDescription.Checked) {
+                $r = @{
+                    ID               = $TableView.table.rows[$TableView.SelectedRow].ID
+                    Path             = $txtPath.Text.ToString()
+                    ClearDescription = $True
+                    ErrorAction      = 'Stop'
                 }
             }
             else {
-                $StatusBar.Items[3].Title = $strings.MissingName
+                $r = @{
+                    ID          = $TableView.table.rows[$TableView.SelectedRow].ID
+                    Name        = $txtTaskName.Text.ToString()
+                    Category    = $dropCategory.Source.ToList()[$dropCategory.SelectedItem]
+                    Path        = $txtPath.Text.ToString()
+                    ErrorAction = 'Stop'
+                }
+                if ($txtDescription.text.ToString() -match '\w+') {
+                    $r.Add('Description', $txtDescription.text.ToString())
+                }
+                if ($txtProgress.text.ToString() -match '\d') {
+                    $r.Add('Progress', $txtProgress.text.ToString())
+                }
+                if ($txtDays.Enabled) {
+                    #calculate Date
+                    $due = (Get-Date).AddDays( $txtDays.Text.ToString())
+                    $r.Add('DueDate', $due)
+                }
+                else {
+                    $r.Add('DueDate', $txtDueDate.Text.ToString())
+                }
+            } #else normal set
+            $StatusBar.Items[3].Title = "Updating PSWorkItem $($r.ID) in $($r.Path)"
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 1000
+            Try {
+                Set-PSWorkItem @r
+                Populate
+                RefreshTable
+                UpdateReport
+                $StatusBar.Items[3].Title = 'Ready'
                 $StatusBar.SetChildNeedsDisplay()
                 [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 2000
-                $StatusBar.Items[3].Title = 'Ready'
-                [Terminal.Gui.Application]::Refresh()
             }
-        })
+            Catch {
+                [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+            }
+        }
+        else {
+            $StatusBar.Items[3].Title = $strings.MissingName
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 2000
+            $StatusBar.Items[3].Title = 'Ready'
+            [Terminal.Gui.Application]::Refresh()
+        }
+})
 
     $controls += $btnComplete = [Terminal.Gui.Button]@{
         X       = $btnSet.Frame.Width + 25
@@ -533,41 +534,41 @@ Function Open-PSWorkItemConsole {
     }
 
     $btnComplete.Add_Clicked({
-            if ($txtTaskName.Text.ToString() -match '\w+') {
-                if ($chkWhatIf.Checked) {
-                    ShowWhatIf -Command Complete -id $TableView.table.rows[$TableView.SelectedRow].ID
-                    Return
-                }
-                $r = @{
-                    ID          = $TableView.table.rows[$TableView.SelectedRow].ID
-                    Path        = $txtPath.Text.ToString()
-                    ErrorAction = 'Stop'
-                }
-
-                $StatusBar.Items[3].Title = "Completing PSWorkItem $($r.ID) in $($r.Path)"
-                $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 1000
-
-                Try {
-                    Complete-PSWorkItem @r
-                    ClearForm
-                    UpdateReport
-                    RefreshTable
-                    [Terminal.Gui.Application]::Refresh()
-                }
-                Catch {
-                    [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
-                }
+        if ($txtTaskName.Text.ToString() -match '\w+') {
+            if ($chkWhatIf.Checked) {
+                ShowWhatIf -Command Complete -id $TableView.table.rows[$TableView.SelectedRow].ID
+                Return
             }
-            else {
-                $StatusBar.Items[3].Title = $strings.NoWorkItemSelected
-                $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
-                Start-Sleep -Milliseconds 2000
-                $StatusBar.Items[3].Title = 'Ready'
+            $r = @{
+                ID          = $TableView.table.rows[$TableView.SelectedRow].ID
+                Path        = $txtPath.Text.ToString()
+                ErrorAction = 'Stop'
+            }
+
+            $StatusBar.Items[3].Title = "Completing PSWorkItem $($r.ID) in $($r.Path)"
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 1000
+
+            Try {
+                Complete-PSWorkItem @r
+                ClearForm
+                UpdateReport
+                RefreshTable
                 [Terminal.Gui.Application]::Refresh()
             }
+            Catch {
+                [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+            }
+        }
+        else {
+            $StatusBar.Items[3].Title = $strings.NoWorkItemSelected
+            $StatusBar.SetChildNeedsDisplay()
+            [Terminal.Gui.Application]::Refresh()
+            Start-Sleep -Milliseconds 2000
+            $StatusBar.Items[3].Title = 'Ready'
+            [Terminal.Gui.Application]::Refresh()
+        }
         })
 
     $controls += $btnRemove = [Terminal.Gui.Button]@{

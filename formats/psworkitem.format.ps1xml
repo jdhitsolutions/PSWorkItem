@@ -70,7 +70,7 @@ https://github.com/jdhitsolutions/PSScriptTools
                     "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.name, $psstyle.reset
                 }
                 else {
-                                    <!--use the PSWorkItemCategory hastable to add custom highlights-->
+                    <!--use the PSWorkItemCategory hastable to add custom highlights-->
                     "$($PSWorkItemCategory["$($_.category)"])$($_.name)$($PSStyle.Reset)"
                 }
             }
@@ -100,20 +100,28 @@ https://github.com/jdhitsolutions/PSScriptTools
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
+                <!--format the due date with leading zeros and no seconds-->
+                $cult = Get-Culture
+                if ($cult.DateTimeFormat.ShortDatePattern -match "^M/d/yyyy$") {
+                  $dd = "{0:MM/dd/yyyy hh:mm tt}" -f $_.DueDate
+                }
+                else {
+                  $dd = "{0:$($cult.DateTimeFormat.ShortDatePattern) $($cult.DateTimeFormat.LongTimePattern)}" -f $_.DueDate
+                }
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $_.DueDate, $psstyle.reset
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $dd, $psstyle.reset
                 }
                 ElseIf ($ts.totaldays -le 3) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.DueDate, $psstyle.reset
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $dd, $psstyle.reset
                 }
                 else {
-                    "$($PSWorkItemCategory["$($_.category)"])$($_.duedate)$($PSStyle.Reset)"
+                    "$($PSWorkItemCategory["$($_.category)"])$($dd)$($PSStyle.Reset)"
                 }
             }
             else {
-                $_.DueDate
+                $dd
             }
                 </ScriptBlock>
               </TableColumnItem>
@@ -190,7 +198,17 @@ https://github.com/jdhitsolutions/PSScriptTools
                 <PropertyName>Description</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>DueDate</PropertyName>
+                <ScriptBlock>
+                <!--format the due date with leading zeros and no seconds-->
+                $cult = Get-Culture
+                if ($cult.DateTimeFormat.ShortDatePattern -match "^M/d/yyyy$") {
+                  $dd = "{0:MM/dd/yyyy hh:mm tt}" -f $_.DueDate
+                }
+                else {
+                  $dd = "{0:$($cult.DateTimeFormat.ShortDatePattern) $($cult.DateTimeFormat.LongTimePattern)}" -f $_.DueDate
+                }
+                $dd
+                </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
                 <!--this is the simplest way to handle negative values-->
@@ -334,16 +352,24 @@ https://github.com/jdhitsolutions/PSScriptTools
               </TableColumnItem>
               <TableColumnItem>
                 <ScriptBlock>
+                <!--format the due date with leading zeros and no seconds-->
+                $cult = Get-Culture
+                if ($cult.DateTimeFormat.ShortDatePattern -match "^M/d/yyyy$") {
+                  $dd = "{0:MM/dd/yyyy hh:mm tt}" -f $_.DueDate
+                }
+                else {
+                  $dd = "{0:$($cult.DateTimeFormat.ShortDatePattern) $($cult.DateTimeFormat.LongTimePattern)}" -f $_.DueDate
+                }
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $_.DueDate, $psstyle.reset
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $dd, $psstyle.reset
                 }
                 ElseIf ($ts.totaldays -le 3) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.DueDate, $psstyle.reset
+                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $dd, $psstyle.reset
                 }
                 else {
-                    $_.DueDate
+                    $dd
                 }
             }
             else {
@@ -406,7 +432,17 @@ https://github.com/jdhitsolutions/PSScriptTools
                 </ScriptBlock>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>TaskCreated</PropertyName>
+                <ScriptBlock>
+                <!--format the creation date with leading zeros and no seconds-->
+                $cult = Get-Culture
+                if ($cult.DateTimeFormat.ShortDatePattern -match "^M/d/yyyy$") {
+                  $dd = "{0:MM/dd/yyyy hh:mm tt}" -f $_.TaskCreated
+                }
+                else {
+                  $dd = "{0:$($cult.DateTimeFormat.ShortDatePattern) $($cult.DateTimeFormat.LongTimePattern)}" -f $_.TaskCreated
+                }
+                $dd
+                </ScriptBlock>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

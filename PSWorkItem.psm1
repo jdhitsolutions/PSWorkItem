@@ -124,6 +124,8 @@ class PSWorkItemDatabase {
     [String]$Encoding
     [int32]$PageCount
     [int32]$PageSize
+    [string]$SQLiteVersion
+    [string]$CreatedBy
 }
 
 #endregion

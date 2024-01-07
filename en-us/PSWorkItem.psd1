@@ -68,13 +68,14 @@ ConvertFrom-StringData @'
     Starting = Starting command
     TaskCount = Getting a PSWorkItem count
     TaskCreated = PSWorkItem {0} created
-    tipCategory = Select a category for the PSWorkItem
+    tipCategory = Select a category for the PSWorkItem. Not required but recommended.
+    tipClear = Clear the description
     tipDatabasePath = Specify the path to the SQLite file. It must end in .db
     tipDescription = Enter a brief description or comment for the PSWorkItem
     tipFilterTable = Filter the table by the selected category
     tipProgress = Specify a progress percentage for the PSWorkItem as an integer
     tipReport = A report of open items by category. You might need to scroll.
-    tipTaskName = Enter the name for the new PSWorkItem
+    tipTaskName = Enter the name for the new PSWorkItem. Required.
     Testing = I am a localized message
     TestingColumnID = Testing database for ID column
     UpdateArchiveTable = Updating archive table value

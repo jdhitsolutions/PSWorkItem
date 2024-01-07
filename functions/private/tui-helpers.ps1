@@ -3,7 +3,6 @@
 Function ConvertTo-DataTable {
     [cmdletbinding()]
     [OutputType('System.Data.DataTable')]
-    [alias('alias')]
     Param(
         [Parameter(
             Mandatory,
@@ -158,10 +157,49 @@ Function RefreshTable {
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
     $TableView.RemoveAll()
     $TableView.Clear()
+    #4 Jan 2024 format due date with leading zeros and no seconds
+    $cult = Get-Culture
+
     $Data = Get-PSWorkItem -Path $txtPath.Text.ToString() -All | Where-Object { $_.Category -Like $FilterCategory } |
-    Select-Object ID, Name, Description, DueDate, Progress, Category, OverDue |
+    Select-Object ID, Name, Description,
+    @{Name = 'Due'; Expression = {
+        if ($cult.DateTimeFormat.ShortDatePattern -match "^M/d/yyyy$") {
+            "{0:MM/dd/yyyy hh:mm tt}" -f $_.DueDate
+        }
+        else {
+            "{0:$($cult.DateTimeFormat.ShortDatePattern) $($cult.DateTimeFormat.LongTimePattern)}" -f $_.DueDate
+        }
+    }},
+    Progress, Category, OverDue |
     ConvertTo-DataTable
+
     $TableView.Table = $Data
+    <#
+    Black     Blue     Green     Cyan
+    Red    Magenta     Brown     Gray
+    DarkGray     BrightBlue     BrightGreen
+    BrightCyan    BrightRed     BrightMagenta
+    BrightYellow    White
+    #>
+
+    $TableView.Style.RowColorGetter =   {
+        Param ($Table)
+        $item = $table.Table.Rows[$Table.RowIndex]
+        $due = $item.Due -as [DateTime]
+        $ts = New-TimeSpan -Start (Get-Date) -End $due
+        $cs = [Terminal.Gui.ColorScheme]::new()
+        $bg =$window.ColorScheme.Normal.Background
+        if ($Item.OverDue) {
+            $cs.Normal = [Terminal.Gui.Attribute]::new("BrightRed", $bg)
+            $cs
+        }
+        elseif ($ts.TotalDays -le 5 ) {
+            #highlight tasks due in the next 5 days
+            $cs.Normal = [Terminal.Gui.Attribute]::new("Cyan", $bg)
+            $cs
+        }
+    }
+
     $TableView.Style.ColumnStyles.Add(
         $TableView.Table.Columns['ID'],
         [Terminal.Gui.TableView+ColumnStyle]@{
@@ -169,19 +207,48 @@ Function RefreshTable {
             MinWidth  = 4
         }
     )
+    $TableView.Style.ColumnStyles.Add(
+        $TableView.Table.Columns['Name'],
+        [Terminal.Gui.TableView+ColumnStyle]@{
+            Alignment = 'Left'
+            MinWidth  =30
+        }
+    )
+
+    $TableView.Style.ColumnStyles.Add(
+        $TableView.Table.Columns['Description'],
+        [Terminal.Gui.TableView+ColumnStyle]@{
+            Alignment = 'Left'
+            MinWidth  =35
+        }
+    )
 
     $TableView.Style.ColumnStyles.Add(
         $TableView.Table.Columns['Progress'],
         [Terminal.Gui.TableView+ColumnStyle]@{
             Alignment = 'Right'
+            RepresentationGetter = {
+                Param($item)
+                "{0}% " -f $item
+            }
         }
     )
 
     $TableView.Style.ColumnStyles.Add(
-        $TableView.Table.Columns['DueDate'],
+        $TableView.Table.Columns['Due'],
         [Terminal.Gui.TableView+ColumnStyle]@{
             Alignment = 'Justified'
             MinWidth  = 22
+        }
+    )
+
+    #hide the OverDue column since it is represented in Red
+    #this allows more space for other columns
+    $TableView.Style.ColumnStyles.Add(
+        $TableView.Table.Columns['OverDue'],
+        [Terminal.Gui.TableView+ColumnStyle]@{
+            Alignment = 'Right'
+            Visible   = $False
         }
     )
 
@@ -368,7 +435,7 @@ Function Populate {
         $chkClearDescription.Visible = $False
     }
     $txtTaskName.Text = $item.Name
-    $txtDueDate.Text = '{0:g}' -f $item.DueDate
+    $txtDueDate.Text = '{0:g}' -f $item.Due
     $radioGrp.SelectedItem = 1
     $txtDays.Enabled = $False
     $txtDescription.Text = $item.Description
