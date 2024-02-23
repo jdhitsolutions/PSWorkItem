@@ -318,7 +318,8 @@ Function Open-PSWorkItemConsole {
 
     $controls += $txtDays = [Terminal.Gui.TextField]@{
         Width   = 4
-        Text    = 30
+        #Updated 23 Feb 2024 to use the $PSWorkItemDefaultDays variable
+        Text    = $global:PSWorkItemDefaultDays
         Y       = $txtDescription.Y + 2
         X       = $radioGrp.Frame.Width + 2
         TabStop = $True

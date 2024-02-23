@@ -51,7 +51,7 @@ This command will retrieve PSWorkItems from the database using a parameter defin
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem
 
    Database: C:\Users\Jeff\PSWorkItem.db
@@ -67,7 +67,7 @@ Get all items due in the next 10 days.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -all
 
    Database: C:\Users\Jeff\PSWorkItem.db
@@ -86,7 +86,7 @@ Get all open tasks.
 
 ### Example 3
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -Category Work
 
    Database: C:\Users\Jeff\PSWorkItem.db
@@ -102,7 +102,7 @@ Get tasks from the Work category.
 
 ### Example 4
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -id 9
 
    Database: C:\Users\Jeff\PSWorkItem.db
@@ -116,7 +116,7 @@ Get a PSWorkItem by its ID.
 
 ### Example 5
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -Name p*
 
    Database: C:\Users\Jeff\PSWorkItem.db
@@ -131,7 +131,7 @@ Get PSWorkItems with a name that begins with P.
 
 ### Example 6
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem | Format-Table -View countdown
 
 ID Name              Description         DueDate              TimeRemaining
@@ -145,7 +145,7 @@ The PSWorkItem has a named table view called Countdown.
 
 ### Example 7
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem | Where Overdue
 
    Database: C:\Users\Jeff\PSWorkItem.db
@@ -161,7 +161,7 @@ Get all overdue PSWorkItems.
 
 ### Example 8
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -all | Sort-Object category | Format-Table -view category
 
    Category: Other

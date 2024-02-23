@@ -31,7 +31,7 @@ You can also enter a different database path by entering the path in the Databas
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Open-PSWorkItemConsole
 ```
 
@@ -39,7 +39,7 @@ Open the management console using the default $PSWorkItemPath variable. You can 
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\ OpenPSWorkItemConsole c:\work\personal.db
 ```
 

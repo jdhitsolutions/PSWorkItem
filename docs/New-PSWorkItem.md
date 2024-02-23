@@ -33,7 +33,7 @@ Use this command to add a new PSWorkItem to the database. It is assumed you have
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2023 5:00PM" -Category Blog -PassThru
 ```
 
@@ -41,7 +41,7 @@ Create a new PSWorkItem with a due date 30 days from now. You should be able to 
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> New-PSWorkItem -Name "Publish PSWorkItem" -DaysDue 3 -Category Project
 ```
 

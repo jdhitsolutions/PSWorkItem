@@ -36,7 +36,7 @@ If you want to clear the Description, use the -ClearDescription parameter. All o
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Set-PSWorkItem -id 3 -progress 10
 ```
 
@@ -44,7 +44,7 @@ Set the progress on a PSWorkItem.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -Category blog | Set-PSWorkItem -Category Other -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -59,7 +59,7 @@ Modify multiple PSWorkItems at the same time.
 
 ### Example 3
 
-```powershell
+```shell
 PS C:\ Set-PSWorkItem -id 5 -ClearDescription
 ```
 

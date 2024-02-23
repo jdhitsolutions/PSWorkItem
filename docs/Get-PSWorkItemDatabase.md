@@ -25,7 +25,7 @@ Use this command to get a summary of the PSWorkItem database file. You can not m
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemDatabase
 
    Path: C:\Users\Jeff\PSWorkItem.db [44KB]
@@ -39,7 +39,7 @@ The default summary.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemDatabase | Format-List
 
 Path          : C:\Users\Jeff\PSWorkItem.db

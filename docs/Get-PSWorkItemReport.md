@@ -25,7 +25,7 @@ Use this simple command to get a report of PSWorkItems by category. The percenta
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db

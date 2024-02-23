@@ -29,7 +29,7 @@ During the upgrade, a new table column called ID is added to the Tasks and Archi
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> New-PSWorkItem -Name "DOM1 backup" -DaysDue 3 -Category work
 WARNING: Cannot verify the tasks table column ID. Please run Update-PSWorkItemDatabase to update the table then try completing the command again. It is recommended that you backup your database before updating the table.
 PS C:\>  Update-PSWorkItemDatabase -verbose

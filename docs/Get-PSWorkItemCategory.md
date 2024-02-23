@@ -25,7 +25,7 @@ When you create a PSWorkItem, you need to tag it with a category. The category m
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemCategory
 
 Category    Description
@@ -45,7 +45,7 @@ Get all defined categories.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemCategory blog
 
 Category Description
@@ -57,7 +57,7 @@ Get information about a single category.
 
 ### Example 3
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemCategory | Select-Object Category,ANSIString
 
 Category    ANSIString

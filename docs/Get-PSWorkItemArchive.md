@@ -39,7 +39,7 @@ Completed PSWorkItems are moved to the Archive table. Using this command to view
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemArchive
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -58,7 +58,7 @@ Get all archived PSWorkItems.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemArchive -Category Personal
 
     Database: C:\Users\Jeff\PSWorkItem.db

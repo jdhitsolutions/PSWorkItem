@@ -7,11 +7,12 @@ if ((Get-Culture).Name -match "\w+") {
 }
 else {
     #force using En-US if no culture found, which might happen on non-Windows systems.
-    Import-LocalizedData -BindingVariable strings -FileName PSWorkItem.psd1 -BaseDirectory .\en-us
+    Import-LocalizedData -BindingVariable strings -FileName PSWorkItem.psd1 -BaseDirectory $PSScriptRoot\en-us
 }
 
-if (-Not $ISWindows) {
-    Write-Warning $Strings.WindowsOnly
+#Adding a failsafe check for Windows PowerShell
+if ($IsMacOS -or ($PSEdition -eq "Desktop")) {
+    Write-Warning $Strings.Unsupported
     #bail out
     Return
 }
@@ -47,7 +48,7 @@ foreach ($dll in $dlls) {
         Switch ($Name) {
             "NStack.dll" {
                 #get currently loaded version
-                $ver = [System.Reflection.Assembly]::GetAssembly([nstack.ustring]).GetName().version
+                $ver = [System.Reflection.Assembly]::GetAssembly([NStack.uString]).GetName().version
                 if ($ver -lt $NStackVersion) {
                     $Detail = $strings.WarnDetected -f $ver,$NStackVersion,$PSStyle.Foreground.Red,$PSStyle.Foreground.Green,$PSStyle.Italic,$PSStyle.Reset
                 }

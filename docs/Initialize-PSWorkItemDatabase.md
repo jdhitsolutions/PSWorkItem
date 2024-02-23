@@ -29,7 +29,7 @@ The setup will also define the default categories of Work, Personal, Project, an
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Initialize-PSWorkItemDatabase
 ```
 
@@ -37,7 +37,7 @@ Create a new database file.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Initialize-PSWorkItemDatabase -PassThru
 
    Database: C:\Users\jeff\PSWorkItem.db Table:Metadata

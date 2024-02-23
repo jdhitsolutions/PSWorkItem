@@ -29,7 +29,7 @@ You may need to manually delete the preferences JSON file if you uninstall the m
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Update-PSWorkItemPreference
 ```
 
@@ -37,7 +37,7 @@ This assumes you've customized category settings or the database path.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Update-PSWorkItemPreference -DefaultCategory Work
 ```
 

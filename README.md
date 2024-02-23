@@ -2,11 +2,11 @@
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/PSWorkItem.png?style=for-the-badge&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/PSWorkItem/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSWorkItem.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/PSWorkItem/)
 
-This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The original PowerShell module offered simple task or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the MySQLite module.
+This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The original PowerShell module offered simple tasks or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
 
 ## Installation
 
-This module requires __PowerShell 7.3__ or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows platform__ until the dependency SQLite module [supports non-Windows systems](https://github.com/jdhitsolutions/MySQLite/issues/21).
+This module requires __PowerShell 7.3__ or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows or Linux platform__ until the dependency SQLite module [supports other non-Windows systems](https://github.com/jdhitsolutions/MySQLite/issues/21).
 
 Install the PSWorkItem module from the PowerShell Gallery.
 
@@ -14,11 +14,11 @@ Install the PSWorkItem module from the PowerShell Gallery.
 Install-Module PSWorkItem [-scope CurrentUser]
 ```
 
-:heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery.
+:heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery. Linux support was added in `MySQLite v0.13.0`.
 
 ## PSWorkItem Database Change
 
-**If you were using a version of this module prior to v1.0.0, this note applies to you.**
+**If you were using a version of this module older than v1.0.0, this note applies to you.**
 
 >Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. You should back up your database file before running this command.
 > Alternatively, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
@@ -37,6 +37,7 @@ Install-Module PSWorkItem [-scope CurrentUser]
 - [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md)
 - [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md)
 - [New-PSWorkItem](docs/New-PSWorkItem.md)
+- [Open-PSWorkItemConsole](docs/Open-PSWorkItemConsole.md)
 - [Remove-PSWorkItem](docs/Remove-PSWorkItem.md)
 - [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md)
 - [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md)
@@ -61,7 +62,7 @@ ColumnIndex ColumnName   ColumnType
 8           completed    integer
 ```
 
-When items are queried from this table using `Get-PSWorkItem` they are written to the pipeline as a `PSWorkItem` object. This is a class-based object defined in the root module.
+When items are queried from this table using `Get-PSWorkItem` they are written to the pipeline as `PSWorkItem` objects. This is a class-based object defined in the root module.
 
 > These definitions were revised for v1.0.0.
 
@@ -109,7 +110,7 @@ ColumnIndex ColumnName  ColumnType
 
 You __must__ define categories with `Add-PSWorkItemCategory` before you can create a new task. Categories are written to the pipeline as `PSWorkItemCategory` objects, also defined with a PowerShell class.
 
-```powershell
+```shell
 class PSWorkItemCategory {
     [String]$Category
     [String]$Description
@@ -135,7 +136,7 @@ To get started, run `Initialize-PSWorkItemDatabase`. This will create a new data
 
 You can view a database summary with `Get-PSWorkItemDatabase`.
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemDatabase
 
    Path: C:\Users\Jeff\PSWorkItem.db [44KB]
@@ -155,7 +156,7 @@ Add-PSWorkItemCategory -Category "SRV" -Description "server management tasks"
 
 Use `Get-PSWorkItemCategory` to view your categories.
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemCategory
 
 Category Description
@@ -172,7 +173,7 @@ If you need to update a category, you can re-add it using `-Force`.
 
 > The category name is case-sensitive.
 
-```powershell
+```shell
 PS C:\> Add-PSWorkItemCategory -Category Work -Description "business-related tasks" -PassThru -Force
 
 Category Description
@@ -245,7 +246,7 @@ Category highlighting is only available in the default view.
 
 Use [Set-PSWorkItem](docs/Set-PSWorkItem.md) or its alias `swi` to update a task based on its ID.
 
-```powershell
+```shell
 PS C:\> Set-PSWorkItem -id 7 -Progress 30 -DueDate "8/15/2023 12:00PM" -PassThru
 
   Database: C:\Users\Jeff\PSWorkItem.db
@@ -259,7 +260,7 @@ ID Name            Description DueDate               Category Pct
 
 When a task is complete, you can move it to the `Archive` table.
 
-```powershell
+```shell
 PS C:\> Complete-PSWorkItem -id 7 -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -288,7 +289,7 @@ Beginning with v1.0.0, you can use [Remove-PSWorkItemArchive](docs/Remove-PSWork
 
 You can use [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) to get a summary report of open work items grouped by category.
 
-```powershell
+```shell
 PS C:\>  Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db
@@ -352,7 +353,7 @@ $global:PSDefaultParameterValues["New-PSWorkItem:Category"] = $importPref.Defaul
 
 Use `Get-PSWorkItemPreference` to view.
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemPreference
 
    Path: C:\Users\Jeff\PSWorkItem.db [Default Days: 7 Default Category: Work]
@@ -369,7 +370,7 @@ Personal    `e[32m
 
 The categories are only those where you have customized an ANSI sequence. On module import, these categories will be used to populate `$PSWorkItemCategory.` If you make any changes to your preference, re-run `Update-PSWorkItemPreference`.
 
-> It is possible you will need to manually delete the JSON preferences file if you uninstall the module.
+> You might need to manually delete the JSON preferences file if you uninstall the module.
 
 ## Database Backup
 
@@ -379,7 +380,7 @@ This module has no specific commands for backing up or restoring a database file
 Export-MySQLiteDB -path $PSWorkItemPath -Destination d:\backups\pwi.json
 ```
 
-Use `Import-MySQLiteDB` to import the file and rebuild the database file. When restoring a database file, you should restore the file to a new location, verify the database, then copy the file to `$PSWorkItemPath`.
+Use `Import-MySQLiteDB` to import the file and rebuild the database file. When restoring a database file, you should restore the file to a new location, verify the database, and then copy the file to `$PSWorkItemPath`.
 
 ## Database Sample
 
@@ -391,7 +392,7 @@ If you copy the sample to `$PSWorkItemPath`, delete the file before creating you
 
 Most of the commands in this module create custom objects derived from PowerShell [class definitions](PSWorkItem.psm1) and data in the SQLite database file. If you need to troubleshoot a problem, you can use `Get-PSWorkItemData` to select all data from one of the three tables.
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemData
 
 taskid       : 2196617b-b818-415d-b9cc-52b0c649a77e
@@ -410,6 +411,5 @@ rowid        : 19
 ## Future Tasks or Commands
 
 - Password protection options.
-- Update the TUI management console to show database details
 
 If you have an enhancement suggestion, please submit it as an [Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).

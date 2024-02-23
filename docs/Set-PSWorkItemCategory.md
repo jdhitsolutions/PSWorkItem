@@ -22,11 +22,15 @@ Set-PSWorkItemCategory [-Category] <String> [-Description <String>]
 
 This command will update an existing PSWorkItem category. The category name is case-sensitive. Use caution when renaming a category that has active tasks using the old category name.
 
+If you want to modify the associated ANSI color, you will need to add or modify an entry in the $PSWorkItemCategory hashtable.
+
+$PSWorkItemCategory.Add("Event","`e[38;5;225m")
+
 ## EXAMPLES
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Set-PsworkItemCategory -Category work -Description "Uncategorized work activities" -PassThru
 
 Category Description
@@ -46,7 +50,7 @@ Parameter Sets: (All)
 Aliases: Name
 
 Required: True
-Position: 0
+Position: 0sq
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
@@ -175,3 +179,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 [Get-PSWorkItemCategory](Get-PSWorkItemCategory.md)
 
 [Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)
+
+[Get-PSWorkItemPreference](Get-PSWorkItemPreference.md)
+
+[Update-PSWorkItemPreference](Update-PSWorkItemPreference.md)

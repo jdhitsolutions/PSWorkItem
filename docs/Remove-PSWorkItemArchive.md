@@ -39,7 +39,7 @@ Completed work items are moved to the Archive table in the PSWorkItem database. 
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Remove-PSWorkItem -id 7 -Verbose
 VERBOSE: [12:37:40.2036443 BEGIN  ] Remove-PSWorkItem: Starting
 VERBOSE: [12:37:40.2045322 BEGIN  ] Remove-PSWorkItem: PSBoundParameters
@@ -61,7 +61,7 @@ Delete an archived item by its ID.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Remove-PSWorkItemArchive -Category work -whatif
 What if: Performing the operation "Remove-PSWorkItemArchive" on target "7e87a44f-d0ff-4cbc-ad08-ce3bf834b8e0".
 What if: Performing the operation "Remove-PSWorkItemArchive" on target "02290cca-5e59-45f7-a2d9-9f34bf51817e".
@@ -73,7 +73,7 @@ Remove archived items based on a category.
 
 ### Example 3
 
-```powershell
+```shell
 PS C:\>  Remove-PSWorkItemArchive -name *report
 ```
 

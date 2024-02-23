@@ -25,7 +25,7 @@ If you make a mistake entering a category or want to remove one of the default P
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Remove-PSWorkItemCategory Temp
 ```
 

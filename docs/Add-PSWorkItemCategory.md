@@ -28,7 +28,7 @@ It is recommended that you use proper casing for your category names and that th
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Add-PSWorkItemCategory -Name Blog -Description "blog management and content" -PassThru
 
 Category Description

@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+## [1.8.0] - 2024-02-23
+
+### Added
+
+- Added `mySQLite` module version to the About display in `Open-POSWorkItemConsole`.
+- Added an `about_psworkitem` help topic
+- Added support for running on Linux-x64 platforms.
+
+### Changed
+
+- Updated `Open-PSWorkItemConsole` to use the `$PSWorkItemDefaultDays` value instead of the hard-coded 30.
+- Updated help documentation
+- Updated `README.md`.
+- Revised module description.
+
+### Fixed
+
+- Fixed bug importing localized data on non-Windows systems.
+
 ## [1.7.0] - 2024-01-07
 
 ### Changed
@@ -280,7 +299,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.7.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.8.0..HEAD
+[1.8.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.7.0..v1.8.0
 [1.7.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..v1.7.0
 [1.5.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.4.0..v1.5.0
 [1.4.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.3.1..v1.4.0

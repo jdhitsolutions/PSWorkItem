@@ -25,7 +25,7 @@ Most of the time you will use commands like Get-PSWorkItem to get data from the 
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemData | Out-GridView
 ```
 
@@ -33,7 +33,7 @@ Get all data from the Tasks table and display using Out-GridView.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemData Categories
 
 category    description                          rowid

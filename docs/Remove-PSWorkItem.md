@@ -25,7 +25,7 @@ If you want to delete a PSWorkItem from the database, use Remove-PSWorkItem. You
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Remove-PSWorkItem -ID 10
 ```
 
@@ -33,7 +33,7 @@ Remove the PSWorkItem with an ID of 10.
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -Category Testing | Remove-PSWorkItem
 ```
 

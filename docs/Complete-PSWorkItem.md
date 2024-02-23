@@ -25,7 +25,7 @@ When you are ready to mark a task as complete, use this command. Complete-PSWork
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Complete-PSWorkItem -id 9 -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -38,7 +38,7 @@ Mark a PSWorkItem as completed and move it to the Archive table. The PSWorkItem 
 
 ### Example 2
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItem -category Alpha | Complete-WorkItem
 ```
 

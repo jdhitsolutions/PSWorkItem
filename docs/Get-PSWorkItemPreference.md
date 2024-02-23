@@ -19,13 +19,13 @@ Get-PSWorkItemPreference [<CommonParameters>]
 
 ## DESCRIPTION
 
-You can use Update-PSWorkItemPreference to export the $PSWorkitemCategory and your default database to a settings file in $HOME. Use Get-PSWorkItemPreferences to view the file.
+You can use Update-PSWorkItemPreference to export the $PSWorkitemCategory and your default database to a settings file in $HOME. Use Get-PSWorkItemPreference to view the file.
 
 ## EXAMPLES
 
 ### Example 1
 
-```powershell
+```shell
 PS C:\> Get-PSWorkItemPreference
 
    Path: C:\Users\Jeff\PSWorkItem.db [Default Days: 7 Default Category: Work]

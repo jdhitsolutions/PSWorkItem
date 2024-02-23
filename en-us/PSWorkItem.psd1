@@ -47,6 +47,7 @@ ConvertFrom-StringData @'
     InvalidCategory = The PSWorkItem category {0} is not valid
     InvalidHost = This must be run in a console host. Detected PowerShell host: {0}
     MissingName = Oops! You forgot to specify a name for your PSWorkItem.
+    MissingDependency = Can't find or load the required module {0}
     MoveItem = Moving PSWorkItem to Archive.
     NoPreferenceFile = No PSWorkItem preference file found at {0}. Run Update-PSWorkItemPreferences to create it.
     NoWorkItemSelected = No PSWorkItem selected
@@ -83,6 +84,7 @@ ConvertFrom-StringData @'
     UpdateTaskTable = Updating tasks table values
     UsingDB = Using SQLite database {0}
     UsingModule = Using module PSWorkItem version {0}
+    Unsupported = This module is unsupported on this platform
     ValidateCategory = Validating PSWorkItem category {0}
     ValidateMove = Validating the move
     WarnNoTasksFound = Failed to find any matching open PSWorkItems

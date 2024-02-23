@@ -385,6 +385,7 @@ Function ShowAbout {
     $about = @"
 
 PSWorkItem $scriptVer
+mySQLite $((Get-Module mySQLite).version.ToString())
 PSVersion $($PSVersionTable.PSVersion)
 Terminal.Gui $TerminalGuiVersion
 NStack $NStackVersion
