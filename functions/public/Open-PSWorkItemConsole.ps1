@@ -211,7 +211,7 @@ Function Open-PSWorkItemConsole {
 
     $controls += $lblCategory = [Terminal.Gui.Label]@{
         Text     = 'Category:'
-        X        = $txtDescription.Frame.Right + 4
+        X        = $txtDescription.Frame.Right + 6
         Y        = $lblTaskName.Y
         TabStop  = $false
         CanFocus = $False
@@ -316,9 +316,9 @@ Function Open-PSWorkItemConsole {
             }
         })
 
+    #Updated 23 Feb 2024 to use the $PSWorkItemDefaultDays variable
     $controls += $txtDays = [Terminal.Gui.TextField]@{
         Width   = 4
-        #Updated 23 Feb 2024 to use the $PSWorkItemDefaultDays variable
         Text    = $global:PSWorkItemDefaultDays
         Y       = $txtDescription.Y + 2
         X       = $radioGrp.Frame.Width + 2
@@ -385,6 +385,39 @@ Function Open-PSWorkItemConsole {
             RefreshTable
         }
         })
+
+    $controls += $FilterDays = [Terminal.Gui.TextField]@{
+        Width   = 3
+        Y       = $chkFilterTable.Y
+        X       = $chkFilterTable.Frame.Right + 2
+        TabStop = $False
+    }
+
+    $FilterDays.Add_MouseEnter({
+        $tip = $strings.tipFilterDays
+        $StatusBar.Items[3].Title = $tip
+        [Terminal.Gui.Application]::Refresh()
+    })
+    $FilterDays.Add_MouseLeave({
+        $StatusBar.Items[3].Title = 'Ready'
+        [Terminal.Gui.Application]::Refresh()
+    })
+
+    $FilterDays.Add_TextChanged({
+        if ($FilterDays.Text.ToString() -match '\d') {
+            RefreshTable -DaysDue $FilterDays.Text.ToString()
+        }
+        else {
+            RefreshTable
+        }
+    })
+
+    $controls += $lblFilterDays = [Terminal.Gui.Label]@{
+        Text    = 'Filter by number of days due'
+        X       = $FilterDays.Frame.Right + 1
+        Y       = $chkFilterTable.Y
+        TabStop = $False
+    }
 
     #endregion
 

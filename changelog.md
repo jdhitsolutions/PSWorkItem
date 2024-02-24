@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.9.0] - 2024-02-24
+
+### Changed
+
+- Update TUI to allow filtering table by the number of days dues.
+- Updated TUI to show about information using a dialog instead of a message box to allow for better formatting.
+- Update TUI-based console so that selected category is always in view.
+
+### Fixed
+
+- Fixed hard-coded references in private functions that were pointing to  `C:\temp`.
+
 ## [1.8.0] - 2024-02-23
 
 ### Added
@@ -299,7 +311,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.8.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.9.0..HEAD
+[1.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.8.0..v1.9.0
 [1.8.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.7.0..v1.8.0
 [1.7.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..v1.7.0
 [1.5.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.4.0..v1.5.0

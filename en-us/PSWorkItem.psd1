@@ -74,6 +74,7 @@ ConvertFrom-StringData @'
     tipDatabasePath = Specify the path to the SQLite file. It must end in .db
     tipDescription = Enter a brief description or comment for the PSWorkItem
     tipFilterTable = Filter the table by the selected category
+    tipFilterDays = Filter the table by the number of days due. Clear to reset.
     tipProgress = Specify a progress percentage for the PSWorkItem as an integer
     tipReport = A report of open items by category. You might need to scroll.
     tipTaskName = Enter the name for the new PSWorkItem. Required.

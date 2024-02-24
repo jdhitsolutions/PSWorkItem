@@ -52,17 +52,19 @@ Function ClearForm {
     [CmdletBinding()]
     Param()
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
+
     $txtTaskName.Text = ''
     $txtDescription.Text = ''
     $chkWhatIf.Checked = $False
     $txtProgress.Text = ''
-    $dropCategory.SelectedItem = 0
+    $dropCategory.SelectedItem = $script:DefaultCategoryIndex
     $txtDays.Text = 30
     $txtDueDate.Text = ''
     $radioGrp.SelectedItem = 0
     $lblOverDue.Visible = $False
     $StatusBar.Items[0].Title = Get-Date -Format g
     $StatusBar.Items[3].Title = 'Ready'
+    $FilterDays.Text = ''
     $txtTaskName.SetFocus()
     [Terminal.Gui.Application]::Refresh()
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Ending $($MyInvocation.MyCommand)"
@@ -76,7 +78,7 @@ Function ResetForm {
     $txtDescription.Text = ''
     $chkWhatIf.Checked = $False
     $txtProgress.Text = ''
-    $dropCategory.SelectedItem = 0
+    $dropCategory.SelectedItem = $script:DefaultCategoryIndex
     $txtDays.Text = 30
     $txtDueDate.Text = ''
     $radioGrp.SelectedItem = 0
@@ -86,6 +88,7 @@ Function ResetForm {
     $chkFilterTable.Checked = $False
     $txtTaskName.SetFocus()
     $txtPath.Text = $PSWorkItemPath
+    $FilterDays.Text = ''
 
     RefreshCategoryList
     RefreshTable
@@ -152,7 +155,8 @@ Function ShowHelp {
 Function RefreshTable {
     [CmdletBinding()]
     Param(
-        [string]$FilterCategory = '*'
+        [string]$FilterCategory = '*',
+        [int]$DaysDue
     )
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
     $TableView.RemoveAll()
@@ -160,7 +164,13 @@ Function RefreshTable {
     #4 Jan 2024 format due date with leading zeros and no seconds
     $cult = Get-Culture
 
-    $Data = Get-PSWorkItem -Path $txtPath.Text.ToString() -All | Where-Object { $_.Category -Like $FilterCategory } |
+    if ($DaysDue -gt 0) {
+        $Items = Get-PSWorkItem -Path $txtPath.Text.ToString() -DaysDue $DaysDue
+    }
+    else {
+        $items = Get-PSWorkItem -Path $txtPath.Text.ToString() -All
+    }
+    $Data = $Items | Where-Object { $_.Category -Like $FilterCategory } |
     Select-Object ID, Name, Description,
     @{Name = 'Due'; Expression = {
         if ($cult.DateTimeFormat.ShortDatePattern -match "^M/d/yyyy$") {
@@ -262,14 +272,24 @@ Function RefreshCategoryList {
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
     $src = (Get-PSWorkItemCategory -Path $txtPath.Text.ToString()).Category | Sort-Object
     $src | Write-Verbose
-    $dropCategory.Clear()
-    $dropCategory.SetSource($src)
-    $dropCategory.SetNeedsDisplay()
-    [Terminal.Gui.Application]::Refresh()
-    $dropCategory.SelectedItem = 0
     #create a lookup list
     $script:CatList = [System.Collections.Generic.List[string]]::New()
     $script:CatList.AddRange([string[]]$src)
+    if ($global:PSDefaultParameterValues.ContainsKey("New-PSWorkItem:Category")) {
+        $DefaultCategory = $global:PSDefaultParameterValues["New-PSWorkItem:Category"]
+        Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE]  Default category is $DefaultCategory"
+        $script:DefaultCategoryIndex = $script:CatList.FindIndex({$args[0] -eq $DefaultCategory})
+    }
+    else {
+        $script:DefaultCategoryIndex = 0
+    }
+    Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Using default category index $($script:DefaultCategoryIndex)"
+    $dropCategory.Clear()
+    $dropCategory.SetSource($src)
+    $dropCategory.SelectedItem = $script:DefaultCategoryIndex
+    $dropCategory.EnsureSelectedItemVisible()
+    $dropCategory.SetNeedsDisplay()
+    [Terminal.Gui.Application]::Refresh()
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Ending $($MyInvocation.MyCommand)"
 }
 
@@ -384,15 +404,32 @@ Function ShowAbout {
 
     $about = @"
 
-PSWorkItem $scriptVer
-mySQLite $((Get-Module mySQLite).version.ToString())
-PSVersion $($PSVersionTable.PSVersion)
-Terminal.Gui $TerminalGuiVersion
-NStack $NStackVersion
-System.Data.SQLite $SQLiteVersion
+          PSWorkItem: $scriptVer
+            mySQLite: $((Get-Module mySQLite).version.ToString())
+           PSVersion: $($PSVersionTable.PSVersion)
+        Terminal.Gui: $TerminalGuiVersion
+              NStack: $NStackVersion
+  System.Data.SQLite: $SQLiteVersion
 "@
-Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Show message box"
-    [Terminal.Gui.MessageBox]::Query('About Open-PSWorkItemConsole', $About, @('Ok'))
+
+    $dialog = [Terminal.Gui.Dialog]@{
+        Title         = 'About Open-PSWorkItemConsole'
+        TextAlignment = 'Left'
+        Width         = 40
+        Height        = 12
+        Text          = $about
+    }
+    $ok = [Terminal.Gui.Button]@{
+        Text = 'OK'
+    }
+    $ok.Add_Clicked({ $dialog.RequestStop() })
+    $dialog.AddButton($ok)
+    Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Invoking dialog"
+    [Terminal.Gui.Application]::Run($dialog)
+
+#Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Show message box"
+# Replaced 24 Feb 2024 with a dialog which allows for better formatting
+#[Terminal.Gui.MessageBox]::Query('About Open-PSWorkItemConsole', $About, @('Ok'))
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Ending $($MyInvocation.MyCommand)"
 }
 
@@ -441,6 +478,7 @@ Function Populate {
     $txtDays.Enabled = $False
     $txtDescription.Text = $item.Description
     $dropCategory.SelectedItem = $script:CatList.FindIndex({ $args -eq $item.Category })
+    $dropCategory.EnsureSelectedItemVisible()
     $txtProgress.Text = $item.Progress
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Ending $($MyInvocation.MyCommand)"
 }
@@ -840,8 +878,9 @@ Path = $($txtPath.Text.ToString())
                 }
 
                 Try {
-                $splat | out-string | out-file c:\temp\v.txt
-                    Set-PSWorkItemCategory @splat -verbose 4>>c:\temp\v.txt
+                    $tmpfile = [System.IO.Path]::GetTempFileName()
+                    $splat | Out-String | Out-File -FilePath $tmpFile
+                    Set-PSWorkItemCategory @splat -verbose 4>>$tmpfile
                     if ($warn) {
                         [Terminal.Gui.MessageBox]::ErrorQuery('Warning', $warn.message)
                     }
