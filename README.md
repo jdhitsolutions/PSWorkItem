@@ -16,14 +16,6 @@ Install-Module PSWorkItem [-scope CurrentUser]
 
 :heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery. Linux support was added in `MySQLite v0.13.0`.
 
-## PSWorkItem Database Change
-
-**If you were using a version of this module older than v1.0.0, this note applies to you.**
-
->Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. You should back up your database file before running this command.
-> Alternatively, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
->During the upgrade, a new table column called ID is added to the Tasks and Archive database tables. In the Tasks table, the ID column for existing entries will be set to the row id, which should be the task number you are used to seeing. In the archive table, existing entries will get an ID value of 0 since knowing the original ID number is impossible. This database change corrects this problem. Going forward, the PSWorkItem ID will remain the same when you complete it and move the item to the Archive table.
-
 ## Module Commands and Design
 
 - [Add-PSWorkItemCategory](docs/Add-PSWorkItemCategory.md)
@@ -211,7 +203,7 @@ The primary command in this module, `Get-PSWorkItem`, which has an alias of `gwi
 
 The default behavior is to get tasks due within the next ten days
 
-![Get-PSWorkItem](images/get-PSWorkItem.png)
+![Get-PSWorkItem](images/get-psworkitem.png)
 
 If you are running the command in the PowerShell console or VSCode, overdue tasks will be highlighted in red. Tasks due within three days will be highlighted in yellow.
 
@@ -238,7 +230,7 @@ The entry will have no effect unless the category is defined in the database. Th
 
 > Note that when you view the hashtable, you won't see any values because the escape sequences are non-printable.
 
-![colorized categories](images/PSWorkItemcategory.png)
+![colorized categories](images/psworkitemcategory.png)
 
 Category highlighting is only available in the default view.
 
@@ -387,6 +379,328 @@ Use `Import-MySQLiteDB` to import the file and rebuild the database file. When r
 A sample database has been created in the module's Samples directory. You can specify the path to the sample database or copy it to `$PSWorkItemPath` to try the module out. Note that it is very likely that many of the tasks will be flagged as overdue by the time you view the database.
 
 If you copy the sample to `$PSWorkItemPath`, delete the file before creating your database file.
+
+## Reminders and Alerts TODO
+
+I have received requests and questions about integrating a reminder or alert system. This module does not have any built-in features for this. You could use a scheduled task or a PowerShell script to query the database for tasks due within a certain time frame and then send an email or other alert. I am reluctant to include this feature because I have no way of knowing how you would want to be alerted or what kind of alert you would want. That said, here are some ways you could implement this feature.
+
+### Send-MailKitMessage
+
+I've started using [Send-MailKitMessage](https://github.com/austineric/Send-MailKitMessage) as a replacement for `Send-MailMessage` I use a script to send myself a daily email.
+
+```powershell
+#requires -version 7.2
+#requires -module PSWorkItem,Send-MailKitMessage
+
+Param([int]$Days = 5, [switch]$AsText)
+
+#parameters to splat to Send-MailKitMessage
+$hash = @{
+    Credential    = $global:MailCredential
+    From          = 'jhicks@jdhitsolutions.com'
+    RecipientList = 'jhicks@jdhitsolutions.com'
+    SMTPServer    = $global:SMTPServer
+    Port          = $global:SMTPPort
+    Subject       = "PSWorkItems Due in the Next $days Days"
+    ErrorAction   = 'Stop'
+}
+Write-Host "[$((Get-Date).ToString())] Getting tasks for the next $days days." -ForegroundColor Green
+$data = Get-PSWorkItem -DaysDue $Days
+if ($data) {
+
+    if ($AsText) {
+        Write-Host "[$((Get-Date).ToString())] Sending as TEXT" -ForegroundColor Green
+        # 10/14/2020 Modified to explicitly select properties because
+        # default formatting uses ANSI which distorts the converted output.
+        $body = $data | Select-Object -Property ID, Name, Description, DueDate, OverDue | Format-Table | Out-String
+        $hash.Add('TextBody', $body)
+    }
+
+    else {
+        Write-Host "[$((Get-Date).ToString())] Sending as HTML" -ForegroundColor green
+        #css to be embedded in the html document
+        $head = @"
+    <Title>PSWorkItems Due in $Days Days</Title>
+    <style>
+    body {
+        font-family:Tahoma;
+        font-size:12pt; }
+    td, th { border:1px solid black;
+        border-collapse:collapse; }
+    th { color:white;
+        background-color:black; }
+    table, tr, td, th { padding: 2px; margin: 0px }
+    tr:nth-child(odd) { background-color: LightGray }
+    table { width:95%; margin-left:5px; margin-bottom:20px; }
+    .alert { color: #bd2525 ;}
+        .warn { color:#dd510b; }
+        </style>
+        <br>
+        <H1>PSWorkItems</H1>
+"@
+        [xml]$html = $data |
+        Select-Object ID, Name, Description, DueDate, Category, Progress, TimeRemaining |
+        ConvertTo-Html -Fragment
+
+        #parse html to add color attributes
+        for ($i = 1; $i -le $html.table.tr.count - 1; $i++) {
+            $class = $html.CreateAttribute('class')
+            #check the number of days until the task is due
+            $due = $html.table.tr[$i].td[-1] -as [TimeSpan]
+            if ($due.Days -le 1) {
+                $class.value = 'alert'
+                $html.table.tr[$i].Attributes.Append($class) | Out-Null
+            }
+            elseif ($due.Days -le 2) {
+                $class.value = 'warn'
+                $html.table.tr[$i].Attributes.Append($class) | Out-Null
+            }
+        }
+
+        $Body = ConvertTo-Html -Body $html.InnerXml -Head $head | Out-String
+        $hash.Add('HTMLBody', $body)
+    }
+}
+else {
+    Write-Warning "No tasks found due in the next $days days."
+    #bail out
+    return
+}
+
+Try {
+    Send-MailKitMessage @hash
+    Write-Output "[$((Get-Date).ToString())] Message ($($hash.subject)) sent to $($hash.RecipientList) from $($hash.from)"
+}
+Catch {
+    throw $_
+}
+```
+
+Because the PSWorkItem module requires PowerShell 7 and PowerShell 7 doesn't support scheduled jobs, I set up a scheduled task to run this script daily.
+
+```powershell
+$action = New-ScheduledTaskAction -Execute 'pwsh.exe' -argument '-nologo -noprofile -file C:\scripts\DailyPSWorkItemEmail.ps1'
+$trigger = New-ScheduledTaskTrigger -Daily -At 7:30AM
+$options = new-ScheduledTaskSettingsSet -RunOnlyIfNetworkAvailable
+
+$paramHash = @{
+    Force       = $True
+    User        = "Jeff"
+    Password    = Read-Host "Enter the user password"
+    RunLevel    = "highest"
+    TaskName    = "DailyWorkItem"
+    TaskPath    = "\Microsoft\Windows\PowerShellCore\ScheduledJobs\"
+    Description = "Send PSWorkItem email"
+    Settings    = $options
+    Trigger     = $trigger
+    Action      = $action
+}
+
+Register-ScheduledTask @paramHash
+```
+
+I get an HTML-formatted email with tasks due in the next 5 days.
+
+### Toast Notifications
+
+Another option would be to create something with the [BurntToast](https://github.com/Windos/BurntToast) module.
+
+### New-PwshToastAlarm
+
+I use a function in PowerShell 7 to create a toast notification using a PowerShell scheduled job in Windows Powershell.
+
+```powershell
+Function New-PwshToastAlarm {
+
+    <# PSFunctionInfo
+
+Version 1.2.0
+Author Jeffery Hicks
+CompanyName JDH IT Solutions, Inc.
+Copyright (c) JDH IT Solutions, Inc.
+Description Set a toast alarm from PowerShell 7
+Guid 24250c28-5abc-4067-9890-9722482c1a2d
+Tags profile,pwsh
+LastUpdate 9/22/2022 10:15AM
+Source C:\scripts\New-PwshToastAlarm.ps1
+
+#>
+    [cmdletbinding(DefaultParameterSetName = "sound", SupportsShouldProcess)]
+    [alias("nta")]
+    [OutputType("PSScheduledJob")]
+    Param(
+        [Parameter(
+            Position = 0,
+            Mandatory,
+            ValueFromPipelineByPropertyName,
+            HelpMessage = "What date and time do you want to use for the reminder?"
+        )]
+        [ValidateNotNullOrEmpty()]
+        [Alias("Date", "Time")]
+        [DateTime]$At,
+
+        [Parameter(
+            Mandatory,
+            ValueFromPipelineByPropertyName,
+            HelpMessage = "What message do you want to display?"
+        )]
+        [Alias("Event", "Message")]
+        [ValidateNotNullOrEmpty()]
+        [string]$Text,
+
+        [Parameter(HelpMessage = "Specify the path to an image file to use as logo")]
+        [alias("logo")]
+        [string]$AppLogo = "$env:OneDriveConsumer\pictures\psrobot-icon.png",
+
+        [Parameter(HelpMessage = "What sound would you like?", ParameterSetName = "sound")]
+        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2', 'Alarm3', 'Alarm4',
+            'Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10', 'Call', 'Call2', 'Call3', 'Call4', 'Call5',
+            'Call6', 'Call7', 'Call8', 'Call9', 'Call10', 'None')]
+        [string]$Sound = "Default",
+
+        [Parameter(HelpMessage = "Create a silent alert", ParameterSetName = "silent")]
+        [switch]$Silent,
+
+        [Parameter(HelpMessage = "Specify a job name")]
+        [string]$Name = "BTReminder-$(Get-Random -Minimum 1000 -Maximum 9999)"
+    )
+
+    Begin {
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
+    } #begin
+    Process {
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Defining a toast job for $At - $Text"
+        $h = @{
+            Text  = $Text
+            At    = $At
+            Sound = $sound
+            Name  = $Name
+        }
+
+        if ($AppLogo) {
+            $h.add("AppLogo", $AppLogo)
+        }
+        $cmd = [System.Collections.Generic.list[string]]::new()
+        $alarms = [System.Collections.Generic.list[string]]::new()
+
+        $cmd.add("&{ . c:\scripts\New-ToastAlarm.ps1 ; ")
+        $alarms.Add("New-ToastAlarm ")
+
+        $h.GetEnumerator() | ForEach-Object {
+            $alarms.Add("-$($_.key) '$($_.value)' ")
+        }
+
+        $a = $alarms -join ''
+        $cmd.Add("$a}")
+
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Invoking: $cmd"
+        if ($PSCmdlet.ShouldProcess($a)) {
+            powershell -NoLogo -NoProfile -command $cmd
+        }
+    }
+    End {
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
+    } #end
+
+} #close function
+```
+
+This function calls another script that creates the toast notification as a scheduled job.
+
+```powershell
+#requires -version 5.1
+#requires -module BurntToast,PSScheduledJob
+
+#New-ToastAlarm.ps1
+
+Function New-BTReminder {
+    [cmdletbinding(DefaultParameterSetName = 'sound', SupportsShouldProcess)]
+    [alias('nta', 'New-ToastAlarm')]
+    param(
+        [Parameter(Position = 0, Mandatory, HelpMessage = 'What date and time do you want to use for the reminder?')]
+        [ValidateNotNullOrEmpty()]
+        [DateTime]$At,
+        [Parameter(Mandatory, HelpMessage = 'What message do you want to display?')]
+        [ValidateNotNullOrEmpty()]
+        [string]$Text,
+        [Parameter(HelpMessage = 'Specify the path to an image file to use as logo')]
+        [alias('Logo')]
+        [string]$AppLogo,
+        [Parameter(HelpMessage = 'What sound would you like?', ParameterSetName = 'sound')]
+        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2', 'Alarm3', 'Alarm4',
+            'Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10', 'Call', 'Call2', 'Call3', 'Call4', 'Call5',
+            'Call6', 'Call7', 'Call8', 'Call9', 'Call10', 'None')]
+        [string]$Sound,
+        [Parameter(HelpMessage = 'Create a silent alert', ParameterSetName = 'silent')]
+        [switch]$Silent,
+        [Parameter(HelpMessage = 'Specify a job name')]
+        [string]$Name = "BTReminder-$(Get-Random -Minimum 1000 -Maximum 9999))"
+    )
+
+    Write-Verbose "Starting $($MyInvocation.MyCommand)"
+    Write-Verbose "Running in PowerShell $($PSVersionTable.PSVersion)"
+    $PSBoundParameters | Out-String | Write-Verbose
+
+    [void]($PSBoundParameters.remove('At'))
+    [void]($PSBoundParameters.remove('Name'))
+
+    $toastParams = @{}
+
+    $PSBoundParameters.GetEnumerator() | ForEach-Object {
+        Write-Verbose "Adding $($_.key) to `$toastParams"
+        $toastParams.Add($_.key, $_.value)
+    }
+    #add a toast expiration
+    $toastParams.Add('Expiration', $At.AddMinutes(5))
+    $toastParams.Add('SnoozeAndDismiss', $True)
+    $sb = {
+        param([hashtable]$Params, [string]$JobName)
+            #The Write-Host output will only show if you receive the job. Use for troubleshooting.
+            Write-Host 'Defining a toast job using these params' -ForegroundColor Green
+            $params | Out-String | Write-Host
+            Write-Host 'Toasting...' -ForegroundColor Green
+            New-BurntToastNotification @params
+            Write-Host Sleeping -ForegroundColor Green
+            Start-Sleep -Seconds 60
+            Write-Host "attempting to unregister $jobName" -ForegroundColor Green
+            Unregister-ScheduledJob -Name $JobName
+    }
+
+    $job = @{
+        Trigger        = New-JobTrigger -At $At -Once
+        Name           = $Name
+        MaxResultCount = 1
+        ScriptBlock    = $sb
+        ArgumentList   = @($toastParams, $Name)
+    }
+
+    Write-Verbose 'Using toast params'
+    $toastParams | Out-String | Write-Verbose
+
+    Write-Verbose 'Registering job'
+    $job | Out-String | Write-Verbose
+
+    Register-ScheduledJob @job
+
+    Write-Verbose "Ending $($MyInvocation.MyCommand)"
+}
+```
+Now it is a matter of deciding when you want to be notified.
+
+```powershell
+Get-PSWorkItem | where {-Not $_.OverDue} |
+Foreach-Object -Begin { . C:\scripts\New-PwshToastAlarm.ps1} -process {New-PwshToastAlarm -At ([datetime]$_.dueDate).addDays(-1) -Text "Workitem $($_.Name) is due $($_.DueDate)"}
+```
+
+This is why I am hesitant to add any form of alerting or notification. I don't know what is the most effective way for **you** to be alerted. And, any alerting feature I add would more than likely add a dependency on a specific module which I try to avoid.
+
+## PSWorkItem Database Change
+
+**If you were using a version of this module older than v1.0.0, this note applies to you.**
+
+> *Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. You should back up your database file before running this command.
+> Alternatively, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
+>During the upgrade, a new table column called ID is added to the Tasks and Archive database tables. In the Tasks table, the ID column for existing entries will be set to the row id, which should be the task number you are used to seeing. In the archive table, existing entries will get an ID value of 0 since knowing the original ID number is impossible. This database change corrects this problem. Going forward, the PSWorkItem ID will remain the same when you complete it and move the item to the Archive table.*
 
 ## Troubleshooting
 

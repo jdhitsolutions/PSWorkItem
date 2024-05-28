@@ -1,7 +1,7 @@
 # used for culture debugging
 # write-host "Importing with culture $(Get-Culture)"
 
-if ((Get-Culture).Name -match "\w+") {
+if ((Get-Culture).Name -match '\w+') {
     Import-LocalizedData -BindingVariable strings
 }
 else {
@@ -10,7 +10,7 @@ else {
 }
 
 #Adding a failsafe check for Windows PowerShell
-if ($IsMacOS -or ($PSEdition -eq "Desktop")) {
+if ($IsMacOS -or ($PSEdition -eq 'Desktop')) {
     Write-Warning $Strings.Unsupported
     #bail out
     Return
@@ -29,12 +29,12 @@ ForEach-Object {
 #there may be version conflicts
 
 #required versions
-[version]$NStackVersion = "1.0.7"
-[version]$TerminalGuiVersion = "1.14.0"
+[version]$NStackVersion = '1.1.1.0'
+[version]$TerminalGuiVersion = '1.16.0'
 
-$dlls = "$PSScriptRoot\assemblies\NStack.dll","$PSScriptRoot\assemblies\Terminal.Gui.dll"
+$dlls = "$PSScriptRoot\assemblies\NStack.dll", "$PSScriptRoot\assemblies\Terminal.Gui.dll"
 foreach ($dll in $dlls) {
-    $name = Split-Path -path $dll -leaf
+    $name = Split-Path -Path $dll -Leaf
     #write-host "Loading $dll" -fore yellow
     Try {
         Add-Type -Path $dll -ErrorAction Stop
@@ -45,17 +45,17 @@ foreach ($dll in $dlls) {
 
         #$verMessage = "Detected version $($PSStyle.Foreground.Red){0}$($PSStyle.Reset) which is less than the expected version of $($PSStyle.Foreground.Green){1}$($PSStyle.Reset). $($PSStyle.Italic)There may be unexpected behavior$($PSStyle.Reset). You may need to start a new PowerShell session and load this module first."
         Switch ($Name) {
-            "NStack.dll" {
+            'NStack.dll' {
                 #get currently loaded version
                 $ver = [System.Reflection.Assembly]::GetAssembly([NStack.uString]).GetName().version
                 if ($ver -lt $NStackVersion) {
-                    $Detail = $strings.WarnDetected -f $ver,$NStackVersion,$PSStyle.Foreground.Red,$PSStyle.Foreground.Green,$PSStyle.Italic,$PSStyle.Reset
+                    $Detail = $strings.WarnDetected -f $ver, $NStackVersion, $PSStyle.Foreground.Red, $PSStyle.Foreground.Green, $PSStyle.Italic, $PSStyle.Reset
                 }
             }
-            "Terminal.Gui.dll" {
+            'Terminal.Gui.dll' {
                 $ver = [System.Reflection.Assembly]::GetAssembly([Terminal.Gui.Application]).GetName().version
                 if ($ver -lt $TerminalGuiVersion) {
-                    $Detail = $strings.WarnDetected -f $ver,$TerminalGuiVersion,$PSStyle.Foreground.Red,$PSStyle.Foreground.Green,$PSStyle.Italic,$PSStyle.Reset
+                    $Detail = $strings.WarnDetected -f $ver, $TerminalGuiVersion, $PSStyle.Foreground.Red, $PSStyle.Foreground.Green, $PSStyle.Italic, $PSStyle.Reset
                 }
             }
         } #switch
@@ -133,7 +133,7 @@ class PSWorkItemDatabase {
 #region type extensions
 
 Update-TypeData -TypeName PSWorkItemCategory -MemberType ScriptProperty -MemberName ANSIString -Value { $PSWorkItemCategory[$this.Category] -replace "`e",
-"``e" } -force
+    "``e" } -Force
 #endregion
 
 #region settings and configuration
@@ -160,7 +160,7 @@ If (Test-Path $PreferencePath) {
         $global:PSWorkItemDefaultDays = $importPref.DefaultDays
     }
     If ($importPref.DefaultCategory) {
-        $global:PSDefaultParameterValues["New-PSWorkItem:Category"] = $importPref.DefaultCategory
+        $global:PSDefaultParameterValues['New-PSWorkItem:Category'] = $importPref.DefaultCategory
     }
 }
 else {
@@ -170,3 +170,17 @@ else {
 }
 
 #endregion
+
+#region auto completers
+
+Register-ArgumentCompleter -CommandName Set-PSWorkItem,Remove-PSWorkItem,Complete-PSWorkItem -ParameterName ID -ScriptBlock {
+    param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
+
+    Invoke-MySQLiteQuery "Select Name,ID,Completed from Tasks" -database $PSWorkItemPath |
+    ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new([int]$_.ID, [int]$_.ID, 'ParameterValue', $_.Name)
+    }
+}
+
+#endregion
+

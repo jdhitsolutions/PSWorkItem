@@ -156,7 +156,7 @@ Function New-PSWorkItem {
             $task | Select-Object * | Out-String | Write-Debug
             <#
             6 Aug 2022 variable expansion appears to be culture-invariant. This is a problem
-            with datetime values. Explicitly getting a string appears to resolve problem. - JDH
+            with DateTime values. Explicitly getting a string appears to resolve problem. - JDH
             #>
 
             _verbose -message ($strings.TaskCreated -f $task.taskcreated.ToString())

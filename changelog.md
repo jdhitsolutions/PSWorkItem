@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.10.0] - 2024-05-28
+
+### Added
+
+- Added argument completer for the `ID` parameter of `Complete-PSWorkItem`, `Set-PSWorkItem`, and `Remove-PSWorkItem`
+
+### Changed
+
+- Updated `README`
+- Updated `Terminal.gui` assembly to version 1.16.0
+- Updated `Nstack` assembly to version 1.1.1.0
+
 ## [1.9.0] - 2024-02-24
 
 ### Changed
@@ -311,7 +323,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.9.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.10.0..HEAD
+[1.10.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.9.0..v1.10.0
 [1.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.8.0..v1.9.0
 [1.8.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.7.0..v1.8.0
 [1.7.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.5.0..v1.7.0
