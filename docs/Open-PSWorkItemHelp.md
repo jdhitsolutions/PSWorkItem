@@ -21,7 +21,6 @@ Open-PSWorkItemHelp [-AsMarkdown] [<CommonParameters>]
 
 Use this command to open the PDF help document for the PSWorkItem module with the associated application for PDF files. As an alternative you can view the documentation as a markdown document.
 
-
 ## EXAMPLES
 
 ### Example 1

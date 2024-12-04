@@ -96,7 +96,6 @@ Class PSWorkItemArchive:PSWorkItemBase {
 
 > *These definitions were revised for v1.0.0. of this module.*
 
-
 Each task or `PSWorkItem` must have an associated category. These are stored in the `Categories` table.
 
 ```text
@@ -389,7 +388,7 @@ If you copy the sample to `$PSWorkItemPath`, delete the file before creating you
 
 ## Reminders and Alerts
 
-I have received requests and questions about integrating a reminder or alert system. This module does not have any built-in features for this. You could use a scheduled task or a PowerShell script to query the database for tasks due within a certain time frame and then send an email or other alert. I am reluctant to include this feature because I have no way of knowing how **you** would want to be alerted or what kind of alert you would want. That said, here are some ways you could implement this feature.
+I have received requests and questions about integrating a reminder or alert system. This module does not have any built-in features for this. You could use a scheduled task or a PowerShell script to query the database for tasks due within a certain time frame and then send an email or other alert. I am reluctant to include this feature because I have no way of knowing how __you__ would want to be alerted or what kind of alert you would want. That said, here are some ways you could implement this feature.
 
 ### Send-MailKitMessage
 
@@ -706,7 +705,7 @@ ForEach-Object -Begin {
 }
 ```
 
-This is why I am hesitant to add any form of alerting or notification. I don't know what is the most effective way for **you** to be alerted. And, any alerting feature I add would more than likely add a dependency on a specific module which I want to avoid.
+This is why I am hesitant to add any form of alerting or notification. I don't know what is the most effective way for __you__ to be alerted. And, any alerting feature I add would more than likely add a dependency on a specific module which I want to avoid.
 
 If you have a solution you would like to share, please feel free to post it in the repository's [Discussion section](https://github.com/jdhitsolutions/PSWorkItem/discussions).
 

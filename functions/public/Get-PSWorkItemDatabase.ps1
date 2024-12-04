@@ -50,7 +50,7 @@ Function Get-PSWorkItemDatabase {
             _verbose -message $strings.CategoryCount
             $categories = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from categories" -ErrorAction Stop
             _verbose -message $strings.GetMetadata
-            $global:m = $metadata = invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select * from metadata"
+            $metadata = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select * from metadata"
             Close-MySQLiteDB -Connection $conn
             _verbose -message $strings.CloseDBConnection
 

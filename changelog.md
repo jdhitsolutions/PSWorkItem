@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.11.1] - 2024-12-04
+
+This release was __not__ pushed to the PowerShell Gallery.
+
+### Changed
+
+- Minor Markdown style edits.
+
+### Removed
+
+- Removed global variable reference in `Get-PSWorkItemDatabase` that was used for testing.
+
 ## [1.11.0] - 2024-12-04
 
 ### Added
@@ -343,6 +355,7 @@ This is a major update with significant changes. If this is your first time inst
 - Created Module outline
 
 [Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.0..HEAD
+[1.11.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.0..v1.11.1
 [1.11.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.10.0..v1.11.0
 [1.10.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.9.0..v1.10.0
 [1.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.8.0..v1.9.0
