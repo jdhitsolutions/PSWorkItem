@@ -4,7 +4,7 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '1.10.0'
+    ModuleVersion          = '1.11.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
@@ -45,7 +45,8 @@
         'Update-PSWorkItemDatabase',
         'Update-PSWorkItemPreference',
         'Set-PSWorkItemCategory',
-        'Open-PSWorkItemConsole'
+        'Open-PSWorkItemConsole',
+        'Open-PSWorkItemHelp'
     )
     CmdletsToExport        = @()
     VariablesToExport      = @()
@@ -56,14 +57,29 @@
             LicenseUri     = 'https://github.com/jdhitsolutions/PSWorkItem/blob/main/License.txt'
             ProjectUri     = 'https://github.com/jdhitsolutions/PSWorkItem'
             # IconUri = ''
-            # ReleaseNotes = ''
-            # Prerelease = ''
-            # RequireLicenseAcceptance = $false
+            ReleaseNotes = @'
+## [1.11.0] - 2024-12-04
+
+### Added
+
+- Added documentation PDF and the `Open-PSWorkItemHelp` command.
+- Added `en-GB` localized string data.
+- Added missing basic Pester tests
+
+### Changed
+
+- Updated custom verbose output.
+- Updated `README.md`.
+- Updated Terminal.Gui assembly to version 1.17.1
+- Help documentation updates
+
+### Fixed
+
+- Updated module to better handle datetime values from different cultures.
+'@
+            RequireLicenseAcceptance = $false
             ExternalModuleDependencies = 'mySQLite'
-        } # End of PSData hashtable
-
-    } # End of PrivateData hashtable
-    # DefaultCommandPrefix = ''
-
+        }
+    }
 }
 

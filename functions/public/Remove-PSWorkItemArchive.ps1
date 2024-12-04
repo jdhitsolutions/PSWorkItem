@@ -75,9 +75,15 @@ Function Remove-PSWorkItemArchive {
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         $PSDefaultParameterValues['_verbose:block'] = 'Begin'
         _verbose -message $strings.Starting
-        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
-        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
-        _verbose -message ($strings.UsingDB -f $path)
+        if ($MyInvocation.CommandOrigin -eq 'Runspace') {
+            #Hide this metadata when the command is called from another command
+            _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+            _verbose -message ($strings.UsingHost -f $host.Name)
+            _verbose -message ($strings.UsingOS -f $PSVersionTable.OS)
+            _verbose -message ($strings.UsingModule -f $ModuleVersion)
+            _verbose -message ($strings.UsingDB -f $path)
+            _verbose ($strings.DetectedCulture -f (Get-Culture))
+        }
         Write-Debug "[$((Get-Date).TimeOfDay) BEGIN  ] $($MyInvocation.MyCommand): PSBoundParameters"
         $PSBoundParameters | Out-String | Write-Debug
         _verbose $strings.OpenDBConnection

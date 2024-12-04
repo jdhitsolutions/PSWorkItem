@@ -30,7 +30,7 @@ $PSWorkItemCategory.Add("Event","`e[38;5;225m")
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Set-PsworkItemCategory -Category work -Description "Uncategorized work activities" -PassThru
 
 Category Description
@@ -42,7 +42,7 @@ Work     Uncategorized work activities
 
 ### -Category
 
-Specify a case-sensitive category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
+Specify a case-sensitive category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String
@@ -171,6 +171,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### PSWorkItemCategory
 
 ## NOTES
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
 

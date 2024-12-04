@@ -25,7 +25,7 @@ Use this simple command to get a report of PSWorkItems by category. The percenta
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db
@@ -73,6 +73,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### PSWorkItemReport
 
 ## NOTES
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
 

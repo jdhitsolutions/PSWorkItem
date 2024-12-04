@@ -379,7 +379,6 @@ Describe Remove-PSWorkItemArchive {
 
 } -tag function
 
-
 Describe Set-PSWorkItemCategory {
     It "Should have help documentation" {
         (Get-Help Set-PSWorkItemCategory).Description | Should -Not -BeNullOrEmpty
@@ -399,7 +398,6 @@ Describe Set-PSWorkItemCategory {
 
 } -tag function
 
-
 Describe Get-PSWorkItemPreference {
     It "Should have help documentation" {
         (Get-Help Get-PSWorkItemPreference).Description | Should -Not -BeNullOrEmpty
@@ -414,6 +412,44 @@ Describe Get-PSWorkItemPreference {
         most likely needs to be refined
         #>
         {Get-PSWorkItemPreference} | Should -Not -Throw
+    } -pending
+    #insert additional command-specific tests
+
+} -tag function
+
+Describe Open-PSWorkItemConsole {
+    It "Should have help documentation" {
+        (Get-Help Open-PSWorkItemConsole).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -name Open-PSWorkItemConsole).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        {Open-PSWorkItemConsole} | Should -Not -Throw
+    } -pending
+    #insert additional command-specific tests
+
+} -tag function
+
+Describe Get-PSWorkItemReport {
+    It "Should have help documentation" {
+        (Get-Help Get-PSWorkItemReport).Description | Should -Not -BeNullOrEmpty
+    }
+    It "Should have a defined output type" {
+        (Get-Command -CommandType function -name Get-PSWorkItemReport).OutputType | Should -Not -BeNullOrEmpty
+    }
+    It "Should run without error" {
+        <#
+        mock and set mandatory parameters as needed
+        this test is marked as pending since it
+        most likely needs to be refined
+        #>
+        {Get-PSWorkItemReport} | Should -Not -Throw
     } -pending
     #insert additional command-specific tests
 

@@ -25,7 +25,7 @@ If you make a mistake entering a category or want to remove one of the default P
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Remove-PSWorkItemCategory Temp
 ```
 
@@ -33,7 +33,7 @@ PS C:\> Remove-PSWorkItemCategory Temp
 
 ### -Category
 
-Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
+Specify the category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String[]

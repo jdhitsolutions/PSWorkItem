@@ -19,7 +19,7 @@ Update-PSWorkItemDatabase [[-Path] <String>] [-PassThru] [-WhatIf] [-Confirm] [<
 
 ## DESCRIPTION
 
-Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run this command before adding, changing, or completing work items. It is recommended that you backup you database file before running this command.
+Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run this command before adding, changing, or completing work items. It is recommended that you backup the database file before running this command.
 
 As an alternative, you could export your work items, delete the database file, initialize a new one, and re-import your work items.
 
@@ -29,7 +29,7 @@ During the upgrade, a new table column called ID is added to the Tasks and Archi
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> New-PSWorkItem -Name "DOM1 backup" -DaysDue 3 -Category work
 WARNING: Cannot verify the tasks table column ID. Please run Update-PSWorkItemDatabase to update the table then try completing the command again. It is recommended that you backup your database before updating the table.
 PS C:\>  Update-PSWorkItemDatabase -verbose
@@ -147,6 +147,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### MySQLiteTableDetail
 
 ## NOTES
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
 

@@ -19,17 +19,17 @@ Initialize-PSWorkItemDatabase [[-Path] <String>] [-PassThru] [-Force] [-WhatIf] 
 
 ## DESCRIPTION
 
-Before you can define and PSWorkItems or categories, you need to setup the SQLite database file. By default the file will be created using the $PSWorkItem path which points to $HOME\PSWorkItem.db. If you want to use a different location you should change the variable before creating to make it easier to use the commands in this module. Advanced users may want to setup multiple database files in which case, they will need to keep track of paths.
+Before you can define any PSWorkItems or categories, you need to set up the SQLite database file. By default, the file will be created using the $PSWorkItem path which points to PSWorkItem.db in $HOME. If you want to use a different location, you should change the variable before creating to make it easier to use the commands in this module. Advanced users may want to set up multiple database files in which case, they will need to keep track of paths.
 
 If the file already exists, the command will not complete unless you use the -Force parameter.
 
-The setup will also define the default categories of Work, Personal, Project, and Other.
+The set up will also define the default categories of Work, Personal, Project, and Other.
 
 ## EXAMPLES
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Initialize-PSWorkItemDatabase
 ```
 
@@ -37,7 +37,7 @@ Create a new database file.
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Initialize-PSWorkItemDatabase -PassThru
 
    Database: C:\Users\jeff\PSWorkItem.db Table:Metadata

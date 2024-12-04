@@ -19,13 +19,13 @@ Complete-PSWorkItem [-ID] <Int32> [-Path <String>] [-CompletionDate <DateTime>] 
 
 ## DESCRIPTION
 
-When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Archive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.
+When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Archive table, and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.
 
 ## EXAMPLES
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Complete-PSWorkItem -id 9 -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -38,7 +38,7 @@ Mark a PSWorkItem as completed and move it to the Archive table. The PSWorkItem 
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItem -category Alpha | Complete-WorkItem
 ```
 

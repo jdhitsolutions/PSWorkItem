@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+## [1.11.0] - 2024-12-04
+
+### Added
+
+- Added documentation PDF and the `Open-PSWorkItemHelp` command.
+- Added `en-GB` localized string data.
+- Added missing basic Pester tests
+
+### Changed
+
+- Updated custom verbose output.
+- Updated `README.md`.
+- Updated Terminal.Gui assembly to version 1.17.1
+- Help documentation updates
+
+### Fixed
+
+- Updated module to better handle datetime values from different cultures.
+
 ## [1.10.0] - 2024-05-28
 
 ### Added
@@ -12,7 +31,7 @@
 
 - Updated `README`
 - Updated `Terminal.gui` assembly to version 1.16.0
-- Updated `Nstack` assembly to version 1.1.1.0
+- Updated `NStack` assembly to version 1.1.1.0
 
 ## [1.9.0] - 2024-02-24
 
@@ -323,7 +342,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.10.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.0..HEAD
+[1.11.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.10.0..v1.11.0
 [1.10.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.9.0..v1.10.0
 [1.9.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.8.0..v1.9.0
 [1.8.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.7.0..v1.8.0

@@ -19,13 +19,13 @@ Remove-PSWorkItem [-ID] <Int32> [-Path <String>] [-WhatIf] [-Confirm] [<CommonPa
 
 ## DESCRIPTION
 
-If you want to delete a PSWorkItem from the database, use Remove-PSWorkItem. You might do this to correct a mistake or to delete a cancelled task. To mark a task as complete and retain an archived copy, use Complete-PSWorkItem.
+If you want to delete a PSWorkItem from the database, use Remove-PSWorkItem. You might do this to correct a mistake or to delete a canceled task. To mark a task as complete and retain an archived copy, use Complete-PSWorkItem.
 
 ## EXAMPLES
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Remove-PSWorkItem -ID 10
 ```
 
@@ -33,7 +33,7 @@ Remove the PSWorkItem with an ID of 10.
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItem -Category Testing | Remove-PSWorkItem
 ```
 

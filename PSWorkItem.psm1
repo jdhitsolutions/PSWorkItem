@@ -30,7 +30,7 @@ ForEach-Object {
 
 #required versions
 [version]$NStackVersion = '1.1.1.0'
-[version]$TerminalGuiVersion = '1.16.0'
+[version]$TerminalGuiVersion = '1.17.1'
 
 $dlls = "$PSScriptRoot\assemblies\NStack.dll", "$PSScriptRoot\assemblies\Terminal.Gui.dll"
 foreach ($dll in $dlls) {
@@ -150,6 +150,27 @@ $global:PSWorkItemCategory = @{
     'Personal' = $PSStyle.Foreground.Green
 }
 
+<#
+a hash table to store ANSI escape sequences for different commands
+used in verbose output with the private _verbose helper function
+#>
+$VerboseANSI = @{
+    'Get-PSWorkItem'                = '[1;38;5;122m'
+    'Get-PSWorkItemCategory'        = '[1;38;5;111m'
+    'Set-PSWorkItem'                = '[1;96m'
+    'New-PSWorkItem'                = '[1;38;5;10m'
+    'Complete-PSWorkItem'           = '[1;38;5;208m'
+    'Get-PSWorkItemReport'          = '[1;38;5;159m'
+    'Get-PSWorkItemDatabase'        = '[1;38;5;195m'
+    'Initialize-PSWorkItemDatabase' = '[1;38;5;214m'
+    'Get-PSWorkItemArchive'         = '[1;38;5;228m'
+    'Remove-PSWorkItem'             = '[1;38;5;197m'
+    Default                         = '[1;38;5;51m'
+}
+
+#used in verbose messaging
+$ModuleVersion = '1.11.0'
+
 #import and use the preference file if found
 $PreferencePath = Join-Path -Path $HOME -ChildPath '.psworkitempref.json'
 If (Test-Path $PreferencePath) {
@@ -173,10 +194,10 @@ else {
 
 #region auto completers
 
-Register-ArgumentCompleter -CommandName Set-PSWorkItem,Remove-PSWorkItem,Complete-PSWorkItem -ParameterName ID -ScriptBlock {
+Register-ArgumentCompleter -CommandName Set-PSWorkItem, Remove-PSWorkItem, Complete-PSWorkItem -ParameterName ID -ScriptBlock {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
 
-    Invoke-MySQLiteQuery "Select Name,ID,Completed from Tasks" -database $PSWorkItemPath |
+    Invoke-MySQLiteQuery 'Select Name,ID,Completed from Tasks' -database $PSWorkItemPath |
     ForEach-Object {
         [System.Management.Automation.CompletionResult]::new([int]$_.ID, [int]$_.ID, 'ParameterValue', $_.Name)
     }

@@ -33,13 +33,13 @@ Get-PSWorkItemArchive [-Category <String>] [-Path <String>] [<CommonParameters>]
 
 ## DESCRIPTION
 
-Completed PSWorkItems are moved to the Archive table. Using this command to view completed items.
+Completed PSWorkItems are moved to the Archive table. Use this command to view completed items.
 
 ## EXAMPLES
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemArchive
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -58,7 +58,7 @@ Get all archived PSWorkItems.
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemArchive -Category Personal
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -75,7 +75,7 @@ Get archived PSWorkItems by category.
 
 ### -Category
 
-Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
+Get all open PSWorkItems by category. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String

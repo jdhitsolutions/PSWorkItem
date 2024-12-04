@@ -10,7 +10,7 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>When you setup a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force.</maml:para>
+      <maml:para>When you set up a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force.</maml:para>
       <maml:para>It is recommended that you use proper casing for your category names and that they be single words.</maml:para>
     </maml:description>
     <command:syntax>
@@ -267,7 +267,7 @@ Blog     blog management and content</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Archive table and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.</maml:para>
+      <maml:para>When you are ready to mark a task as complete, use this command. Complete-PSWorkItem will set the progress to 100, mark the item as completed, copy it to the Archive table, and delete it from the tasks table. There are no commands to modify the task after it has been marked as completed so if you need to update the category, name, or description, do so before completing it.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -501,7 +501,7 @@ ID Name           Description Category Completed
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>This command will retrieve PSWorkItems from the database using a parameter defined query. The default behavior is to get all PSWorkItems due within the next 10 days. If you are running the command in the PowerShell console or VSCode, the default formatting will highlight overdue tasks in red and tasks due within 3 days in yellow.</maml:para>
+      <maml:para>This command will retrieve PSWorkItems from the database using a parameter-defined query. The default behavior is to get all PSWorkItems due within the next 10 days. If you are running the command in the PowerShell console or VSCode, the default formatting will highlight overdue tasks in red and tasks due within 3 days in yellow.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -535,7 +535,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you are specifying an alternate path, specify the path before using this parameter.</maml:para>
+            <maml:para>Get all open PSWorkItems by category. There should be tab completion for this parameter. If you are specifying an alternate path, specify the path before using this parameter.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -655,7 +655,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you are specifying an alternate path, specify the path before using this parameter.</maml:para>
+          <maml:para>Get all open PSWorkItems by category. There should be tab completion for this parameter. If you are specifying an alternate path, specify the path before using this parameter.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -913,7 +913,7 @@ ID    Name                 Description               DueDate                 Pct
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Completed PSWorkItems are moved to the Archive table. Using this command to view completed items.</maml:para>
+      <maml:para>Completed PSWorkItems are moved to the Archive table. Use this command to view completed items.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -921,7 +921,7 @@ ID    Name                 Description               DueDate                 Pct
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>Get all open PSWorkItems by category. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1002,7 +1002,7 @@ ID    Name                 Description               DueDate                 Pct
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Get all open PSWorkItems by category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>Get all open PSWorkItems by category. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1140,7 +1140,7 @@ ID Name           Description Category Completed
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>Specify the category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
@@ -1167,7 +1167,7 @@ ID Name           Description Category Completed
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>Specify the category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
@@ -1519,7 +1519,7 @@ PageCount     : 11
 PageSize      : 4096
 ModifiedAge   : 00:46:29.3572634</dev:code>
         <dev:remarks>
-          <maml:para>There are additional properties. The ModifiedAge property is a time span that shows how long ago the database was last modified.</maml:para>
+          <maml:para>There are additional properties. The ModifiedAge property is a TimeSpan object that shows how long ago the database was last modified.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1590,7 +1590,7 @@ ModifiedAge   : 00:46:29.3572634</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1689,7 +1689,7 @@ Other       `e[38;5;204m</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1734,9 +1734,9 @@ Overdue      4       31</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Before you can define and PSWorkItems or categories, you need to setup the SQLite database file. By default the file will be created using the $PSWorkItem path which points to $HOME\PSWorkItem.db. If you want to use a different location you should change the variable before creating to make it easier to use the commands in this module. Advanced users may want to setup multiple database files in which case, they will need to keep track of paths.</maml:para>
+      <maml:para>Before you can define any PSWorkItems or categories, you need to set up the SQLite database file. By default, the file will be created using the $PSWorkItem path which points to PSWorkItem.db in $HOME. If you want to use a different location, you should change the variable before creating to make it easier to use the commands in this module. Advanced users may want to set up multiple database files in which case, they will need to keep track of paths.</maml:para>
       <maml:para>If the file already exists, the command will not complete unless you use the -Force parameter.</maml:para>
-      <maml:para>The setup will also define the default categories of Work, Personal, Project, and Other.</maml:para>
+      <maml:para>The set up will also define the default categories of Work, Personal, Project, and Other.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1995,7 +1995,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>Select a valid category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
             <maml:para>If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -2092,7 +2092,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>Select a valid category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
             <maml:para>If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -2177,7 +2177,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>Select a valid category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           <maml:para>If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -2432,6 +2432,7 @@ ColumnIndex ColumnName  ColumnType
         <maml:para>You cannot specify a PSWorkItem completion date using this tool.</maml:para>
         <maml:para>If you have difficulty seeing the cursor in text fields, and you are running in Windows Terminal, you might try changing the cursor in your Windows Terminal profile setting. The TUI color scheme is also influenced by the Windows Terminal color scheme. It will have a different appearance under different Windows Terminal color schemes. You may also have to adjust the zoom level in Windows Terminal to see the entire form.</maml:para>
         <maml:para>IMPORTANT: This command relies on a specific version of Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like Microsoft.PowerShell.ConsoleGuiTools. You may need to load this module first in a new PowerShell session.</maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -2491,6 +2492,104 @@ ColumnIndex ColumnName  ColumnType
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Open-PSWorkItemHelp</command:name>
+      <command:verb>Open</command:verb>
+      <command:noun>PSWorkItemHelp</command:noun>
+      <maml:description>
+        <maml:para>Open the PSWorkItem help document</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Use this command to open the PDF help document for the PSWorkItem module with the associated application for PDF files. As an alternative you can view the documentation as a markdown document.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Open-PSWorkItemHelp</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="md">
+          <maml:name>AsMarkdown</maml:name>
+          <maml:description>
+            <maml:para>Open the README help file as a Markdown document.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="md">
+        <maml:name>AsMarkdown</maml:name>
+        <maml:description>
+          <maml:para>Open the README help file as a Markdown document.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Open-PSWorkItemHelp</dev:code>
+        <dev:remarks>
+          <maml:para>The file should open in the default application for PDF files.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Open-PSWorkItemHelp -AsMarkdown | more</dev:code>
+        <dev:remarks>
+          <maml:para>View the help file a markdown document.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>PSWorkItem GitHub Repository:</maml:linkText>
+        <maml:uri>https://github.com/jdhitsolutions/PSWorkItem</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Remove-PSWorkItem</command:name>
       <command:verb>Remove</command:verb>
       <command:noun>PSWorkItem</command:noun>
@@ -2499,7 +2598,7 @@ ColumnIndex ColumnName  ColumnType
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>If you want to delete a PSWorkItem from the database, use Remove-PSWorkItem. You might do this to correct a mistake or to delete a cancelled task. To mark a task as complete and retain an archived copy, use Complete-PSWorkItem.</maml:para>
+      <maml:para>If you want to delete a PSWorkItem from the database, use Remove-PSWorkItem. You might do this to correct a mistake or to delete a canceled task. To mark a task as complete and retain an archived copy, use Complete-PSWorkItem.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2685,7 +2784,7 @@ ColumnIndex ColumnName  ColumnType
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>A PSWorkItem category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>A PSWorkItem category. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2832,7 +2931,7 @@ ColumnIndex ColumnName  ColumnType
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>A PSWorkItem category. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>A PSWorkItem category. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2924,7 +3023,7 @@ ColumnIndex ColumnName  ColumnType
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -2964,7 +3063,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <maml:title>-------------------------- Example 3 --------------------------</maml:title>
         <dev:code>PS C:\&gt;  Remove-PSWorkItemArchive -name *report</dev:code>
         <dev:remarks>
-          <maml:para>Remove archived items where the name end in 'report'.</maml:para>
+          <maml:para>Remove archived items where the name ends in 'report'.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3001,7 +3100,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>Specify the category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
@@ -3050,7 +3149,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="Name">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>Specify the category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
@@ -3180,7 +3279,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify an updated category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>Specify an updated category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -3359,7 +3458,7 @@ What if: Performing the operation "Remove-PSWorkItemArchive" on target "19fea3ee
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify an updated category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>Specify an updated category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -3596,7 +3695,7 @@ ID Name              Description         DueDate             Category Pct
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0sq" aliases="Name">
           <maml:name>Category</maml:name>
           <maml:description>
-            <maml:para>Specify a case-sensitive category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+            <maml:para>Specify a case-sensitive category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -3680,7 +3779,7 @@ ID Name              Description         DueDate             Category Pct
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0sq" aliases="Name">
         <maml:name>Category</maml:name>
         <maml:description>
-          <maml:para>Specify a case-sensitive category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
+          <maml:para>Specify a case-sensitive category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -3792,7 +3891,7 @@ ID Name              Description         DueDate             Category Pct
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -3845,7 +3944,7 @@ Work     Uncategorized work activities</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run this command before adding, changing, or completing work items. It is recommended that you backup you database file before running this command.</maml:para>
+      <maml:para>Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run this command before adding, changing, or completing work items. It is recommended that you backup the database file before running this command.</maml:para>
       <maml:para>As an alternative, you could export your work items, delete the database file, initialize a new one, and re-import your work items.</maml:para>
       <maml:para>During the upgrade, a new table column called ID is added to the Tasks and Archive database tables. In the Tasks table, the ID column for existing entries will be set to the row id, which should be the task number you are used to seeing. In the archive table, existing entries will get an ID value of 0, since it is impossible to know the original ID number. This database change corrects this problem. Going forward, the PSWorkItem ID will remain the same when you complete it and move the item to the Archive table.</maml:para>
     </maml:description>
@@ -3979,7 +4078,7 @@ Work     Uncategorized work activities</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -4177,7 +4276,7 @@ ID Name        Description DueDate               Category Pct
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>

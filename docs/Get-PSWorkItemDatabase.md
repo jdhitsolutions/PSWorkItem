@@ -25,7 +25,7 @@ Use this command to get a summary of the PSWorkItem database file. You can not m
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemDatabase
 
    Path: C:\Users\Jeff\PSWorkItem.db [44KB]
@@ -39,7 +39,7 @@ The default summary.
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemDatabase | Format-List
 
 Path          : C:\Users\Jeff\PSWorkItem.db
@@ -55,7 +55,7 @@ PageSize      : 4096
 ModifiedAge   : 00:46:29.3572634
 ```
 
-There are additional properties. The ModifiedAge property is a time span that shows how long ago the database was last modified.
+There are additional properties. The ModifiedAge property is a TimeSpan object that shows how long ago the database was last modified.
 
 ## PARAMETERS
 

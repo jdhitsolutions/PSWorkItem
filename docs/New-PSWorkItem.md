@@ -33,7 +33,7 @@ Use this command to add a new PSWorkItem to the database. It is assumed you have
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2023 5:00PM" -Category Blog -PassThru
 ```
 
@@ -41,7 +41,7 @@ Create a new PSWorkItem with a due date 30 days from now. You should be able to 
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> New-PSWorkItem -Name "Publish PSWorkItem" -DaysDue 3 -Category Project
 ```
 
@@ -51,7 +51,7 @@ Create a new PSWorkItem due in 3 days.
 
 ### -Category
 
-Select a valid category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
+Select a valid category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.
 

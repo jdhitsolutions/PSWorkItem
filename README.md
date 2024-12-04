@@ -2,11 +2,13 @@
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/PSWorkItem.png?style=for-the-badge&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/PSWorkItem/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSWorkItem.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/PSWorkItem/)
 
+:information_source:
+
 This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The original PowerShell module offered simple tasks or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
 
 ## Installation
 
-This module requires __PowerShell 7.3__ or later and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows or Linux platform__ until the dependency SQLite module [supports other non-Windows systems](https://github.com/jdhitsolutions/MySQLite/issues/21).
+This module requires __PowerShell 7.3 or later__ and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows or Linux platform__ until the dependency SQLite module [supports other non-Windows systems](https://github.com/jdhitsolutions/MySQLite/issues/21).
 
 Install the PSWorkItem module from the PowerShell Gallery.
 
@@ -15,6 +17,8 @@ Install-Module PSWorkItem [-scope CurrentUser]
 ```
 
 :heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery. Linux support was added in `MySQLite v0.13.0`.
+
+After installation, you can run `Open-PSWorkItemHelp` to open a PDF version of this README file. :tipping_hand_person:
 
 ## Module Commands and Design
 
@@ -30,6 +34,7 @@ Install-Module PSWorkItem [-scope CurrentUser]
 - [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md)
 - [New-PSWorkItem](docs/New-PSWorkItem.md)
 - [Open-PSWorkItemConsole](docs/Open-PSWorkItemConsole.md)
+- [Open-PSWorkItemHelp](docs/Open-PSWorkItemHelp.md)
 - [Remove-PSWorkItem](docs/Remove-PSWorkItem.md)
 - [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md)
 - [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md)
@@ -55,8 +60,6 @@ ColumnIndex ColumnName   ColumnType
 ```
 
 When items are queried from this table using `Get-PSWorkItem` they are written to the pipeline as `PSWorkItem` objects. This is a class-based object defined in the root module.
-
-> These definitions were revised for v1.0.0.
 
 ```powershell
 class PSWorkItemBase {
@@ -91,6 +94,9 @@ Class PSWorkItemArchive:PSWorkItemBase {
 }
 ```
 
+> *These definitions were revised for v1.0.0. of this module.*
+
+
 Each task or `PSWorkItem` must have an associated category. These are stored in the `Categories` table.
 
 ```text
@@ -102,7 +108,7 @@ ColumnIndex ColumnName  ColumnType
 
 You __must__ define categories with `Add-PSWorkItemCategory` before you can create a new task. Categories are written to the pipeline as `PSWorkItemCategory` objects, also defined with a PowerShell class.
 
-```shell
+```powershell
 class PSWorkItemCategory {
     [String]$Category
     [String]$Description
@@ -128,7 +134,7 @@ To get started, run `Initialize-PSWorkItemDatabase`. This will create a new data
 
 You can view a database summary with `Get-PSWorkItemDatabase`.
 
-```shell
+```dos
 PS C:\> Get-PSWorkItemDatabase
 
    Path: C:\Users\Jeff\PSWorkItem.db [44KB]
@@ -148,7 +154,7 @@ Add-PSWorkItemCategory -Category "SRV" -Description "server management tasks"
 
 Use `Get-PSWorkItemCategory` to view your categories.
 
-```shell
+```dos
 PS C:\> Get-PSWorkItemCategory
 
 Category Description
@@ -165,8 +171,9 @@ If you need to update a category, you can re-add it using `-Force`.
 
 > The category name is case-sensitive.
 
-```shell
-PS C:\> Add-PSWorkItemCategory -Category Work -Description "business-related tasks" -PassThru -Force
+```dos
+PS C:\> Add-PSWorkItemCategory -Category Work -Description "business-related tasks" `
+ -PassThru -Force
 
 Category Description
 -------- -----------
@@ -230,7 +237,7 @@ The entry will have no effect unless the category is defined in the database. Th
 
 > Note that when you view the hashtable, you won't see any values because the escape sequences are non-printable.
 
-![colorized categories](images/psworkitemcategory.png)
+![Colorized Categories](images/psworkitemcategory.png)
 
 Category highlighting is only available in the default view.
 
@@ -238,7 +245,7 @@ Category highlighting is only available in the default view.
 
 Use [Set-PSWorkItem](docs/Set-PSWorkItem.md) or its alias `swi` to update a task based on its ID.
 
-```shell
+```dos
 PS C:\> Set-PSWorkItem -id 7 -Progress 30 -DueDate "8/15/2023 12:00PM" -PassThru
 
   Database: C:\Users\Jeff\PSWorkItem.db
@@ -252,7 +259,7 @@ ID Name            Description DueDate               Category Pct
 
 When a task is complete, you can move it to the `Archive` table.
 
-```shell
+```dos
 PS C:\> Complete-PSWorkItem -id 7 -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -281,7 +288,7 @@ Beginning with v1.0.0, you can use [Remove-PSWorkItemArchive](docs/Remove-PSWork
 
 You can use [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) to get a summary report of open work items grouped by category.
 
-```shell
+```dos
 PS C:\>  Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db
@@ -303,7 +310,7 @@ The percentages for each category are rounded. The percentage for Overdue items 
 
 Version 1.3.0 added a management console based on the [Terminal.Gui](https://github.com/gui-cs/Terminal.Gui) framework.
 
-![console management](images/psworkitemconsole.png)
+![Using Terminal Console Management](images/psworkitemconsole.png)
 
 Run [`Open-PSWorkItemConsole`](docs\Open-PSWorkItemConsole.md) or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the Open Database command under Options. The file must end in `.db`. If you select a different database, you can use `Options - Reset Form` to reset to your default database.
 
@@ -311,15 +318,15 @@ If you select an item from the table, it will populate the form fields. You can 
 
 You can also manage categories.
 
-![add category](images/tui-addcategory.png)
+![Add a category with the TUI console](images/tui-addcategory.png)
 
-![set category](images/tui-setcategory.png)
+![Set the category with the TUI console](images/tui-setcategory.png)
 
 You can right-click a task in the table to get detailed information.
 
-![task details](images/tui-taskdetail.png)
+![Get details with the TUI console](images/tui-taskdetail.png)
 
-__IMPORTANT__ This command relies on a specific version of the Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like `Microsoft.PowerShell.ConsoleGuiTools`. You may need to load this module first in a new PowerShell session.
+__IMPORTANT__ *This command relies on a specific version of the Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like `Microsoft.PowerShell.ConsoleGuiTools`. You may need to load this module first in a new PowerShell session.*
 
 ## User Preferences
 
@@ -345,7 +352,7 @@ $global:PSDefaultParameterValues["New-PSWorkItem:Category"] = $importPref.Defaul
 
 Use `Get-PSWorkItemPreference` to view.
 
-```shell
+```dos
 PS C:\> Get-PSWorkItemPreference
 
    Path: C:\Users\Jeff\PSWorkItem.db [Default Days: 7 Default Category: Work]
@@ -380,9 +387,9 @@ A sample database has been created in the module's Samples directory. You can sp
 
 If you copy the sample to `$PSWorkItemPath`, delete the file before creating your database file.
 
-## Reminders and Alerts TODO
+## Reminders and Alerts
 
-I have received requests and questions about integrating a reminder or alert system. This module does not have any built-in features for this. You could use a scheduled task or a PowerShell script to query the database for tasks due within a certain time frame and then send an email or other alert. I am reluctant to include this feature because I have no way of knowing how you would want to be alerted or what kind of alert you would want. That said, here are some ways you could implement this feature.
+I have received requests and questions about integrating a reminder or alert system. This module does not have any built-in features for this. You could use a scheduled task or a PowerShell script to query the database for tasks due within a certain time frame and then send an email or other alert. I am reluctant to include this feature because I have no way of knowing how **you** would want to be alerted or what kind of alert you would want. That said, here are some ways you could implement this feature.
 
 ### Send-MailKitMessage
 
@@ -404,20 +411,21 @@ $hash = @{
     Subject       = "PSWorkItems Due in the Next $days Days"
     ErrorAction   = 'Stop'
 }
-Write-Host "[$((Get-Date).ToString())] Getting tasks for the next $days days." -ForegroundColor Green
+Write-Host "[$((Get-Date).ToString())] Getting tasks for the next $days days." -Fore Green
 $data = Get-PSWorkItem -DaysDue $Days
 if ($data) {
 
     if ($AsText) {
-        Write-Host "[$((Get-Date).ToString())] Sending as TEXT" -ForegroundColor Green
+        Write-Host "[$((Get-Date).ToString())] Sending as TEXT" -Fore Green
         # 10/14/2020 Modified to explicitly select properties because
         # default formatting uses ANSI which distorts the converted output.
-        $body = $data | Select-Object -Property ID, Name, Description, DueDate, OverDue | Format-Table | Out-String
+        $body = $data | Select-Object -Property ID, Name, Description, DueDate,
+        OverDue | Format-Table | Out-String
         $hash.Add('TextBody', $body)
     }
 
     else {
-        Write-Host "[$((Get-Date).ToString())] Sending as HTML" -ForegroundColor green
+        Write-Host "[$((Get-Date).ToString())] Sending as HTML" -Fore green
         #css to be embedded in the html document
         $head = @"
     <Title>PSWorkItems Due in $Days Days</Title>
@@ -449,11 +457,11 @@ if ($data) {
             $due = $html.table.tr[$i].td[-1] -as [TimeSpan]
             if ($due.Days -le 1) {
                 $class.value = 'alert'
-                $html.table.tr[$i].Attributes.Append($class) | Out-Null
+                [void]($html.table.tr[$i].Attributes.Append($class))
             }
             elseif ($due.Days -le 2) {
                 $class.value = 'warn'
-                $html.table.tr[$i].Attributes.Append($class) | Out-Null
+                [void]($html.table.tr[$i].Attributes.Append($class))
             }
         }
 
@@ -469,7 +477,8 @@ else {
 
 Try {
     Send-MailKitMessage @hash
-    Write-Output "[$((Get-Date).ToString())] Message ($($hash.subject)) sent to $($hash.RecipientList) from $($hash.from)"
+    $msg = "Message {0} sent to {1} from {2}" -f $hash.subject,$hash.RecipientList,$hash.from
+    Write-Output "[$((Get-Date).ToString())] $msg"
 }
 Catch {
     throw $_
@@ -479,7 +488,8 @@ Catch {
 Because the PSWorkItem module requires PowerShell 7 and PowerShell 7 doesn't support scheduled jobs, I set up a scheduled task to run this script daily.
 
 ```powershell
-$action = New-ScheduledTaskAction -Execute 'pwsh.exe' -argument '-nologo -noprofile -file C:\scripts\DailyPSWorkItemEmail.ps1'
+$actionArg = '-nologo -noprofile -file C:\scripts\DailyPSWorkItemEmail.ps1'
+$action = New-ScheduledTaskAction -Execute 'pwsh.exe' -argument $actionArg
 $trigger = New-ScheduledTaskTrigger -Daily -At 7:30AM
 $options = new-ScheduledTaskSettingsSet -RunOnlyIfNetworkAvailable
 
@@ -499,11 +509,11 @@ $paramHash = @{
 Register-ScheduledTask @paramHash
 ```
 
-I get an HTML-formatted email with tasks due in the next 5 days.
+I get an HTML-formatted email every morning with tasks due in the next 5 days.
 
 ### Toast Notifications
 
-Another option would be to create something with the [BurntToast](https://github.com/Windos/BurntToast) module.
+Another option would be to create something with the excellent [BurntToast](https://github.com/Windos/BurntToast) module.
 
 ### New-PwshToastAlarm
 
@@ -512,19 +522,6 @@ I use a function in PowerShell 7 to create a toast notification using a PowerShe
 ```powershell
 Function New-PwshToastAlarm {
 
-    <# PSFunctionInfo
-
-Version 1.2.0
-Author Jeffery Hicks
-CompanyName JDH IT Solutions, Inc.
-Copyright (c) JDH IT Solutions, Inc.
-Description Set a toast alarm from PowerShell 7
-Guid 24250c28-5abc-4067-9890-9722482c1a2d
-Tags profile,pwsh
-LastUpdate 9/22/2022 10:15AM
-Source C:\scripts\New-PwshToastAlarm.ps1
-
-#>
     [cmdletbinding(DefaultParameterSetName = "sound", SupportsShouldProcess)]
     [alias("nta")]
     [OutputType("PSScheduledJob")]
@@ -553,9 +550,10 @@ Source C:\scripts\New-PwshToastAlarm.ps1
         [string]$AppLogo = "$env:OneDriveConsumer\pictures\psrobot-icon.png",
 
         [Parameter(HelpMessage = "What sound would you like?", ParameterSetName = "sound")]
-        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2', 'Alarm3', 'Alarm4',
-            'Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10', 'Call', 'Call2', 'Call3', 'Call4', 'Call5',
-            'Call6', 'Call7', 'Call8', 'Call9', 'Call10', 'None')]
+        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2', 'Alarm3',
+         'Alarm4','Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10', 'Call',
+         'Call2', 'Call3', 'Call4', 'Call5','Call6', 'Call7', 'Call8', 'Call9', 'Call10',
+         'None')]
         [string]$Sound = "Default",
 
         [Parameter(HelpMessage = "Create a silent alert", ParameterSetName = "silent")]
@@ -605,7 +603,7 @@ Source C:\scripts\New-PwshToastAlarm.ps1
 } #close function
 ```
 
-This function calls another script that creates the toast notification as a scheduled job.
+This function calls another script that creates the toast notification as a scheduled job in Windows PowerShell.
 
 ```powershell
 #requires -version 5.1
@@ -617,7 +615,11 @@ Function New-BTReminder {
     [cmdletbinding(DefaultParameterSetName = 'sound', SupportsShouldProcess)]
     [alias('nta', 'New-ToastAlarm')]
     param(
-        [Parameter(Position = 0, Mandatory, HelpMessage = 'What date and time do you want to use for the reminder?')]
+        [Parameter(
+            Position = 0,
+            Mandatory,
+            HelpMessage = 'What date and time do you want to use for the reminder?'
+        )]
         [ValidateNotNullOrEmpty()]
         [DateTime]$At,
         [Parameter(Mandatory, HelpMessage = 'What message do you want to display?')]
@@ -627,9 +629,11 @@ Function New-BTReminder {
         [alias('Logo')]
         [string]$AppLogo,
         [Parameter(HelpMessage = 'What sound would you like?', ParameterSetName = 'sound')]
-        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2', 'Alarm3', 'Alarm4',
-            'Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10', 'Call', 'Call2', 'Call3', 'Call4', 'Call5',
-            'Call6', 'Call7', 'Call8', 'Call9', 'Call10', 'None')]
+        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2',
+        'Alarm3', 'Alarm4','Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10',
+        'Call', 'Call2', 'Call3', 'Call4', 'Call5','Call6', 'Call7', 'Call8', 'Call9',
+        'Call10', 'None'
+        )]
         [string]$Sound,
         [Parameter(HelpMessage = 'Create a silent alert', ParameterSetName = 'silent')]
         [switch]$Silent,
@@ -655,7 +659,8 @@ Function New-BTReminder {
     $toastParams.Add('SnoozeAndDismiss', $True)
     $sb = {
         param([hashtable]$Params, [string]$JobName)
-            #The Write-Host output will only show if you receive the job. Use for troubleshooting.
+            #The Write-Host output will only show if you receive the job.
+            #Use for troubleshooting.
             Write-Host 'Defining a toast job using these params' -ForegroundColor Green
             $params | Out-String | Write-Host
             Write-Host 'Toasting...' -ForegroundColor Green
@@ -685,14 +690,25 @@ Function New-BTReminder {
     Write-Verbose "Ending $($MyInvocation.MyCommand)"
 }
 ```
+
 Now it is a matter of deciding when you want to be notified.
 
 ```powershell
-Get-PSWorkItem | where {-Not $_.OverDue} |
-Foreach-Object -Begin { . C:\scripts\New-PwshToastAlarm.ps1} -process {New-PwshToastAlarm -At ([datetime]$_.dueDate).addDays(-1) -Text "Workitem $($_.Name) is due $($_.DueDate)"}
+Get-PSWorkItem | where { -Not $_.OverDue } |
+ForEach-Object -Begin {
+    . C:\scripts\New-PwshToastAlarm.ps1
+} -Process {
+    $splat = @{
+        At   = ([datetime]$_.dueDate).addDays(-1)
+        Text = "WorkItem $($_.Name) is due $($_.DueDate)"
+    }
+    New-PwshToastAlarm $splat
+}
 ```
 
-This is why I am hesitant to add any form of alerting or notification. I don't know what is the most effective way for **you** to be alerted. And, any alerting feature I add would more than likely add a dependency on a specific module which I try to avoid.
+This is why I am hesitant to add any form of alerting or notification. I don't know what is the most effective way for **you** to be alerted. And, any alerting feature I add would more than likely add a dependency on a specific module which I want to avoid.
+
+If you have a solution you would like to share, please feel free to post it in the repository's [Discussion section](https://github.com/jdhitsolutions/PSWorkItem/discussions).
 
 ## PSWorkItem Database Change
 
@@ -706,7 +722,7 @@ This is why I am hesitant to add any form of alerting or notification. I don't k
 
 Most of the commands in this module create custom objects derived from PowerShell [class definitions](PSWorkItem.psm1) and data in the SQLite database file. If you need to troubleshoot a problem, you can use `Get-PSWorkItemData` to select all data from one of the three tables.
 
-```shell
+```dos
 PS C:\> Get-PSWorkItemData
 
 taskid       : 2196617b-b818-415d-b9cc-52b0c649a77e
@@ -722,8 +738,8 @@ rowid        : 19
 ...
 ```
 
-## Future Tasks or Commands
+## :octocat: Future Tasks or Commands
 
 - Password protection options.
 
-If you have an enhancement suggestion, please submit it as an [Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).
+If you have an enhancement suggestion, please [submit it as an Issue](https://github.com/jdhitsolutions/PSWorkItem/issues).

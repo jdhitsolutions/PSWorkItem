@@ -25,7 +25,7 @@ You can use Update-PSWorkItemPreference to export the $PSWorkitemCategory and yo
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemPreference
 
    Path: C:\Users\Jeff\PSWorkItem.db [Default Days: 7 Default Category: Work]
@@ -57,6 +57,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### psWorkItemPreference
 
 ## NOTES
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
 

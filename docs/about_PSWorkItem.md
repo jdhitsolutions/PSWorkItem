@@ -58,7 +58,7 @@ In addition to formatting overdue and imminent due dates, the module also provid
 
 You can modify this hashtable as you would any other hashtable.
 
-```shell
+```powershell
 $PSWorkItemCategory.Add("Event","`e[38;5;153m")
 ```
 
@@ -74,7 +74,7 @@ Use `Set-PSWorkItem` or its alias `swi` to update a task based on its ID.
 
 When a task is complete, you can move it to the `Archive` table.
 
-```shell
+```powershell
 PS C:\> Complete-PSWorkItem -id 7
 ```
 
@@ -142,7 +142,7 @@ You might need to manually delete the JSON preferences file if you uninstall the
 
 This module has no specific commands for backing up or restoring a database file. But you can use the `Export-MySQLiteDB` command to export the PSWorkItem database file to a JSON file.
 
-```shell
+```powershell
 Export-MySQLiteDB -path $PSWorkItemPath -Destination d:\backups\pwi.json
 ```
 

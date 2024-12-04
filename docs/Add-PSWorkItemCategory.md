@@ -20,7 +20,7 @@ Add-PSWorkItemCategory [-Category] <String[]> [[-Description] <String>]
 
 ## DESCRIPTION
 
-When you setup a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force.
+When you set up a new PSWorkItem database, it will define the default categories of Personal, Work, Project, and Other. You may want to add categories. The category must be defined before you can use it. The category will not be added if it already exists unless you use -Force.
 
 It is recommended that you use proper casing for your category names and that they be single words.
 
@@ -28,7 +28,7 @@ It is recommended that you use proper casing for your category names and that th
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Add-PSWorkItemCategory -Name Blog -Description "blog management and content" -PassThru
 
 Category Description

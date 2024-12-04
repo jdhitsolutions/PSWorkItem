@@ -29,7 +29,7 @@ You may need to manually delete the preferences JSON file if you uninstall the m
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Update-PSWorkItemPreference
 ```
 
@@ -37,7 +37,7 @@ This assumes you've customized category settings or the database path.
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Update-PSWorkItemPreference -DefaultCategory Work
 ```
 
@@ -123,6 +123,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### None
 
 ## NOTES
+
+Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
 
 ## RELATED LINKS
 

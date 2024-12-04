@@ -27,8 +27,15 @@ Function Update-PSWorkItemPreference {
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
-        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
-        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
+        if ($MyInvocation.CommandOrigin -eq 'Runspace') {
+            #Hide this metadata when the command is called from another command
+            _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+            _verbose -message ($strings.UsingHost -f $host.Name)
+            _verbose -message ($strings.UsingOS -f $PSVersionTable.OS)
+            _verbose -message ($strings.UsingModule -f $ModuleVersion)
+            _verbose -message ($strings.UsingDB -f $path)
+            _verbose ($strings.DetectedCulture -f (Get-Culture))
+        }
         $FilePath = Join-Path -Path $HOME -ChildPath ".psworkitempref.json"
     } #begin
 

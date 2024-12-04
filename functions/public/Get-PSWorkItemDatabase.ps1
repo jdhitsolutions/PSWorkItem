@@ -17,8 +17,15 @@ Function Get-PSWorkItemDatabase {
         $PSDefaultParameterValues["_verbose:Command"] = $MyInvocation.MyCommand
         $PSDefaultParameterValues["_verbose:block"] = "Begin"
         _verbose -message $strings.Starting
-        _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
-        _verbose -message ($strings.UsingModule -f (Get-Command -name $MyInvocation.MyCommand).Version)
+        if ($MyInvocation.CommandOrigin -eq 'Runspace') {
+            #Hide this metadata when the command is called from another command
+            _verbose -message ($strings.PSVersion -f $PSVersionTable.PSVersion)
+            _verbose -message ($strings.UsingHost -f $host.Name)
+            _verbose -message ($strings.UsingOS -f $PSVersionTable.OS)
+            _verbose -message ($strings.UsingModule -f $ModuleVersion)
+            _verbose -message ($strings.UsingDB -f $path)
+            _verbose ($strings.DetectedCulture -f (Get-Culture))
+        }
         #convert path
         $cPath = Convert-Path $path
         _verbose -message ($strings.UsingDB -f $cPath)
@@ -43,7 +50,7 @@ Function Get-PSWorkItemDatabase {
             _verbose -message $strings.CategoryCount
             $categories = Invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select Count() from categories" -ErrorAction Stop
             _verbose -message $strings.GetMetadata
-            $metadata = invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select * from metadata"
+            $global:m = $metadata = invoke-MySQLiteQuery -Connection $conn -KeepAlive -Query "Select * from metadata"
             Close-MySQLiteDB -Connection $conn
             _verbose -message $strings.CloseDBConnection
 
@@ -51,7 +58,8 @@ Function Get-PSWorkItemDatabase {
             $out = [PSWorkItemDatabase]::new()
             #define properties
             $out.Path = $db.Path
-            $out.Created = $metadata.Created
+            # 21 August 2024 - the Created property is a string. Force the type to fix culture-related issues
+            $out.Created = $metadata.Created -as [DateTime]
             $out.LastModified = $db.Modified
             $out.size = $db.Size
             $out.TaskCount = $tasks.'Count()'

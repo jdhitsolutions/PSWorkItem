@@ -25,7 +25,7 @@ When you create a PSWorkItem, you need to tag it with a category. The category m
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemCategory
 
 Category    Description
@@ -45,7 +45,7 @@ Get all defined categories.
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemCategory blog
 
 Category Description
@@ -57,7 +57,7 @@ Get information about a single category.
 
 ### Example 3
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItemCategory | Select-Object Category,ANSIString
 
 Category    ANSIString
@@ -79,7 +79,7 @@ Display categories with their ANSI escape sequences.
 
 ### -Category
 
-Specify the category name. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
+Specify the category name. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String[]

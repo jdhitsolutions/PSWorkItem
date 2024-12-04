@@ -36,7 +36,7 @@ If you want to clear the Description, use the -ClearDescription parameter. All o
 
 ### Example 1
 
-```shell
+```powershell
 PS C:\> Set-PSWorkItem -id 3 -progress 10
 ```
 
@@ -44,7 +44,7 @@ Set the progress on a PSWorkItem.
 
 ### Example 2
 
-```shell
+```powershell
 PS C:\> Get-PSWorkItem -Category blog | Set-PSWorkItem -Category Other -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -59,7 +59,7 @@ Modify multiple PSWorkItems at the same time.
 
 ### Example 3
 
-```shell
+```powershell
 PS C:\ Set-PSWorkItem -id 5 -ClearDescription
 ```
 
@@ -69,7 +69,7 @@ Clear the description property for the PSWorkItem with the ID of 5.
 
 ### -Category
 
-Specify an updated category. The category must be pre-defined. There should be tab-completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
+Specify an updated category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 ```yaml
 Type: String
