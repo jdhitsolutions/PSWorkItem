@@ -2,9 +2,9 @@
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/PSWorkItem.png?style=for-the-badge&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/PSWorkItem/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSWorkItem.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/PSWorkItem/)
 
-:information_source:
+![](images/db.png)
 
-This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The original PowerShell module offered simple tasks or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
+:information_source: This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The original PowerShell module offered simple tasks or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
 
 ## Installation
 
@@ -13,35 +13,37 @@ This module requires __PowerShell 7.3 or later__ and a 64-bit version of PowerSh
 Install the PSWorkItem module from the PowerShell Gallery.
 
 ```powershell
-Install-Module PSWorkItem [-scope CurrentUser]
+Install-PSResource PSWorkItem [-scope CurrentUser]
 ```
 
-:heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery. Linux support was added in `MySQLite v0.13.0`.
+:heavy_exclamation_mark: Module installation will also install the required [MySQLite](https://github.com/jdhitsolutions/MySQLite) module from the PowerShell Gallery. Linux support was added in `MySQLite v0.13.0`. If you are running Windows on ARM64, ensure that you have at least version 1.0.0 of the MySQLite module. __ARM64 support is only available on Windows.__
 
-After installation, you can run `Open-PSWorkItemHelp` to open a PDF version of this README file. :tipping_hand_person:
+:tipping_hand_person: After installation, you can run `Open-PSWorkItemHelp` to open a PDF version of this README file.
 
 ## Module Commands and Design
 
-- [Add-PSWorkItemCategory](docs/Add-PSWorkItemCategory.md)
-- [Complete-PSWorkItem](docs/Complete-PSWorkItem.md)
-- [Get-PSWorkItem](docs/Get-PSWorkItem.md)
-- [Get-PSWorkItemArchive](docs/Get-PSWorkItemArchive.md)
-- [Get-PSWorkItemCategory](docs/Get-PSWorkItemCategory.md)
-- [Get-PSWorkItemData](docs/Get-PSWorkItemData.md)
-- [Get-PSWorkItemDatabase](docs/Get-PSWorkItemDatabase.md)
-- [Get-PSWorkItemPreference](docs/Get-PSWorkItemPreference.md)
-- [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md)
-- [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md)
-- [New-PSWorkItem](docs/New-PSWorkItem.md)
-- [Open-PSWorkItemConsole](docs/Open-PSWorkItemConsole.md)
-- [Open-PSWorkItemHelp](docs/Open-PSWorkItemHelp.md)
-- [Remove-PSWorkItem](docs/Remove-PSWorkItem.md)
-- [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md)
-- [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md)
-- [Set-PSWorkItem](docs/Set-PSWorkItem.md)
-- [Set-PSWorkItemCategory](docs/Set-PSWorkItemCategory.md)
-- [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md)
-- [Update-PSWorkItemPreference](docs/Update-PSWorkItemPreference.md)
+| Name | Alias | Synopsis |
+|------|-------|----------|
+| [Add-PSWorkItemCategory](docs/Add-PSWorkItemCategory.md) |  | Add a new PSWorkItem category |
+| [Complete-PSWorkItem](docs/Complete-PSWorkItem.md) | *cwi* | Mark a PSWorkItem as complete. |
+| [Get-PSWorkItem](docs/Get-PSWorkItem.md) | *gwi* | Get a PSWorkItem. |
+| [Get-PSWorkItemArchive](docs/Get-PSWorkItemArchive.md) |  | Get archived PSWorkItems. |
+| [Get-PSWorkItemCategory](docs/Get-PSWorkItemCategory.md) |  | Get defined PSWorkItem categories. |
+| [Get-PSWorkItemData](docs/Get-PSWorkItemData.md) |  | Get raw database table data. |
+| [Get-PSWorkItemDatabase](docs/Get-PSWorkItemDatabase.md) |  | Get information about the PSWorkItem database |
+| [Get-PSWorkItemPreference](docs/Get-PSWorkItemPreference.md) |  | Get saved PSWorkItem preferences |
+| [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) |  | Get a summary report of PSWorkItems. |
+| [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md) |  | Create a new PSWorkItem database file. |
+| [New-PSWorkItem](docs/New-PSWorkItem.md) | *nwi* | Create a new PSWorkItem. |
+| [Open-PSWorkItemConsole](docs/Open-PSWorkItemConsole.md) | *wic* | Open the PSWorkItem management TUI-based console |
+| [Open-PSWorkItemHelp](docs/Open-PSWorkItemHelp.md) |  | Open the PSWorkItem help document |
+| [Remove-PSWorkItem](docs/Remove-PSWorkItem.md) |  | Remove a PSWorkItem. |
+| [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md) | *rwi* | Remove archive PSWorkItems |
+| [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md) |  | Remove a PSWorkItem category. |
+| [Set-PSWorkItem](docs/Set-PSWorkItem.md) | *swi* | Modify an existing PSWorkItem |
+| [Set-PSWorkItemCategory](docs/Set-PSWorkItemCategory.md) |  | Update an existing PSWorkItem category |
+| [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) |  | Update the PSWorkItem database |
+| [Update-PSWorkItemPreference](docs/Update-PSWorkItemPreference.md) |  | Update or create a preference file |
 
 The module is based on three tables in a SQLite database file. The primary `Tasks` table is where active items are stored.
 
@@ -140,7 +142,7 @@ PS C:\> Get-PSWorkItemDatabase
 
 Created              LastModified         Tasks Archived Categories
 -------              ------------         ----- -------- ----------
-7/30/2023 1:55:02 PM 9/12/2023 1:05:26 PM    13       35         12
+7/30/2024 1:55:02 PM 9/12/2024 1:05:26 PM    13       35         12
 ```
 
 ## Categories
@@ -171,16 +173,15 @@ If you need to update a category, you can re-add it using `-Force`.
 > The category name is case-sensitive.
 
 ```dos
-PS C:\> Add-PSWorkItemCategory -Category Work -Description "business-related tasks" `
+PS C:\> Add-PSWorkItemCategory -Category Work -Description "company tasks" `
  -PassThru -Force
 
 Category Description
 -------- -----------
-Work     business-related tasks
+Work     company tasks
 ```
 
 Or you can use `Remove-PSWorkItemCategory` and start all over.
-
 Commands that have a `Category` parameter should have tab completion.
 
 ## Adding a Task
@@ -245,13 +246,13 @@ Category highlighting is only available in the default view.
 Use [Set-PSWorkItem](docs/Set-PSWorkItem.md) or its alias `swi` to update a task based on its ID.
 
 ```dos
-PS C:\> Set-PSWorkItem -id 7 -Progress 30 -DueDate "8/15/2023 12:00PM" -PassThru
+PS C:\> Set-PSWorkItem -id 7 -Progress 30 -Due "8/15/2024 12:00PM" -PassThru
 
   Database: C:\Users\Jeff\PSWorkItem.db
 
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
- 7 password report             8/15/2023 12:00:00 PM Work      30
+ 7 password report             8/15/2024 12:00:00 PM Work      30
 ```
 
 ## Completing Tasks
@@ -264,7 +265,7 @@ PS C:\> Complete-PSWorkItem -id 7 -PassThru
     Database: C:\Users\Jeff\PSWorkItem.db
 ID Name          Description Category Completed
 -- ----          ----------- -------- ---------
-7  update resume             Work     3/11/2023 1:29:08 PM
+7  update resume             Work     3/11/2024 1:29:08 PM
 ```
 
 There are no commands to modify the task after it has been archived, so if you want to update the name, description, or category, do so before marking it as complete.
@@ -343,32 +344,20 @@ You can also specify a default category for `New-PSWorkItem`.
 Update-PSWorkItemPreference -DefaultCategory Work
 ```
 
-The next time you import the module, an entry will be made to $PSDefaultParameterValues.
-
-```powershell
-$global:PSDefaultParameterValues["New-PSWorkItem:Category"] = $importPref.DefaultCategory
-```
-
-Use `Get-PSWorkItemPreference` to view.
+The next time you import the module, an entry will be made to `$PSDefaultParameterValues`.
 
 ```dos
-PS C:\> Get-PSWorkItemPreference
-
-   Path: C:\Users\Jeff\PSWorkItem.db [Default Days: 7 Default Category: Work]
-
-Category    ANSIString
---------    ----------
-Other       `e[38;5;204m
-Project     `e[38;5;215m
-Event       `e[38;5;153m
-Training    `e[94m
-Work        `e[36m
-Personal    `e[32m
+PS C:\> $PSDefaultParameterValues["New-PSWorkItem:Category"]
+Work
 ```
+
+Use `Get-PSWorkItemPreference` to view all saved preferences.
+
+![PSWorkItem Preferences](images/psworkitempreference.png)
 
 The categories are only those where you have customized an ANSI sequence. On module import, these categories will be used to populate `$PSWorkItemCategory.` If you make any changes to your preference, re-run `Update-PSWorkItemPreference`.
 
-> You might need to manually delete the JSON preferences file if you uninstall the module.
+> You will need to manually delete the JSON preferences file if you uninstall the module.
 
 ## Database Backup
 
@@ -410,21 +399,21 @@ $hash = @{
     Subject       = "PSWorkItems Due in the Next $days Days"
     ErrorAction   = 'Stop'
 }
-Write-Host "[$((Get-Date).ToString())] Getting tasks for the next $days days." -Fore Green
+Write-Host "Getting tasks for the next $days days." -Fore Green
 $data = Get-PSWorkItem -DaysDue $Days
 if ($data) {
 
     if ($AsText) {
-        Write-Host "[$((Get-Date).ToString())] Sending as TEXT" -Fore Green
+        Write-Host "Sending as TEXT" -Fore Green
         # 10/14/2020 Modified to explicitly select properties because
         # default formatting uses ANSI which distorts the converted output.
-        $body = $data | Select-Object -Property ID, Name, Description, DueDate,
+        $body = $data | Select-Object -Property ID,Name,Description,DueDate,
         OverDue | Format-Table | Out-String
         $hash.Add('TextBody', $body)
     }
 
     else {
-        Write-Host "[$((Get-Date).ToString())] Sending as HTML" -Fore green
+        Write-Host "Sending as HTML" -Fore green
         #css to be embedded in the html document
         $head = @"
     <Title>PSWorkItems Due in $Days Days</Title>
@@ -446,7 +435,7 @@ if ($data) {
         <H1>PSWorkItems</H1>
 "@
         [xml]$html = $data |
-        Select-Object ID, Name, Description, DueDate, Category, Progress, TimeRemaining |
+        Select-Object ID,Name,Description,DueDate,Category,Progress,TimeRemaining |
         ConvertTo-Html -Fragment
 
         #parse html to add color attributes
@@ -476,8 +465,9 @@ else {
 
 Try {
     Send-MailKitMessage @hash
-    $msg = "Message {0} sent to {1} from {2}" -f $hash.subject,$hash.RecipientList,$hash.from
-    Write-Output "[$((Get-Date).ToString())] $msg"
+    $msg = "Message {0} sent to {1} from {2}" -f $hash.subject,
+    $hash.RecipientList,$hash.from
+    Write-Output $msg
 }
 Catch {
     throw $_
@@ -520,8 +510,10 @@ I use a function in PowerShell 7 to create a toast notification using a PowerShe
 
 ```powershell
 Function New-PwshToastAlarm {
-
-    [cmdletbinding(DefaultParameterSetName = "sound", SupportsShouldProcess)]
+    [cmdletbinding(
+        DefaultParameterSetName = "sound",
+        SupportsShouldProcess
+    ]
     [alias("nta")]
     [OutputType("PSScheduledJob")]
     Param(
@@ -529,7 +521,7 @@ Function New-PwshToastAlarm {
             Position = 0,
             Mandatory,
             ValueFromPipelineByPropertyName,
-            HelpMessage = "What date and time do you want to use for the reminder?"
+            HelpMessage = "Reminder date and time"
         )]
         [ValidateNotNullOrEmpty()]
         [Alias("Date", "Time")]
@@ -544,18 +536,24 @@ Function New-PwshToastAlarm {
         [ValidateNotNullOrEmpty()]
         [string]$Text,
 
-        [Parameter(HelpMessage = "Specify the path to an image file to use as logo")]
+        [Parameter(HelpMessage = "Specify the path to a logo image file.")]
         [alias("logo")]
         [string]$AppLogo = "$env:OneDriveConsumer\pictures\psrobot-icon.png",
 
-        [Parameter(HelpMessage = "What sound would you like?", ParameterSetName = "sound")]
-        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2', 'Alarm3',
-         'Alarm4','Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10', 'Call',
-         'Call2', 'Call3', 'Call4', 'Call5','Call6', 'Call7', 'Call8', 'Call9', 'Call10',
-         'None')]
+        [Parameter(
+            HelpMessage = "What sound would you like?",
+            ParameterSetName = "sound"
+        )]
+        [ValidateSet('Default','IM','Mail','Reminder','SMS','Alarm','Alarm2',
+        'Alarm3','Alarm4','Alarm5','Alarm6','Alarm7','Alarm8','Alarm9',
+        'Alarm10','Call','Call2','Call3','Call4','Call5','Call6','Call7',
+        'Call8','Call9','Call10','None')]
         [string]$Sound = "Default",
 
-        [Parameter(HelpMessage = "Create a silent alert", ParameterSetName = "silent")]
+        [Parameter(
+            HelpMessage = "Create a silent alert",
+            ParameterSetName = "silent"
+        )]
         [switch]$Silent,
 
         [Parameter(HelpMessage = "Specify a job name")]
@@ -563,10 +561,12 @@ Function New-PwshToastAlarm {
     )
 
     Begin {
-        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $($MyInvocation.MyCommand)"
+        $cmd = $MyInvocation.MyCommand
+        Write-Verbose "[$((Get-Date).TimeOfDay) BEGIN  ] Starting $cmd"
     } #begin
     Process {
-        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] Defining a toast job for $At - $Text"
+        $msg = "Defining a toast job for $At - $Text"
+        Write-Verbose "[$((Get-Date).TimeOfDay) PROCESS] $msg"
         $h = @{
             Text  = $Text
             At    = $At
@@ -596,7 +596,7 @@ Function New-PwshToastAlarm {
         }
     }
     End {
-        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $($MyInvocation.MyCommand)"
+        Write-Verbose "[$((Get-Date).TimeOfDay) END    ] Ending $cmd"
     } #end
 
 } #close function
@@ -611,30 +611,38 @@ This function calls another script that creates the toast notification as a sche
 #New-ToastAlarm.ps1
 
 Function New-BTReminder {
-    [cmdletbinding(DefaultParameterSetName = 'sound', SupportsShouldProcess)]
+    [cmdletbinding(
+        DefaultParameterSetName = 'sound',
+        SupportsShouldProcess
+    )]
     [alias('nta', 'New-ToastAlarm')]
     param(
         [Parameter(
             Position = 0,
             Mandatory,
-            HelpMessage = 'What date and time do you want to use for the reminder?'
+            HelpMessage = 'Reminder date and time?'
         )]
         [ValidateNotNullOrEmpty()]
         [DateTime]$At,
         [Parameter(Mandatory, HelpMessage = 'What message do you want to display?')]
         [ValidateNotNullOrEmpty()]
         [string]$Text,
-        [Parameter(HelpMessage = 'Specify the path to an image file to use as logo')]
+        [Parameter(HelpMessage = 'Specify the path to a logo image file.')]
         [alias('Logo')]
         [string]$AppLogo,
-        [Parameter(HelpMessage = 'What sound would you like?', ParameterSetName = 'sound')]
-        [ValidateSet('Default', 'IM', 'Mail', 'Reminder', 'SMS', 'Alarm', 'Alarm2',
-        'Alarm3', 'Alarm4','Alarm5', 'Alarm6', 'Alarm7', 'Alarm8', 'Alarm9', 'Alarm10',
-        'Call', 'Call2', 'Call3', 'Call4', 'Call5','Call6', 'Call7', 'Call8', 'Call9',
-        'Call10', 'None'
+        [Parameter(
+            HelpMessage = 'What sound would you like?',
+            ParameterSetName = 'sound'
         )]
+        [ValidateSet('Default','IM','Mail','Reminder','SMS','Alarm','Alarm2',
+        'Alarm3','Alarm4','Alarm5','Alarm6','Alarm7','Alarm8','Alarm9',
+        'Alarm10','Call','Call2','Call3','Call4','Call5','Call6','Call7',
+        'Call8','Call9','Call10','None')]
         [string]$Sound,
-        [Parameter(HelpMessage = 'Create a silent alert', ParameterSetName = 'silent')]
+        [Parameter(
+            HelpMessage = 'Create a silent alert',
+            ParameterSetName = 'silent')
+            ]
         [switch]$Silent,
         [Parameter(HelpMessage = 'Specify a job name')]
         [string]$Name = "BTReminder-$(Get-Random -Minimum 1000 -Maximum 9999))"
@@ -660,13 +668,13 @@ Function New-BTReminder {
         param([hashtable]$Params, [string]$JobName)
             #The Write-Host output will only show if you receive the job.
             #Use for troubleshooting.
-            Write-Host 'Defining a toast job using these params' -ForegroundColor Green
+            Write-Host 'Defining a toast job using these params' -Fore Green
             $params | Out-String | Write-Host
-            Write-Host 'Toasting...' -ForegroundColor Green
+            Write-Host 'Toasting...' -Fore Green
             New-BurntToastNotification @params
             Write-Host Sleeping -ForegroundColor Green
             Start-Sleep -Seconds 60
-            Write-Host "attempting to unregister $jobName" -ForegroundColor Green
+            Write-Host "attempting to unregister $jobName" -Fore Green
             Unregister-ScheduledJob -Name $JobName
     }
 
@@ -725,11 +733,11 @@ Most of the commands in this module create custom objects derived from PowerShel
 PS C:\> Get-PSWorkItemData
 
 taskid       : 2196617b-b818-415d-b9cc-52b0c649a77e
-taskcreated  : 07/28/2023 16:56:25
-taskmodified : 07/30/2023 14:01:09
+taskcreated  : 07/28/2024 16:56:25
+taskmodified : 07/30/2024 14:01:09
 name         : Update PSWorkItem module
 description  : v0.6.0
-duedate      : 12/31/2023 12:00:00
+duedate      : 12/31/2024 12:00:00
 category     : Other
 progress     : 10
 completed    : 0

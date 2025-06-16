@@ -73,7 +73,7 @@ Function Open-PSWorkItemConsole {
     $MenuItem4.Shortcut = 'F1'
     $MenuItem5 = [Terminal.Gui.MenuItem]::New('Open Project _Repository', '', { Start-Process 'https://github.com/jdhitsolutions/PSWorkItem' })
     $MenuItem6 = [Terminal.Gui.MenuItem]::New('Report a GitHub _Issue', '', { Start-Process 'https://github.com/jdhitsolutions/PSWorkItem/issues/new/choose' })
-    $MenuItem7 = [Terminal.Gui.MenuItem]::New('Open _Help Online', '', { Start-Process 'https://bit.ly/48zfOB8' })
+    $MenuItem7 = [Terminal.Gui.MenuItem]::New('Open _Help Online', '', { Start-Process '' })
     $MenuItem8 = [Terminal.Gui.MenuItem]::New('_Show database detail', '', { ShowDatabaseDetail })
     $MenuBarItem1 = [Terminal.Gui.MenuBarItem]::New('_Help', @($MenuItem4, $MenuItem7, $MenuItem5, $MenuItem6, $MenuItem8, $MenuItem3))
 

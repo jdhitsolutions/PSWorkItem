@@ -1,7 +1,7 @@
 ---
 external help file: PSWorkItem-help.xml
 Module Name: PSWorkItem
-online version: https://bit.ly/3JjqVlD
+online version: https://jdhitsolutions.com/yourls/e4b952
 schema: 2.0.0
 ---
 

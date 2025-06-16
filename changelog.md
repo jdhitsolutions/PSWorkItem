@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+## [1.12.0] - 2025-06-16
+
+### Changed
+
+- Updated the Terminal.Gui assembly to v1.19.0. The file version will show as 1.0.0.0.
+- Update `README.md`.
+- Updated links to online help.
+
+### Removed
+
+- Removed processor architecture from the module manifest.
+
+### Fixed
+
+- Modified code to use `[DateTime]::Parse()` to convert datetime strings. [[Issue #2](https://github.com/jdhitsolutions/PSWorkItem/issues/2)]
+- Fixed errors with image locations in the help PDF.
+
 ## [1.11.1] - 2024-12-04
 
 This release was __not__ pushed to the PowerShell Gallery.
@@ -61,7 +78,7 @@ This release was __not__ pushed to the PowerShell Gallery.
 
 ### Added
 
-- Added `mySQLite` module version to the About display in `Open-POSWorkItemConsole`.
+- Added `mySQLite` module version to the About display in `Open-PSWorkItemConsole`.
 - Added an `about_psworkitem` help topic
 - Added support for running on Linux-x64 platforms.
 
@@ -354,7 +371,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.12.0..HEAD
+[1.12.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.1..v1.12.0
 [1.11.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.0..v1.11.1
 [1.11.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.10.0..v1.11.0
 [1.10.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.9.0..v1.10.0

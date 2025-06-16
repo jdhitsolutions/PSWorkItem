@@ -26,9 +26,11 @@ function _newWorkItem {
     $item.progress = $data.progress
     # 21 August 2024 - Don't force the datetime conversion. The property should handle it.
     # This is related to fixing datetime handling in the MySQLite module
-    $item.DueDate = $data.DueDate #-as [DateTime]
-    $item.TaskCreated = $data.TaskCreated #-as [DateTime]
-    $item.TaskModified = $data.TaskModified #-as [DateTime]
+    # 16 June 2025 Using Parse to handle culture formatting - Issue #2
+    $item.DueDate = [DateTime]::Parse($data.DueDate)
+    #$data.DueDate #-as [DateTime]
+    $item.TaskCreated = [DateTime]::Parse($data.TaskCreated) #-as [DateTime]
+    $item.TaskModified = [DateTime]::Parse($data.TaskModified) #-as [DateTime]
     $item.Completed = $data.completed
     $item.taskId = $data.TaskId
     if ($path -ne '') {

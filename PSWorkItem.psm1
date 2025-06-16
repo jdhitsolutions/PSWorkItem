@@ -169,7 +169,7 @@ $VerboseANSI = @{
 }
 
 #used in verbose messaging
-$ModuleVersion = '1.11.0'
+$ModuleVersion = '1.12.0'
 
 #import and use the preference file if found
 $PreferencePath = Join-Path -Path $HOME -ChildPath '.psworkitempref.json'

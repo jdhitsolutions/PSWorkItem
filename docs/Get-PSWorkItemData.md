@@ -1,7 +1,7 @@
 ---
 external help file: PSWorkItem-help.xml
 Module Name: PSWorkItem
-online version: https://bit.ly/3LiiFn4
+online version: https://jdhitsolutions.com/yourls/a52cea
 schema: 2.0.0
 ---
 
@@ -105,4 +105,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell
 
 [Get-PSWorkItemDatabase](Get-PSWorkItemDatase.md)
 
-[Invoke-MySQLiteQuery](https://bit.ly/3B6YcOW)
+[Invoke-MySQLiteQuery]()

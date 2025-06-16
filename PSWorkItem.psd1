@@ -4,16 +4,16 @@
 
 @{
     RootModule             = 'PSWorkItem.psm1'
-    ModuleVersion          = '1.11.1'
+    ModuleVersion          = '1.12.0'
     CompatiblePSEditions   = 'Core'
     GUID                   = '4d3ff215-69ea-4fe6-8ad6-97ffc3a15bfb'
     Author                 = 'Jeff Hicks'
     CompanyName            = 'JDH Information Technology Solutions, Inc.'
-    Copyright              = '(c) JDH Information Technology Solutions, Inc. All rights reserved.'
+    Copyright              = '(c) 2022-2025 JDH Information Technology Solutions, Inc. All rights reserved.'
     Description            = 'A PowerShell 7 module for managing work and personal tasks or to-do items. This module uses a SQLite database to store task and category information. The module is not a full-featured project management solution, but should be fine for personal needs. The module requires a 64-bit Windows or Linux platform.'
     PowerShellVersion      = '7.3'
     DotNetFrameworkVersion = '4.6'
-    ProcessorArchitecture  = 'Amd64'
+    ProcessorArchitecture  = ''
     RequiredModules        = 'mySQLite'
     TypesToProcess = @(
         'types\psworkitem.types.ps1xml',
@@ -53,30 +53,23 @@
     AliasesToExport        = @('gwi', 'nwi', 'swi', 'rwi', 'cwi','wic')
     PrivateData            = @{
         PSData = @{
-            Tags           = @('database', 'sqlite', 'to-do', 'project-management', 'tasks')
+            Tags           = @('database','sqlite','reminder','to-do','project-management','tasks')
             LicenseUri     = 'https://github.com/jdhitsolutions/PSWorkItem/blob/main/License.txt'
             ProjectUri     = 'https://github.com/jdhitsolutions/PSWorkItem'
             # IconUri = ''
-            ReleaseNotes = @'
-## [1.11.0] - 2024-12-04
-
-### Added
-
-- Added documentation PDF and the `Open-PSWorkItemHelp` command.
-- Added `en-GB` localized string data.
-- Added missing basic Pester tests
+            ReleaseNotes = @"
+## [1.12.0] - 2025-06-16
 
 ### Changed
 
-- Updated custom verbose output.
-- Updated `README.md`.
-- Updated Terminal.Gui assembly to version 1.17.1
-- Help documentation updates
+- Updated the Terminal.Gui assembly to v1.19.0. The file version will show as 1.0.0.0.
+- Update `README.md`.
+- Updated links to online help.
 
-### Fixed
+### Removed
 
-- Updated module to better handle datetime values from different cultures.
-'@
+- Removed processor architecture from the module manifest.
+"@
             RequireLicenseAcceptance = $false
             ExternalModuleDependencies = 'mySQLite'
         }
