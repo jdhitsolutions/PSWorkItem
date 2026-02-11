@@ -34,7 +34,7 @@ Use this command to add a new PSWorkItem to the database. It is assumed you have
 ### Example 1
 
 ```powershell
-PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "8/15/2023 5:00PM" -Category Blog -PassThru
+PS C:\> New-PSWorkItem -Name "Blog updates" -Description "update pages" -DueDate "7/15/2026 5:00PM" -Category Blog -PassThru
 ```
 
 Create a new PSWorkItem with a due date 30 days from now. You should be able to use tab completion for the Category parameter.
@@ -47,6 +47,14 @@ PS C:\> New-PSWorkItem -Name "Publish PSWorkItem" -DaysDue 3 -Category Project
 
 Create a new PSWorkItem due in 3 days.
 
+### Example 3
+
+```powershell
+PS C:\> New-PSWorkItem -Name "Job Interview Prep" -Category Hidden
+```
+
+Create a hidden work item.
+
 ## PARAMETERS
 
 ### -Category
@@ -54,6 +62,8 @@ Create a new PSWorkItem due in 3 days.
 Select a valid category. The category must be pre-defined. There should be tab completion for this parameter. If you will be specifying an alternate database path, specify the path before using this parameter so that correct categories will be detected.
 
 If you would like to set a default category you can manually add an entry to $PSDefaultParameterValues. Or use Update-PSWorkItemPreference with a default category and re-import the module into your PowerShell session.
+
+Beginning with module version 1.13.0 you can set the category to Hidden. This will have the effect of hiding the PSWorkItem from the default Get-PSWorkItem output.
 
 ```yaml
 Type: String
@@ -214,7 +224,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 This command has an alias of nwi.
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

@@ -3,6 +3,7 @@ Function Get-PSWorkItemCategory {
     [OutputType('PSWorkItemCategory')]
     Param(
         [Parameter(
+            Position = 0,
             HelpMessage = 'The path to the PSWorkItem SQLite database file. It must end in .db'
         )]
         [ValidatePattern('\.db$')]
@@ -18,7 +19,6 @@ Function Get-PSWorkItemCategory {
             $Path = $global:PSWorkItemPath
         }
         If (Test-Path $Path) {
-
             $paramDictionary = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
 
             # Defining parameter attributes
@@ -26,7 +26,6 @@ Function Get-PSWorkItemCategory {
             $attributes = New-Object System.Management.Automation.ParameterAttribute
             $attributes.ValueFromPipeline = $True
             $attributes.ValueFromPipelineByPropertyName = $True
-            $attributes.Position = 0
             $attributes.HelpMessage = 'Removed archived PSWorkItems by the selected category'
 
             # Adding ValidateSet parameter validation

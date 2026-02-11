@@ -62,7 +62,7 @@ Delete an archived item by its ID.
 ### Example 2
 
 ```powershell
-PS C:\> Remove-PSWorkItemArchive -Category work -whatif
+PS C:\> Remove-PSWorkItemArchive -Category work -WhatIf
 What if: Performing the operation "Remove-PSWorkItemArchive" on target "7e87a44f-d0ff-4cbc-ad08-ce3bf834b8e0".
 What if: Performing the operation "Remove-PSWorkItemArchive" on target "02290cca-5e59-45f7-a2d9-9f34bf51817e".
 What if: Performing the operation "Remove-PSWorkItemArchive" on target "44d12012-915f-481c-9dfc-c31041bb20cc".
@@ -194,7 +194,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

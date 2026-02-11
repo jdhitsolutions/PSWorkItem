@@ -100,7 +100,7 @@ Function Get-PSWorkItem {
         $results = [System.Collections.Generic.list[object]]::new()
         _verbose -message ($strings.DetectedParameterSet -f $PSCmdlet.ParameterSetName)
         Switch -regex ($PSCmdlet.ParameterSetName) {
-            'all|days' { $query = 'Select * from tasks' }
+            'all|days' { $query = 'Select * from tasks where category<> "Hidden"' }
             'category' { $query = "Select * from tasks where category ='$($PSBoundParameters['Category'])' collate nocase" }
             <#
                 6 August 2022 -JDH

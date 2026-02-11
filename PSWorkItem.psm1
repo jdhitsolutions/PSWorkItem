@@ -30,7 +30,7 @@ ForEach-Object {
 
 #required versions
 [version]$NStackVersion = '1.1.1.0'
-[version]$TerminalGuiVersion = '1.17.1'
+[version]$TerminalGuiVersion = '1.19.0'
 
 $dlls = "$PSScriptRoot\assemblies\NStack.dll", "$PSScriptRoot\assemblies\Terminal.Gui.dll"
 foreach ($dll in $dlls) {
@@ -132,8 +132,14 @@ class PSWorkItemDatabase {
 
 #region type extensions
 
-Update-TypeData -TypeName PSWorkItemCategory -MemberType ScriptProperty -MemberName ANSIString -Value { $PSWorkItemCategory[$this.Category] -replace "`e",
-    "``e" } -Force
+Update-TypeData -TypeName PSWorkItemCategory -MemberType ScriptProperty -MemberName ANSIString -Value {
+$PSWorkItemCategory[$this.Category] -replace "`e","``e"
+} -Force
+
+Update-TypeData -TypeName PSWorkItemDatabase -MemberType ScriptProperty -MemberName Modified -Value {
+    New-TimeSpan -Start $this.LastModified -End (Get-Date)
+} -Force
+
 #endregion
 
 #region settings and configuration
@@ -142,12 +148,13 @@ Default categories when creating a new database file.
 This will be a module-scoped variable, not exposed to the user
 #>
 
-$script:PSWorkItemDefaultCategories = 'Work', 'Personal', 'Project', 'Other'
+$script:PSWorkItemDefaultCategories = 'Work', 'Personal', 'Project', 'Other','Hidden'
 
 #a global hashtable used for formatting PSWorkItems
 $global:PSWorkItemCategory = @{
     'Work'     = $PSStyle.Foreground.Cyan
     'Personal' = $PSStyle.Foreground.Green
+    'Hidden'   = $PSStyle.Foreground.BrightMagenta+$PSStyle.Italic
 }
 
 <#
@@ -169,7 +176,7 @@ $VerboseANSI = @{
 }
 
 #used in verbose messaging
-$ModuleVersion = '1.12.0'
+$ModuleVersion = '1.13.0'
 
 #import and use the preference file if found
 $PreferencePath = Join-Path -Path $HOME -ChildPath '.psworkitempref.json'

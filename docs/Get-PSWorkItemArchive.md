@@ -153,7 +153,7 @@ This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariabl
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

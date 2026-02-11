@@ -27,6 +27,8 @@ Use the category menu options to add, set, or remove a category.
 
 You can also enter a different database path by entering the path in the Database field, or using Options - Open database. Use the Reset Form option to reset the form with your default settings.
 
+Note that Hidden items will not be displayed unless you filter on the Hidden category.
+
 ## EXAMPLES
 
 ### Example 1
@@ -83,7 +85,7 @@ If you have difficulty seeing the cursor in text fields, and you are running in 
 
 IMPORTANT: This command relies on a specific version of Terminal.Gui assembly. You might encounter version conflicts from modules that use older versions of this assembly like Microsoft.PowerShell.ConsoleGuiTools. You may need to load this module first in a new PowerShell session.
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

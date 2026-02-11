@@ -32,6 +32,10 @@ To add a new category, you must specify a category name. The description is opti
 
 Use `Get-PSWorkItemCategory` to view your categories. If you need to update a category, you can re-add it using `-Force`. The category name is case-sensitive.
 
+### Hidden Items
+
+Beginning with module version 1.13.0, you can set a category to Hidden. This will have the effect of hiding any PSWorkItem with that category from the default `Get-PSWorkItem` output unless you specify the Hidden category. Hidden items will also not show by default in `Open-PSWorkItemConsole` unless you filter on the Hidden category.
+
 ## Adding a Task
 
 Use `New-PSWorkItem` to define a task. You need to specify a name and category. You must specify a valid, pre-defined category. By default, the task will be configured with a due date of 30 days from now. You can specify a different datetime or specify the number of days from now.
@@ -92,7 +96,7 @@ Remove-PSWorkItem -id 13
 
 This command will delete the item from the Tasks database.
 
-Beginning with v1.0.0, you can use Remove-PSWorkItemArchive to remove items from the archive table.
+Beginning with v1.0.0, you can use `Remove-PSWorkItemArchive` to remove items from the archive table.
 
 ## Reporting
 
@@ -102,7 +106,7 @@ You can use `Get-PSWorkItemReport` to get a summary report of open work items gr
 
 Version 1.3.0 added a management console based on the Terminal.Gui framework.
 
-Run Open-PSWorkItemConsole or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the Open Database command under Options. The file must end in `.db`. If you select a different database, you can use `Options - Reset Form` to reset to your default database.
+Run `Open-PSWorkItemConsole` or its alias *`wic`*. The form will open with your default database. You can type a new database path or use the Open Database command under Options. The file must end in `.db`. If you select a different database, you can use `Options - Reset Form` to reset to your default database.
 
 If you select an item from the table, it will populate the form fields. You can then update, complete, or remove the item. To create a new item, it is recommended that you first clear the form (`Options - Clear Form`). Enter the PSWorkItem details and click the `Add PSWorkItem` button.
 
@@ -136,11 +140,11 @@ Use `Get-PSWorkItemPreference` to view.
 
 The categories are only those where you have customized an ANSI sequence. On module import, these categories will be used to populate `$PSWorkItemCategory.` If you make any changes to your preference, re-run `Update-PSWorkItemPreference`.
 
-You might need to manually delete the JSON preferences file if you uninstall the module.
+You will need to manually delete the JSON preferences file if you uninstall the module.
 
 ## Database Backup
 
-This module has no specific commands for backing up or restoring a database file. But you can use the `Export-MySQLiteDB` command to export the PSWorkItem database file to a JSON file.
+This module has no specific commands for backing up or restoring a database file. However, you can use the `Export-MySQLiteDB` command to export the PSWorkItem database file to a JSON file.
 
 ```powershell
 Export-MySQLiteDB -path $PSWorkItemPath -Destination d:\backups\pwi.json

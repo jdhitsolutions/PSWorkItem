@@ -8,7 +8,7 @@
 
 ## Installation
 
-This module requires __PowerShell 7.3 or later__ and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows or Linux platform__ until the dependency SQLite module [supports other non-Windows systems](https://github.com/jdhitsolutions/MySQLite/issues/21).
+This module requires __PowerShell 7.3 or later__ and a 64-bit version of PowerShell, which I assume most people are running. __The module requires a Windows or Linux platform__ until the dependency SQLite module [supports other non-Windows systems](https://github.com/jdhitsolutions/MySQLite/issues/21). The module should work in Windows on ARM64.
 
 Install the PSWorkItem module from the PowerShell Gallery.
 
@@ -23,27 +23,27 @@ Install-PSResource PSWorkItem [-scope CurrentUser]
 ## Module Commands and Design
 
 | Name | Alias | Synopsis |
-|------|-------|----------|
-| [Add-PSWorkItemCategory](docs/Add-PSWorkItemCategory.md) |  | Add a new PSWorkItem category |
+| ------ | :-------: | ----------|
+| [Add-PSWorkItemCategory](docs/Add-PSWorkItemCategory.md) | | Add a new PSWorkItem category |
 | [Complete-PSWorkItem](docs/Complete-PSWorkItem.md) | *cwi* | Mark a PSWorkItem as complete. |
 | [Get-PSWorkItem](docs/Get-PSWorkItem.md) | *gwi* | Get a PSWorkItem. |
-| [Get-PSWorkItemArchive](docs/Get-PSWorkItemArchive.md) |  | Get archived PSWorkItems. |
-| [Get-PSWorkItemCategory](docs/Get-PSWorkItemCategory.md) |  | Get defined PSWorkItem categories. |
+| [Get-PSWorkItemArchive](docs/Get-PSWorkItemArchive.md) | | Get archived PSWorkItems. |
+| [Get-PSWorkItemCategory](docs/Get-PSWorkItemCategory.md) | | Get defined PSWorkItem categories. |
 | [Get-PSWorkItemData](docs/Get-PSWorkItemData.md) |  | Get raw database table data. |
-| [Get-PSWorkItemDatabase](docs/Get-PSWorkItemDatabase.md) |  | Get information about the PSWorkItem database |
-| [Get-PSWorkItemPreference](docs/Get-PSWorkItemPreference.md) |  | Get saved PSWorkItem preferences |
-| [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) |  | Get a summary report of PSWorkItems. |
-| [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md) |  | Create a new PSWorkItem database file. |
+| [Get-PSWorkItemDatabase](docs/Get-PSWorkItemDatabase.md) | | Get information about the PSWorkItem database |
+| [Get-PSWorkItemPreference](docs/Get-PSWorkItemPreference.md) | | Get saved PSWorkItem preferences |
+| [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) | | Get a summary report of PSWorkItems. |
+| [Initialize-PSWorkItemDatabase](docs/Initialize-PSWorkItemDatabase.md) | | Create a new PSWorkItem database file. |
 | [New-PSWorkItem](docs/New-PSWorkItem.md) | *nwi* | Create a new PSWorkItem. |
 | [Open-PSWorkItemConsole](docs/Open-PSWorkItemConsole.md) | *wic* | Open the PSWorkItem management TUI-based console |
-| [Open-PSWorkItemHelp](docs/Open-PSWorkItemHelp.md) |  | Open the PSWorkItem help document |
-| [Remove-PSWorkItem](docs/Remove-PSWorkItem.md) |  | Remove a PSWorkItem. |
+| [Open-PSWorkItemHelp](docs/Open-PSWorkItemHelp.md) | | Open the PSWorkItem help document |
+| [Remove-PSWorkItem](docs/Remove-PSWorkItem.md) | | Remove a PSWorkItem. |
 | [Remove-PSWorkItemArchive](docs/Remove-PSWorkItemArchive.md) | *rwi* | Remove archive PSWorkItems |
-| [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md) |  | Remove a PSWorkItem category. |
+| [Remove-PSWorkItemCategory](docs/Remove-PSWorkItemCategory.md) | | Remove a PSWorkItem category. |
 | [Set-PSWorkItem](docs/Set-PSWorkItem.md) | *swi* | Modify an existing PSWorkItem |
-| [Set-PSWorkItemCategory](docs/Set-PSWorkItemCategory.md) |  | Update an existing PSWorkItem category |
-| [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) |  | Update the PSWorkItem database |
-| [Update-PSWorkItemPreference](docs/Update-PSWorkItemPreference.md) |  | Update or create a preference file |
+| [Set-PSWorkItemCategory](docs/Set-PSWorkItemCategory.md) | | Update an existing PSWorkItem category |
+| [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) | | Update the PSWorkItem database |
+| [Update-PSWorkItemPreference](docs/Update-PSWorkItemPreference.md) | | Update or create a preference file |
 
 The module is based on three tables in a SQLite database file. The primary `Tasks` table is where active items are stored.
 
@@ -142,7 +142,7 @@ PS C:\> Get-PSWorkItemDatabase
 
 Created              LastModified         Tasks Archived Categories
 -------              ------------         ----- -------- ----------
-7/30/2024 1:55:02 PM 9/12/2024 1:05:26 PM    13       35         12
+7/30/2025 1:55:02 PM 9/12/2025 1:05:26 PM    13       35         12
 ```
 
 ## Categories
@@ -153,19 +153,20 @@ To add a new category, you must specify a category name. The description is opti
 Add-PSWorkItemCategory -Category "SRV" -Description "server management tasks"
 ```
 
-Use `Get-PSWorkItemCategory` to view your categories.
+Use `Get-PSWorkItemCategory` to view your categories. The output should be formatted using any corresponding highlight colors.
 
 ```dos
 PS C:\> Get-PSWorkItemCategory
 
-Category Description
--------- -----------
+Category     Description
+--------     -----------
 Work
 Personal
 Project
 Other
-Blog     blog management and content
-SRV      server management tasks
+Blog         blog management and content
+SRV          server management tasks
+Hidden       hidden work items not displayed by default
 ```
 
 If you need to update a category, you can re-add it using `-Force`.
@@ -184,7 +185,11 @@ Work     company tasks
 Or you can use `Remove-PSWorkItemCategory` and start all over.
 Commands that have a `Category` parameter should have tab completion.
 
-## Adding a Task
+### Hidden Items
+
+Beginning with module version 1.13.0, you can set a category to Hidden. This will have the effect of hiding any PSWorkItem with that category from the default `Get-PSWorkItem` output unless you specify the Hidden category. Hidden items will also not show by default in `Open-PSWorkItemConsole` unless you filter on the Hidden category.
+
+## Adding a WorkItem
 
 Use `New-PSWorkItem` to define a task. You need to specify a name and category. You must specify a valid, pre-defined category. By default, the task will be configured with a due date of 30 days from now. You can specify a different datetime or specify the number of days from now.
 
@@ -221,9 +226,11 @@ Read the examples for [Get-PSWorkItem](docs/Get-PSWorkItem.md) for other ways to
 In addition to formatting overdue and imminent due dates, the module also provides a mechanism to add highlighting for specific categories. Importing the module will create a global variable called `PSWorkItemCategory`. The key will be a category name. The value will be a $PSStyle or ANSI escape sequence. These are the module defaults.
 
 ```powershell
+#a global hashtable used for formatting PSWorkItems
 $global:PSWorkItemCategory = @{
-    "Work"     = $PSStyle.Foreground.Cyan
-    "Personal" = $PSStyle.Foreground.Green
+    'Work'     = $PSStyle.Foreground.Cyan
+    'Personal' = $PSStyle.Foreground.Green
+    'Hidden'   = $PSStyle.Foreground.BrightMagenta+$PSStyle.Italic
 }
 ```
 
@@ -233,9 +240,9 @@ You can modify this hashtable as you would any other hashtable.
 $PSWorkItemCategory.Add("Event","`e[38;5;153m")
 ```
 
-The entry will have no effect unless the category is defined in the database. The category customizations last for the duration of your PowerShell session or until the module is removed. Add your customizations to your PowerShell profile script or use `Update-PSWorkItemPreference` to save the settings to a JSON file under $HOME.
+The entry will have no effect unless the category is defined in the database. The category customizations last for the duration of your PowerShell session or until the module is removed. Add your customizations to your PowerShell profile script or use `Update-PSWorkItemPreference` to save the settings to a JSON file under $HOME. These preferences will be imported the next time you import the module.
 
-> Note that when you view the hashtable, you won't see any values because the escape sequences are non-printable.
+> Note that when you view the hashtable, you won't see any values because the escape sequences are non-printable. Use `Get-PSWorkItemCategory` to see the categories with the custom formatting.
 
 ![Colorized Categories](images/psworkitemcategory.png)
 
@@ -252,7 +259,7 @@ PS C:\> Set-PSWorkItem -id 7 -Progress 30 -Due "8/15/2024 12:00PM" -PassThru
 
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
- 7 password report             8/15/2024 12:00:00 PM Work      30
+ 7 password report             8/15/2025 12:00:00 PM Work      30
 ```
 
 ## Completing Tasks
@@ -265,7 +272,7 @@ PS C:\> Complete-PSWorkItem -id 7 -PassThru
     Database: C:\Users\Jeff\PSWorkItem.db
 ID Name          Description Category Completed
 -- ----          ----------- -------- ---------
-7  update resume             Work     3/11/2024 1:29:08 PM
+7  update resume             Work     3/11/2025 1:29:08 PM
 ```
 
 There are no commands to modify the task after it has been archived, so if you want to update the name, description, or category, do so before marking it as complete.
@@ -289,7 +296,7 @@ Beginning with v1.0.0, you can use [Remove-PSWorkItemArchive](docs/Remove-PSWork
 You can use [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) to get a summary report of open work items grouped by category.
 
 ```dos
-PS C:\>  Get-PSWorkItemReport
+PS C:\> Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db
 
@@ -304,7 +311,7 @@ Blog         1        8
 Overdue      4       31
 ```
 
-The percentages for each category are rounded. The percentage for Overdue items is based on all open work items.
+The percentages for each category are rounded. The percentage for Overdue items is based on all open work items. The Overdue data should be displayed in red.
 
 ## TUI-Based Management Console
 
@@ -357,7 +364,7 @@ Use `Get-PSWorkItemPreference` to view all saved preferences.
 
 The categories are only those where you have customized an ANSI sequence. On module import, these categories will be used to populate `$PSWorkItemCategory.` If you make any changes to your preference, re-run `Update-PSWorkItemPreference`.
 
-> You will need to manually delete the JSON preferences file if you uninstall the module.
+> *You will need to manually delete the JSON preferences file if you uninstall the module.*
 
 ## Database Backup
 
@@ -474,7 +481,7 @@ Catch {
 }
 ```
 
-Because the PSWorkItem module requires PowerShell 7 and PowerShell 7 doesn't support scheduled jobs, I set up a scheduled task to run this script daily.
+Because the PSWorkItem module requires PowerShell 7, and PowerShell 7 doesn't support scheduled jobs, I set up a __scheduled task__ to run this script daily.
 
 ```powershell
 $actionArg = '-nologo -noprofile -file C:\scripts\DailyPSWorkItemEmail.ps1'
@@ -719,7 +726,7 @@ If you have a solution you would like to share, please feel free to post it in t
 
 ## PSWorkItem Database Change
 
-**If you were using a version of this module older than v1.0.0, this note applies to you.**
+__If you were using a version of this module older than v1.0.0, this note applies to you.__
 
 > *Version 1.0.0 of the PSWorkItem module introduced a structural change to the database tables. If you are using a database created in an earlier version, you need to run [Update-PSWorkItemDatabase](docs/Update-PSWorkItemDatabase.md) before adding, changing, or completing work items. You should back up your database file before running this command.
 > Alternatively, you could export your work items, delete the database file, initialize a new one, and re-import your work items.

@@ -51,8 +51,8 @@ PS C:\> Get-PSWorkItem -Category blog | Set-PSWorkItem -Category Other -PassThru
 
 ID Name              Description         DueDate             Category Pct
 -- ----              -----------         -------             -------- ---
- 9 Clean database                        8/2/2023 9:34:35 AM Other      0
- 5 revise blog pages essentials and tips 8/7/2023 5:00:00 PM Other      0
+ 9 Clean database                        8/2/2025 9:34:35 AM Other      0
+ 5 revise blog pages essentials and tips 8/7/2025 5:00:00 PM Other      0
 ```
 
 Modify multiple PSWorkItems at the same time.
@@ -261,7 +261,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 This command has an alias of swi.
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

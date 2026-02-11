@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-02-11
+
+### Added
+
+- Added a default `Hidden` category and configured `Get-PSWorkItem` to exclude hidden items unless using `-Category hidden` __This is a potential breaking change__.
+
+### Changed
+
+- Minor code cleanup in format.ps1xml file.
+- Updated data in sample database.
+- Updates to command help.
+- Updated `README.md` with new information about the Hidden category.
+- Updated `ShowAbout` helper function to display the `Terminal.Gui` product version from the assembly file.
+- Revised `Open-PSWorkItemConsole` to use the `Terminal.Gui` namespace.
+
+### Fixed
+
+- Fixed bug in `Open-PSWorkItemConsole` when resetting the form which changed the database path.
+- Restored missing `Modified` script property extension for the `PSWorkItemDatabase` object.
+- Fixed missing link for online help in the about box in `Open-PSWorkItemConsole`.
+
 ## [1.12.0] - 2025-06-16
 
 ### Changed
@@ -371,7 +392,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.12.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.13.0..HEAD
+[1.13.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.12.0..v1.13.0
 [1.12.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.1..v1.12.0
 [1.11.1]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.0..v1.11.1
 [1.11.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.10.0..v1.11.0

@@ -1,3 +1,6 @@
+Using namespace Terminal.Gui
+
+#7 Nov 2025 The [Attribute] class doesn't appear to like using Namespace so those are explicitly defined
 Function Open-PSWorkItemConsole {
     [cmdletbinding()]
     [Alias('wic')]
@@ -19,81 +22,81 @@ Function Open-PSWorkItemConsole {
         Return
     }
 
-    #region initialize
+#region initialize
 
     $scriptVer = (Get-Module PSWorkItem).version
-    [Terminal.Gui.Application]::Init()
-    [Terminal.Gui.Application]::QuitKey = 27
+    [Application]::Init()
+    [Application]::QuitKey = 27
 
-    $window = [Terminal.Gui.Window]@{
+    $window = [Window]@{
         Title = 'PSWorkItem Console'
     }
 
     #initialize an array to hold TUI controls
     $controls = @()
 
-    #endregion
+#endregion
 
-    #region status bar
-    $StatusBar = [Terminal.Gui.StatusBar]::New(
+#region status bar
+    $StatusBar = [StatusBar]::New(
         @(
-            [Terminal.Gui.StatusItem]::New('Unknown', $(Get-Date -Format g), {}),
-            [Terminal.Gui.StatusItem]::New('Unknown', 'ESC to quit or cancel', {}),
-            [Terminal.Gui.StatusItem]::New('Unknown', "v$scriptVer", {}),
-            [Terminal.Gui.StatusItem]::New('Unknown', 'Ready', {})
+            [StatusItem]::New('Unknown', $(Get-Date -Format g), {}),
+            [StatusItem]::New('Unknown', 'ESC to quit or cancel', {}),
+            [StatusItem]::New('Unknown', "v$scriptVer", {}),
+            [StatusItem]::New('Unknown', 'Ready', {})
         )
     )
 
-    [Terminal.Gui.Application]::Top.Add($StatusBar)
+    [Application]::Top.Add($StatusBar)
 
     #endregion
 
-    #region menu bar
+#region menu bar
     #Options
-    $MenuItem0 = [Terminal.Gui.MenuItem]::New('Clear Form', '', { ClearForm })
-    $MenuItem0.ShortCut = [int][Terminal.Gui.Key]'CtrlMask' -bor [int][char]'X'
-    $MenuItem1 = [Terminal.Gui.MenuItem]::New('Reset Form', '', { ResetForm })
-    $MenuItem1.ShortCut = [int][Terminal.Gui.Key]'CtrlMask' -bor [int][char]'R'
-    $MenuItem3 = [Terminal.Gui.MenuItem]::New('Open _Database', '', { OpenDatabase })
-    $MenuItem3.ShortCut = [int][Terminal.Gui.Key]'CtrlMask' -bor [int][char]'D'
-    $MenuItem2 = [Terminal.Gui.MenuItem]::New('_Quit', '', { [Terminal.Gui.Application]::RequestStop() })
-    $MenuItem2.ShortCut = [int][Terminal.Gui.Key]'CtrlMask' -bor [int][char]'Q'
-    $MenuBarItem0 = [Terminal.Gui.MenuBarItem]::New('_Options', @($MenuItem3, $MenuItem0, $MenuItem1, $MenuItem2))
+    $MenuItem0 = [MenuItem]::New('Clear Form', '', { ClearForm })
+    $MenuItem0.ShortCut = [int][Key]'CtrlMask' -bor [int][char]'X'
+    $MenuItem1 = [MenuItem]::New('Reset Form', '', { ResetForm })
+    $MenuItem1.ShortCut = [int][Key]'CtrlMask' -bor [int][char]'R'
+    $MenuItem3 = [MenuItem]::New('Open _Database', '', { OpenDatabase })
+    $MenuItem3.ShortCut = [int][Key]'CtrlMask' -bor [int][char]'D'
+    $MenuItem2 = [MenuItem]::New('_Quit', '', { [Application]::RequestStop() })
+    $MenuItem2.ShortCut = [int][Key]'CtrlMask' -bor [int][char]'Q'
+    $MenuBarItem0 = [MenuBarItem]::New('_Options', @($MenuItem3, $MenuItem0, $MenuItem1, $MenuItem2))
 
     #Categories
     #3 Oct 2023 - add menu bar to manage categories
-    $MenuItem8 = [Terminal.Gui.MenuItem]::New('Add Category', '', { AddCategory })
-    $MenuItem9 = [Terminal.Gui.MenuItem]::New('Remove Category', '', { RemoveCategory })
-    $MenuItem10 = [Terminal.Gui.MenuItem]::New('Set Category', '', { SetCategory })
-    $MenuBarItem2 = [Terminal.Gui.MenuBarItem]::New('_Categories', @($MenuItem8, $MenuItem10, $MenuItem9))
+    $MenuItem8 = [MenuItem]::New('Add Category', '', { AddCategory })
+    $MenuItem9 = [MenuItem]::New('Remove Category', '', { RemoveCategory })
+    $MenuItem10 = [MenuItem]::New('Set Category', '', { SetCategory })
+    $MenuBarItem2 = [MenuBarItem]::New('_Categories', @($MenuItem8, $MenuItem10, $MenuItem9))
 
     #Help
-    $MenuItem3 = [Terminal.Gui.MenuItem]::New('A_bout', '', { ShowAbout })
-    $MenuItem4 = [Terminal.Gui.MenuItem]::New('_Documentation', '', { ShowHelp })
+    $MenuItem3 = [MenuItem]::New('A_bout', '', { ShowAbout })
+    $MenuItem4 = [MenuItem]::New('_Documentation', '', { ShowHelp })
     $MenuItem4.Shortcut = 'F1'
-    $MenuItem5 = [Terminal.Gui.MenuItem]::New('Open Project _Repository', '', { Start-Process 'https://github.com/jdhitsolutions/PSWorkItem' })
-    $MenuItem6 = [Terminal.Gui.MenuItem]::New('Report a GitHub _Issue', '', { Start-Process 'https://github.com/jdhitsolutions/PSWorkItem/issues/new/choose' })
-    $MenuItem7 = [Terminal.Gui.MenuItem]::New('Open _Help Online', '', { Start-Process '' })
-    $MenuItem8 = [Terminal.Gui.MenuItem]::New('_Show database detail', '', { ShowDatabaseDetail })
-    $MenuBarItem1 = [Terminal.Gui.MenuBarItem]::New('_Help', @($MenuItem4, $MenuItem7, $MenuItem5, $MenuItem6, $MenuItem8, $MenuItem3))
+    $MenuItem5 = [MenuItem]::New('Open Project _Repository', '', { Start-Process 'https://github.com/jdhitsolutions/PSWorkItem' })
+    $MenuItem6 = [MenuItem]::New('Report a GitHub _Issue', '', { Start-Process 'https://github.com/jdhitsolutions/PSWorkItem/issues/new/choose' })
+    $MenuItem7 = [MenuItem]::New('Open _Help Online', '', { Start-Process 'https://github.com/jdhitsolutions/PSWorkItem/blob/main/docs/Open-PSWorkItemConsole.md' })
+    $MenuItem8 = [MenuItem]::New('_Show database detail', '', { ShowDatabaseDetail })
+    $MenuBarItem1 = [MenuBarItem]::New('_Help', @($MenuItem4, $MenuItem7, $MenuItem5, $MenuItem6, $MenuItem8, $MenuItem3))
 
     #define the menu bar
-    $MenuBar = [Terminal.Gui.MenuBar]::New(@($MenuBarItem0, $MenuBarItem2, $MenuBarItem1))
+    $MenuBar = [MenuBar]::New(@($MenuBarItem0, $MenuBarItem2, $MenuBarItem1))
 
     #add to the window
     $Window.Add($MenuBar)
 
-    #endregion
+#endregion
 
-    #region main form
-    $controls += $lblDescription = [Terminal.Gui.Label]@{
+#region main form
+    $controls += $lblDescription = [Label]@{
         Text    = 'Description:'
         X       = 1
         Y       = 4
         TabStop = $False
     }
 
-    $controls += $txtDescription = [Terminal.Gui.TextField]@{
+    $controls += $txtDescription = [TextField]@{
         X       = $lblDescription.Frame.Width + 2
         Width   = 30
         Y       = 4
@@ -103,15 +106,15 @@ Function Open-PSWorkItemConsole {
     $txtDescription.Add_MouseEnter({
         $tip = $strings.tipDescription
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $txtDescription.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
-    $controls += $chkClearDescription = [Terminal.Gui.CheckBox]@{
+    $controls += $chkClearDescription = [CheckBox]@{
         Text    = 'C_lear'
         X       = $txtDescription.X + ($txtDescription.Frame.Width + 2)
         Y       = 4
@@ -122,22 +125,22 @@ Function Open-PSWorkItemConsole {
     $chkClearDescription.Add_MouseEnter({
         $tip = $strings.tipClear
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $chkClearDescription.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
-    $controls += $lblPath = [Terminal.Gui.Label]@{
+    $controls += $lblPath = [Label]@{
         Text    = 'Database:'
         X       = 1
         Y       = 11
         TabStop = $false
     }
 
-    $controls += $txtPath = [Terminal.Gui.TextField]@{
+    $controls += $txtPath = [TextField]@{
         X       = $lblDescription.Frame.Width + 2
         Width   = 40
         Y       = 11
@@ -148,12 +151,12 @@ Function Open-PSWorkItemConsole {
     $txtPath.Add_MouseEnter({
         $tip = $strings.tipDatabasePath
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $txtPath.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $controls += $txtPath.Add_TextChanged({
@@ -167,9 +170,9 @@ Function Open-PSWorkItemConsole {
         })
 
         #4 Jan 2024 Show required fields in a different color
-        $cs = [Terminal.Gui.ColorScheme]::new()
+        $cs = [ColorScheme]::new()
         $cs.Normal = [Terminal.Gui.Attribute]::new('BrightYellow', 'Blue')
-    $controls += $lblTaskName = [Terminal.Gui.Label]@{
+    $controls += $lblTaskName = [Label]@{
         Text    = '*Name:'
         X       = 1
         Y       = 2
@@ -177,7 +180,7 @@ Function Open-PSWorkItemConsole {
         ColorScheme = $cs
     }
 
-    $controls += $txtTaskName = [Terminal.Gui.TextField]@{
+    $controls += $txtTaskName = [TextField]@{
         X        = $lblDescription.Frame.Width + 2
         Width    = 25
         Y        = 2
@@ -188,17 +191,17 @@ Function Open-PSWorkItemConsole {
     $txtTaskName.Add_MouseEnter({
         $tip = $strings.tipTaskName
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $txtTaskName.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
-    $OverDueColor = [Terminal.Gui.ColorScheme]::new()
+    $OverDueColor = [ColorScheme]::new()
     $OverDueColor.Normal = [Terminal.Gui.Attribute]::new('BrightRed', 'Blue')
-    $controls += $lblOverDue = [Terminal.Gui.Label]@{
+    $controls += $lblOverDue = [Label]@{
         X           = $txtTaskName.Frame.Right + 2
         Width       = 10
         Y           = 2
@@ -209,7 +212,7 @@ Function Open-PSWorkItemConsole {
         CanFocus    = $False
     }
 
-    $controls += $lblCategory = [Terminal.Gui.Label]@{
+    $controls += $lblCategory = [Label]@{
         Text     = 'Category:'
         X        = $txtDescription.Frame.Right + 6
         Y        = $lblTaskName.Y
@@ -221,15 +224,15 @@ Function Open-PSWorkItemConsole {
     $lblCategory.Add_MouseEnter({
         $tip = $strings.TipCategory
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $lblCategory.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
-    $controls += $dropCategory = [Terminal.Gui.ListView]@{
+    $controls += $dropCategory = [ListView]@{
         Width                   = 15
         Height                  = 8
         X                       = $lblCategory.Frame.Right + 2
@@ -246,7 +249,7 @@ Function Open-PSWorkItemConsole {
             }
         })
 
-    $cs = [Terminal.Gui.ColorScheme]::new()
+    $cs = [ColorScheme]::new()
     <#
     Black     Blue     Green     Cyan
     Red    Magenta     Brown     Gray
@@ -263,11 +266,11 @@ Function Open-PSWorkItemConsole {
     $cs.disabled = [Terminal.Gui.Attribute]::new($fg,$bg)
 
     #4 Jan 2024 - convert from Label to TextView to allow scrolling
-    $controls += $lblReport = [Terminal.Gui.TextView]@{
+    $controls += $lblReport = [TextView]@{
         AutoSize      = $False
         Multiline     = $True
         Width         = 30
-        Height        = [Terminal.Gui.Dim]::Percent(33)
+        Height        = [Dim]::Percent(33)
         TextAlignment = 'Center'
         X             = $dropCategory.Frame.right + 2
         Y             = $dropCategory.Y
@@ -281,21 +284,21 @@ Function Open-PSWorkItemConsole {
     $lblReport.Add_MouseEnter({
         $tip = $strings.tipReport
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $lblReport.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
-    $controls += $chkWhatIf = [Terminal.Gui.CheckBox]@{
+    $controls += $chkWhatIf = [CheckBox]@{
         Text = 'WhatIf'
         X    = 2
         Y    = 9
     }
 
-    $controls += $radioGrp = [Terminal.Gui.RadioGroup]@{
+    $controls += $radioGrp = [RadioGroup]@{
         X            = 2
         Y            = $txtDescription.Y + 2
         Text         = 'Due Date'
@@ -317,7 +320,7 @@ Function Open-PSWorkItemConsole {
         })
 
     #Updated 23 Feb 2024 to use the $PSWorkItemDefaultDays variable
-    $controls += $txtDays = [Terminal.Gui.TextField]@{
+    $controls += $txtDays = [TextField]@{
         Width   = 4
         Text    = $global:PSWorkItemDefaultDays
         Y       = $txtDescription.Y + 2
@@ -325,7 +328,7 @@ Function Open-PSWorkItemConsole {
         TabStop = $True
     }
 
-    $controls += $txtDueDate = [Terminal.Gui.TextField]@{
+    $controls += $txtDueDate = [TextField]@{
         Width   = 20
         Y       = $txtDescription.Y + 3
         X       = $radioGrp.Frame.Width + 2
@@ -333,7 +336,7 @@ Function Open-PSWorkItemConsole {
         TabStop = $True
     }
 
-    $controls += $lblProgress = [Terminal.Gui.Label]@{
+    $controls += $lblProgress = [Label]@{
         Text     = 'Progress:'
         X        = $txtDueDate.Frame.Right + 4
         Y        = $txtDays.Y
@@ -341,7 +344,7 @@ Function Open-PSWorkItemConsole {
         CanFocus = $False
     }
 
-    $controls += $txtProgress = [Terminal.Gui.TextField]@{
+    $controls += $txtProgress = [TextField]@{
         Width   = 5
         Y       = $txtDays.Y
         X       = $lblProgress.Frame.Right + 2
@@ -351,15 +354,15 @@ Function Open-PSWorkItemConsole {
     $txtProgress.Add_MouseEnter({
         $tip = $strings.tipProgress
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $txtProgress.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
-    $controls += $chkFilterTable = [Terminal.Gui.CheckBox]@{
+    $controls += $chkFilterTable = [CheckBox]@{
         X       = $TxtPath.X + $txtPath.Frame.Width + 2
         Y       = $txtPath.Y
         Text    = 'Filter table'
@@ -369,12 +372,12 @@ Function Open-PSWorkItemConsole {
     $chkFilterTable.Add_MouseEnter({
         $tip = $strings.tipFilterTable
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $chkFilterTable.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $chkFilterTable.Add_Toggled({
@@ -386,7 +389,7 @@ Function Open-PSWorkItemConsole {
         }
         })
 
-    $controls += $FilterDays = [Terminal.Gui.TextField]@{
+    $controls += $FilterDays = [TextField]@{
         Width   = 3
         Y       = $chkFilterTable.Y
         X       = $chkFilterTable.Frame.Right + 2
@@ -396,11 +399,11 @@ Function Open-PSWorkItemConsole {
     $FilterDays.Add_MouseEnter({
         $tip = $strings.tipFilterDays
         $StatusBar.Items[3].Title = $tip
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
     $FilterDays.Add_MouseLeave({
         $StatusBar.Items[3].Title = 'Ready'
-        [Terminal.Gui.Application]::Refresh()
+        [Application]::Refresh()
     })
 
     $FilterDays.Add_TextChanged({
@@ -412,17 +415,17 @@ Function Open-PSWorkItemConsole {
         }
     })
 
-    $controls += $lblFilterDays = [Terminal.Gui.Label]@{
+    $controls += $lblFilterDays = [Label]@{
         Text    = 'Filter by number of days due'
         X       = $FilterDays.Frame.Right + 1
         Y       = $chkFilterTable.Y
         TabStop = $False
     }
 
-    #endregion
+#endregion
 
-    #region buttons
-    $controls += $btnAdd = [Terminal.Gui.Button]@{
+#region buttons
+    $controls += $btnAdd = [Button]@{
         X       = 1
         Y       = $txtPath.Y + 2
         Text    = '_Add New PSWorkItem'
@@ -454,30 +457,30 @@ Function Open-PSWorkItemConsole {
 
             $StatusBar.Items[3].Title = "Creating PSWorkItem $($txtTaskName.Text.ToString()) in $($r.Path)"
             $StatusBar.SetChildNeedsDisplay()
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
             Start-Sleep -Milliseconds 1000
             Try {
                 New-PSWorkItem @r
                 ClearForm
                 UpdateReport
                 RefreshTable
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
             }
             Catch {
-                [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+                [MessageBox]::ErrorQuery('Error', $_.Exception.Message)
             }
         }
         else {
             $StatusBar.Items[3].Title = $strings.MissingName
             $StatusBar.SetChildNeedsDisplay()
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
             Start-Sleep -Milliseconds 2000
             $StatusBar.Items[3].Title = 'Ready'
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
         }
     })
 
-    $controls += $btnSet = [Terminal.Gui.Button]@{
+    $controls += $btnSet = [Button]@{
         X    = $btnAdd.Frame.Width + 2
         Y    = $txtPath.Y + 2
         Text = '_Set PSWorkItem'
@@ -490,11 +493,11 @@ Function Open-PSWorkItemConsole {
                 $SavedDescription = $txtDescription.Text.ToString()
                 #clear the field for the ShowWhatIF function
                 $txtDescription.Text = ''
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
                 ShowWhatIf -command Set -id $TableView.table.rows[$TableView.SelectedRow].ID
                 #reset the text field
                 $txtDescription.Text = $SavedDescription
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
                 Return
             }
             elseif ($chkWhatIf.Checked) {
@@ -535,7 +538,7 @@ Function Open-PSWorkItemConsole {
             } #else normal set
             $StatusBar.Items[3].Title = "Updating PSWorkItem $($r.ID) in $($r.Path)"
             $StatusBar.SetChildNeedsDisplay()
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
             Start-Sleep -Milliseconds 1000
             Try {
                 Set-PSWorkItem @r
@@ -544,23 +547,23 @@ Function Open-PSWorkItemConsole {
                 UpdateReport
                 $StatusBar.Items[3].Title = 'Ready'
                 $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
             }
             Catch {
-                [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+                [MessageBox]::ErrorQuery('Error', $_.Exception.Message)
             }
         }
         else {
             $StatusBar.Items[3].Title = $strings.MissingName
             $StatusBar.SetChildNeedsDisplay()
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
             Start-Sleep -Milliseconds 2000
             $StatusBar.Items[3].Title = 'Ready'
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
         }
 })
 
-    $controls += $btnComplete = [Terminal.Gui.Button]@{
+    $controls += $btnComplete = [Button]@{
         X       = $btnSet.Frame.Width + 25
         Y       = $txtPath.Y + 2
         Text    = '_Complete PSWorkItem'
@@ -581,7 +584,7 @@ Function Open-PSWorkItemConsole {
 
             $StatusBar.Items[3].Title = "Completing PSWorkItem $($r.ID) in $($r.Path)"
             $StatusBar.SetChildNeedsDisplay()
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
             Start-Sleep -Milliseconds 1000
 
             Try {
@@ -589,23 +592,23 @@ Function Open-PSWorkItemConsole {
                 ClearForm
                 UpdateReport
                 RefreshTable
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
             }
             Catch {
-                [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+                [MessageBox]::ErrorQuery('Error', $_.Exception.Message)
             }
         }
         else {
             $StatusBar.Items[3].Title = $strings.NoWorkItemSelected
             $StatusBar.SetChildNeedsDisplay()
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
             Start-Sleep -Milliseconds 2000
             $StatusBar.Items[3].Title = 'Ready'
-            [Terminal.Gui.Application]::Refresh()
+            [Application]::Refresh()
         }
         })
 
-    $controls += $btnRemove = [Terminal.Gui.Button]@{
+    $controls += $btnRemove = [Button]@{
         X       = $btnComplete.Frame.Width + 44
         Y       = $txtPath.Y + 2
         Text    = '_Remove PSWorkItem'
@@ -629,39 +632,39 @@ Function Open-PSWorkItemConsole {
 
                 $StatusBar.Items[3].Title = "Removing PSWorkItem $($r.ID) in $($r.Path)"
                 $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
                 Start-Sleep -Milliseconds 1000
 
                 Try {
                     Remove-PSWorkItem @r
                 }
                 Catch {
-                    [Terminal.Gui.MessageBox]::ErrorQuery('Error', $_.Exception.Message)
+                    [MessageBox]::ErrorQuery('Error', $_.Exception.Message)
                 }
                 ClearForm
                 UpdateReport
                 RefreshTable
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
             }
             else {
                 $StatusBar.Items[3].Title = $strings.NoWorkItemSelected
                 $StatusBar.SetChildNeedsDisplay()
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
                 Start-Sleep -Milliseconds 2000
                 $StatusBar.Items[3].Title = 'Ready'
-                [Terminal.Gui.Application]::Refresh()
+                [Application]::Refresh()
             }
         })
 
-    #endregion
+#endregion
 
-    #region table view
+#region table view
     #add a table showing work items
-    $controls += $TableView = [Terminal.Gui.TableView]@{
+    $controls += $TableView = [TableView]@{
         X             = 0
         Y             = $btnAdd.Y + 2
-        Width         = [Terminal.Gui.Dim]::Fill()
-        Height        = [Terminal.Gui.Dim]::Fill()
+        Width         = [Dim]::Fill()
+        Height        = [Dim]::Fill()
         AutoSize      = $False
         TabStop       = $False
         MultiSelect   = $False
@@ -682,40 +685,40 @@ Function Open-PSWorkItemConsole {
 
         $item = $TableView.table.rows[$TableView.SelectedRow]
 
-        if ($Mouse.mouseEvent.Flags -eq [Terminal.Gui.MouseFlags]::Button3Clicked) {
+        if ($Mouse.mouseEvent.Flags -eq [MouseFlags]::Button3Clicked) {
             $Detail = Get-PSWorkItem -Path $txtPath.Text.ToString() -ID $item.ID |
             Select-Object -Property ID, Overdue, Description, Progress, Category, TaskCreated, TaskModified, Age, Due, TimeRemaining |
             Out-String
 
-            $DetailDialog = [Terminal.Gui.Dialog]@{
+            $DetailDialog = [Dialog]@{
                 Title         = $item.name
-                X             = [Terminal.Gui.Pos]::Center()
-                Y             = [Terminal.Gui.Pos]::Center()
+                X             = [Pos]::Center()
+                Y             = [Pos]::Center()
                 Width         = 50
                 Height        = 20
                 TextAlignment = 'Left'
                 Text          = $Detail
             }
-            $ok = [Terminal.Gui.Button]@{
+            $ok = [Button]@{
                 Text = 'OK'
             }
             $ok.Add_Clicked({ $DetailDialog.RequestStop() })
             $DetailDialog.AddButton($ok)
 
-            [Terminal.Gui.Application]::Run($DetailDialog)
+            [Application]::Run($DetailDialog)
         }
 
         })
 
     $window.Add($TableView)
 
-    #endregion
+#endregion
 
-    #region execute
+#region execute
     #add the controls to the main window
     $controls.foreach({ $window.Add($_) })
 
-    [Terminal.Gui.Application]::Top.Add($window)
+    [Application]::Top.Add($window)
     #set tab order
     $txtTaskName.TabIndex = 0
     $dropCategory.TabIndex = 1
@@ -735,7 +738,7 @@ Function Open-PSWorkItemConsole {
     UpdateReport
     $txtTaskName.SetFocus()
     #set a timer to update the status bar every 15 seconds
-    $TimerToken = [Terminal.Gui.Application]::MainLoop.AddTimeout((New-TimeSpan -Seconds 15), { UpdateStatusTime })
+    $TimerToken = [Application]::MainLoop.AddTimeout((New-TimeSpan -Seconds 15), { UpdateStatusTime })
 
     #4 Jan 2024 If using -Debug export variables to the global scope for review
     If ($PSBoundParameters.ContainsKey("Debug")) {
@@ -743,9 +746,9 @@ Function Open-PSWorkItemConsole {
         $global:wicControls = $controls
     }
 
-    [Terminal.Gui.Application]::Run()
-    [Terminal.Gui.Application]::ShutDown()
+    [Application]::Run()
+    [Application]::ShutDown()
 
-    #endregion
+#endregion
 
 } #end function

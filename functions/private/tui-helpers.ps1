@@ -73,6 +73,7 @@ Function ClearForm {
 Function ResetForm {
     [CmdletBinding()]
     Param( )
+
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
     $txtTaskName.Text = ''
     $txtDescription.Text = ''
@@ -87,7 +88,9 @@ Function ResetForm {
     $StatusBar.Items[3].Title = 'Ready'
     $chkFilterTable.Checked = $False
     $txtTaskName.SetFocus()
-    $txtPath.Text = $PSWorkItemPath
+    #7 Nov 2025 Use the currently entered database path
+    # don't set this
+    # $txtPath.Text = $PSWorkItemPath
     $FilterDays.Text = ''
 
     RefreshCategoryList
@@ -269,6 +272,7 @@ Function RefreshTable {
 Function RefreshCategoryList {
     [CmdletBinding()]
     Param()
+
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
     $src = (Get-PSWorkItemCategory -Path $txtPath.Text.ToString()).Category | Sort-Object
     $src | Write-Verbose
@@ -398,7 +402,9 @@ Function ShowAbout {
     [CmdletBinding()]
     Param()
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
-    $TerminalGuiVersion = [System.Reflection.Assembly]::GetAssembly([Terminal.Gui.Application]).GetName().version
+    #$TerminalGuiVersion = [System.Reflection.Assembly]::GetAssembly([Terminal.Gui.Application]).GetName().version
+`   #7 Nov 2025 Pull the product version from the assembly file
+    $TerminalGuiVersion = (Get-Item ([System.Reflection.Assembly]::GetAssembly([Terminal.Gui.Application]).location)).VersionInfo.ProductVersion -split "\+" | Select-Object -first 1
     $NStackVersion = [System.Reflection.Assembly]::GetAssembly([NStack.UString]).GetName().version
     $SQLiteVersion = [System.Reflection.Assembly]::GetAssembly([System.Data.Sqlite.SqLiteConnection]).GetName().version
 

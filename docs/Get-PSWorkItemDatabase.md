@@ -28,11 +28,11 @@ Use this command to get a summary of the PSWorkItem database file. You can not m
 ```powershell
 PS C:\> Get-PSWorkItemDatabase
 
-   Path: C:\Users\Jeff\PSWorkItem.db [44KB]
+   Path: C:\Users\Jeff\PSWorkItem.db [76KB]
 
-Created              LastModified         Tasks Archived Categories
--------              ------------         ----- -------- ----------
-7/30/2022 1:55:10 PM 10/6/2023 8:47:22 AM    15       49         12
+Created              LastModified          Tasks Archived Categories
+-------              ------------          ----- -------- ----------
+7/26/2022 9:56:18 AM 11/7/2025 11:53:09 AM    20      192         10
 ```
 
 The default summary.
@@ -43,16 +43,18 @@ The default summary.
 PS C:\> Get-PSWorkItemDatabase | Format-List
 
 Path          : C:\Users\Jeff\PSWorkItem.db
-Created       : 7/30/2022 1:55:10 PM
-LastModified  : 10/6/2023 8:47:22 AM
-Size          : 45056
-TaskCount     : 15
-CategoryCount : 12
-ArchiveCount  : 49
+Created       : 7/26/2022 9:56:18 AM
+LastModified  : 11/7/2025 11:53:09 AM
+Size          : 77824
+TaskCount     : 20
+CategoryCount : 10
+ArchiveCount  : 192
 Encoding      : UTF-8
-PageCount     : 11
+PageCount     : 19
 PageSize      : 4096
-ModifiedAge   : 00:46:29.3572634
+SQLiteVersion : 3.42.0
+CreatedBy     : THINKX1-JH\Jeff
+Modified      : 00:11:54.9521283
 ```
 
 There are additional properties. The ModifiedAge property is a TimeSpan object that shows how long ago the database was last modified.
@@ -90,7 +92,7 @@ This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariabl
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

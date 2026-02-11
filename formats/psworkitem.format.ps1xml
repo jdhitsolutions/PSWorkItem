@@ -64,13 +64,13 @@ https://github.com/jdhitsolutions/PSScriptTools
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $_.name, $psstyle.reset
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightRed, $_.name, $PSStyle.reset
                 }
-                ElseIf ($ts.totaldays -le 3) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.name, $psstyle.reset
+                ElseIf ($ts.TotalDays -le 3) {
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightYellow, $_.name, $PSStyle.reset
                 }
                 else {
-                    <!--use the PSWorkItemCategory hastable to add custom highlights-->
+                    <!--use the PSWorkItemCategory hashtable to add custom highlights-->
                     "$($PSWorkItemCategory["$($_.category)"])$($_.name)$($PSStyle.Reset)"
                 }
             }
@@ -84,10 +84,10 @@ https://github.com/jdhitsolutions/PSScriptTools
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $_.Description, $psstyle.reset
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightRed, $_.Description, $PSStyle.reset
                 }
-                ElseIf ($ts.totaldays -le 3) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.Description, $psstyle.reset
+                ElseIf ($ts.TotalDays -le 3) {
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightYellow, $_.Description, $PSStyle.reset
                 }
                 else {
                     "$($PSWorkItemCategory["$($_.category)"])$($_.Description)$($PSStyle.Reset)"
@@ -111,10 +111,10 @@ https://github.com/jdhitsolutions/PSScriptTools
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $dd, $psstyle.reset
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightRed, $dd, $PSStyle.reset
                 }
-                ElseIf ($ts.totaldays -le 3) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $dd, $psstyle.reset
+                ElseIf ($ts.TotalDays -le 3) {
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightYellow, $dd, $PSStyle.reset
                 }
                 else {
                     "$($PSWorkItemCategory["$($_.category)"])$($dd)$($PSStyle.Reset)"
@@ -333,10 +333,10 @@ https://github.com/jdhitsolutions/PSScriptTools
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $_.name, $psstyle.reset
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightRed, $_.name, $PSStyle.reset
                 }
-                ElseIf ($ts.totaldays -le 3) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $_.name, $psstyle.reset
+                ElseIf ($ts.TotalDays -le 3) {
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightYellow, $_.name, $PSStyle.reset
                 }
                 else {
                     $_.name
@@ -363,10 +363,10 @@ https://github.com/jdhitsolutions/PSScriptTools
               if ($host.name -match "console|code") {
                 $ts = New-TimeSpan -Start (Get-Date) -End $_.duedate
                 If ($ts.TotalDays -le 0) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightred, $dd, $psstyle.reset
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightRed, $dd, $PSStyle.reset
                 }
-                ElseIf ($ts.totaldays -le 3) {
-                    "{0}{1}{2}" -f $psstyle.Foreground.brightyellow, $dd, $psstyle.reset
+                ElseIf ($ts.TotalDays -le 3) {
+                    "{0}{1}{2}" -f $PSStyle.Foreground.BrightYellow, $dd, $PSStyle.reset
                 }
                 else {
                     $dd

@@ -89,7 +89,7 @@ ConvertFrom-StringData @'
     UsingDB = Using SQLite database {0}
     UsingModule = Using module PSWorkItem version {0}
     UsingHost = Using PowerShell Host {0}
-    UsingOS = Running under Operating System {0}
+    UsingOS = Running under operating system {0}
     Unsupported = This module is unsupported on this platform
     ValidateCategory = Validating PSWorkItem category {0}
     ValidateMove = Validating the move

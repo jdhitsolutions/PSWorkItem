@@ -41,6 +41,8 @@ Blog         1        8
 Overdue      4       31
 ```
 
+The Overdue data should be shown in red.
+
 ## PARAMETERS
 
 ### -Path
@@ -74,7 +76,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

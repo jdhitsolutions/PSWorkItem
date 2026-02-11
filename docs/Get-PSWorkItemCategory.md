@@ -41,19 +41,19 @@ Testing     Sample category for testing
 Training    Anything related to a training event
 ```
 
-Get all defined categories.
+Get all defined categories. Categories should be formatted with the corresponding highlight color in the console.
 
 ### Example 2
 
 ```powershell
-PS C:\> Get-PSWorkItemCategory blog
+PS C:\> Get-PSWorkItemCategory -Name blog
 
 Category Description
 -------- -----------
 Blog     Blog management or content
 ```
 
-Get information about a single category.
+Get information about a single category. This is a dynamic parameter based on the database path which requires it to be a named parameter.
 
 ### Example 3
 
@@ -87,7 +87,7 @@ Parameter Sets: (All)
 Aliases: Name
 
 Required: False
-Position: 0
+Position: Named
 Default value: *
 Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
@@ -104,7 +104,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: $PSWorkItemPath
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -124,7 +124,7 @@ This command supports the common parameters: -Debug, -ErrorAction, -ErrorVariabl
 
 ## NOTES
 
-Learn more about PowerShell: http://jdhitsolutions.com/blog/essential-powershell-resources/
+Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 

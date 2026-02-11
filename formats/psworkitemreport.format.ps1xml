@@ -44,7 +44,7 @@ https://github.com/jdhitsolutions/PSScriptTools
               <TableColumnItem>
                 <ScriptBlock>
                 if ($host.name -match 'console|code' -AND $_.Category -eq 'Overdue') {
-                    "{0}{1}{2}{3}" -f $psstyle.Foreground.brightred, $psstyle.italic,$_.Category, $psstyle.reset
+                    "{0}{1}{2}{3}" -f $PSStyle.Foreground.BrightRed, $PSStyle.Italic,$_.Category, $PSStyle.Reset
                 }
                 else {
                   $_.Category
@@ -54,7 +54,7 @@ https://github.com/jdhitsolutions/PSScriptTools
               <TableColumnItem>
                 <ScriptBlock>
                 if ($host.name -match 'console|code' -AND $_.Category -eq 'Overdue') {
-                    "{0}{1}{2}{3}" -f $psstyle.Foreground.brightred, $psstyle.italic,$_.count, $psstyle.reset
+                    "{0}{1}{2}{3}" -f $PSStyle.Foreground.BrightRed, $PSStyle.Italic,$_.count, $PSStyle.Reset
                 }
                 else {
                   $_.count
@@ -64,7 +64,7 @@ https://github.com/jdhitsolutions/PSScriptTools
               <TableColumnItem>
                 <ScriptBlock>
                 if ($host.name -match 'console|code' -AND $_.Category -eq 'Overdue') {
-                    "{0}{1}{2}{3}" -f $psstyle.Foreground.brightred, $psstyle.italic,$_.PctTotal, $psstyle.reset
+                    "{0}{1}{2}{3}" -f $PSStyle.Foreground.BrightRed, $PSStyle.Italic,$_.PctTotal, $PSStyle.Reset
                 }
                 else {
                   $_.PctTotal
