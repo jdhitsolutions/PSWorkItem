@@ -186,6 +186,8 @@ If (Test-Path $PreferencePath) {
     $importPref.categories.foreach({ $PSWorkItemCategory[$_.category] = $_.ansi })
     if ($importPref.DefaultDays) {
         $global:PSWorkItemDefaultDays = $importPref.DefaultDays
+        #11 March 2026 Update PSDefaultParameter values with new default
+        $global:PSDefaultParameterValues['Get-PSWorkItem:DaysDue'] = $importPref.DefaultDays
     }
     If ($importPref.DefaultCategory) {
         $global:PSDefaultParameterValues['New-PSWorkItem:Category'] = $importPref.DefaultCategory
