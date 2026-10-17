@@ -1,8 +1,9 @@
 ---
+document type: cmdlet
 external help file: PSWorkItem-help.xml
+HelpUri: https://jdhitsolutions.com/yourls/9d2bab
 Module Name: PSWorkItem
-online version: https://jdhitsolutions.com/yourls/9d2bab
-schema: 2.0.0
+PlatyPS schema version: 2024-05-01
 ---
 
 # Open-PSWorkItemConsole
@@ -13,9 +14,17 @@ Open the PSWorkItem management TUI-based console
 
 ## SYNTAX
 
+### Default (Default)
+
 ```yaml
 Open-PSWorkItemConsole [-Path <String>] [<CommonParameters>]
 ```
+
+## ALIASES
+
+This cmdlet has the following aliases:
+
+- `wic`
 
 ## DESCRIPTION
 
@@ -55,19 +64,27 @@ The path to the PSWorkItem SQLite database file. It must end in .db
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: $PSWorkItemPath
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: $PSWorkItemPath
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -89,18 +106,11 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[New-PSWorkItem](New-PSWorkItem.md)
-
-[Get-PSWorkItem](Get-PSWorkItem.md)
-
-[Set-PSWorkItem](Set-PSWorkItem.md)
-
-[Remove-PSWorkItem](Remove-PSWorkItem.md)
-
-[Complete-PSWorkItem](Complete-PSWorkItem.md)
-
-[Add-PSWorkItemCategory](Add-PSWorkItemCategory.md)
-
-[Set-PSWorkItemCategory](Set-PSWorkItemCategory.md)
-
-[Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)
+- [New-PSWorkItem](New-PSWorkItem.md)
+- [Get-PSWorkItem](Get-PSWorkItem.md)
+- [Set-PSWorkItem](Set-PSWorkItem.md)
+- [Remove-PSWorkItem](Remove-PSWorkItem.md)
+- [Complete-PSWorkItem](Complete-PSWorkItem.md)
+- [Add-PSWorkItemCategory](Add-PSWorkItemCategory.md)
+- [Set-PSWorkItemCategory](Set-PSWorkItemCategory.md)
+- [Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)

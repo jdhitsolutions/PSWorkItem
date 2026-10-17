@@ -175,8 +175,8 @@ $VerboseANSI = @{
     Default                         = '[1;38;5;51m'
 }
 
-#used in verbose messaging
-$ModuleVersion = '1.13.0'
+#used in verbose message
+$ModuleVersion = (Test-ModuleManifest $PSScriptRoot\PSWorkItem.psd1).Version
 
 #import and use the preference file if found
 $PreferencePath = Join-Path -Path $HOME -ChildPath '.psworkitempref.json'
@@ -214,3 +214,18 @@ Register-ArgumentCompleter -CommandName Set-PSWorkItem, Remove-PSWorkItem, Compl
 
 #endregion
 
+#region
+# 20 Aug 2026 Add OnRemove Event
+
+$OnRemoveScript = {
+    #only run this code if the variable is defined
+    $items = $global:PSDefaultParameterValues.GetEnumerator() | where key -match workitem
+    if ($items) {
+        $items.foreach({$global:PSDefaultParameterValues.Remove($_.key)})
+    }
+    Get-Variable -name PSWork* -Scope Global | Remove-Variable -Scope Global -ErrorAction SilentlyContinue
+}
+
+$ExecutionContext.SessionState.Module.OnRemove += $OnRemoveScript
+
+#endregion

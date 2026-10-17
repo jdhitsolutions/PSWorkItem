@@ -1,8 +1,9 @@
 ---
+document type: cmdlet
 external help file: PSWorkItem-help.xml
+HelpUri: https://jdhitsolutions.com/yourls/457bec
 Module Name: PSWorkItem
-online version: https://jdhitsolutions.com/yourls/457bec
-schema: 2.0.0
+PlatyPS schema version: 2024-05-01
 ---
 
 # Get-PSWorkItem
@@ -16,7 +17,7 @@ Get a PSWorkItem.
 ### days (Default)
 
 ```yaml
-Get-PSWorkItem [-DaysDue <Int32>] [-Path <String>] [<CommonParameters>]
+Get-PSWorkItem [-DaysDue <Int32>] [-Path <String>] [-Category <String>] [<CommonParameters>]
 ```
 
 ### name
@@ -34,14 +35,14 @@ Get-PSWorkItem [-ID <String>] [-Path <String>] [<CommonParameters>]
 ### all
 
 ```yaml
-Get-PSWorkItem [-All] [-Path <String>] [<CommonParameters>]
+Get-PSWorkItem [-All] [-Path <String>] [-Category <String>] [<CommonParameters>]
 ```
 
-### Category
+## ALIASES
 
-```yaml
-Get-PSWorkItem [-Path <String>] [-Category <String>] [<CommonParameters>]
-```
+This cmdlet has the following aliases:
+
+- `gwi`
 
 ## DESCRIPTION
 
@@ -58,9 +59,9 @@ PS C:\> Get-PSWorkItem
 
 ID Name              Description         DueDate              Category Pct
 -- ----              -----------         -------              -------- ---
- 6 new server prep   SQL02               8/3/2025 5:00:00 PM  Work      45
- 7 password report                       8/5/2025 12:00:00 PM Work      10
- 5 revise blog pages essentials and tips 8/7/2025 5:00:00 PM  Other      0
+ 6 new server prep   SQL02               8/3/2026 5:00:00 PM  Work      45
+ 7 password report                       8/5/2026 12:00:00 PM Work      10
+ 5 revise blog pages essentials and tips 8/7/2026 5:00:00 PM  Other      0
 ```
 
 Get all items due in the next 10 days.
@@ -74,12 +75,12 @@ PS C:\> Get-PSWorkItem -all
 
 ID Name              Description         DueDate               Category Pct
 -- ----              -----------         -------               -------- ---
- 6 new server prep   SQL02               8/3/2025 5:00:00 PM   Work      45
- 7 password report                       8/5/2025 12:00:00 PM  Work      10
- 5 revise blog pages essentials and tips 8/7/2025 5:00:00 PM   Other      0
- 1 update data                           8/28/2025 10:35:02 AM Temp       0
- 9 Prep vacation                         11/1/2025 5:00:00 PM  Personal   0
- 8 Year end backup                       12/31/2025 5:00:00 PM Work       0
+ 6 new server prep   SQL02               8/3/2026 5:00:00 PM   Work      45
+ 7 password report                       8/5/2026 12:00:00 PM  Work      10
+ 5 revise blog pages essentials and tips 8/7/2026 5:00:00 PM   Other      0
+ 1 update data                           8/28/2026 10:35:02 AM Temp       0
+ 9 Prep vacation                         11/1/2026 5:00:00 PM  Personal   0
+ 8 Year end backup                       12/31/2026 5:00:00 PM Work       0
 ```
 
 Get all open tasks.
@@ -93,12 +94,12 @@ PS C:\> Get-PSWorkItem -Category Work
 
 ID Name            Description DueDate               Category Pct
 -- ----            ----------- -------               -------- ---
- 6 new server prep SQL02       8/3/2025 5:00:00 PM   Work      45
- 7 password report             8/5/2025 12:00:00 PM  Work      10
- 8 Year end backup             12/31/2025 5:00:00 PM Work       0
+ 6 new server prep SQL02       8/3/2026 5:00:00 PM   Work      45
+ 7 password report             8/5/2026 12:00:00 PM  Work      10
+ 8 Year end backup             12/31/2026 5:00:00 PM Work       0
 ```
 
-Get tasks from the Work category.
+Get tasks from the Work category. The category name is case-sensitive. Use tab-completion to get the proper value.
 
 ### Example 4
 
@@ -109,7 +110,7 @@ PS C:\> Get-PSWorkItem -id 9
 
 ID Name          Description DueDate              Category Pct
 -- ----          ----------- -------              -------- ---
- 9 Prep vacation             11/1/2025 5:00:00 PM Personal   0
+ 9 Prep vacation             11/1/2026 5:00:00 PM Personal   0
 ```
 
 Get a PSWorkItem by its ID.
@@ -123,8 +124,8 @@ PS C:\> Get-PSWorkItem -Name p*
 
 ID Name            Description DueDate              Category Pct
 -- ----            ----------- -------              -------- ---
- 7 password report             8/5/2025 12:00:00 PM Work      10
- 9 Prep vacation               11/1/2025 5:00:00 PM Personal   0
+ 7 password report             8/5/2026 12:00:00 PM Work      10
+ 9 Prep vacation               11/1/2026 5:00:00 PM Personal   0
 ```
 
 Get PSWorkItems with a name that begins with P.
@@ -136,9 +137,9 @@ PS C:\> Get-PSWorkItem | Format-Table -View countdown
 
 ID Name              Description         DueDate              TimeRemaining
 -- ----              -----------         -------              -------------
-6  new server prep   SQL02               8/3/2025 5:00:00 PM     4.05:20:31
-7  password report                       8/5/2025 12:00:00 PM    6.00:20:31
-5  revise blog pages essentials and tips 8/7/2025 5:00:00 PM     8.05:20:31
+6  new server prep   SQL02               8/3/2026 5:00:00 PM     4.05:20:31
+7  password report                       8/5/2026 12:00:00 PM    6.00:20:31
+5  revise blog pages essentials and tips 8/7/2026 5:00:00 PM     8.05:20:31
 ```
 
 The PSWorkItem has a named table view called Countdown.
@@ -152,9 +153,9 @@ PS C:\> Get-PSWorkItem | Where Overdue
 
 ID Name                Description DueDate               Category Pct
 -- ----                ----------- -------               -------- ---
-13 extend car warranty             6/1/2025 4:00:00 PM   Personal   0
-11 update resume                   7/12/2025 12:00:00 PM Work       0
- 7 password report                 7/15/2025 5:00:00 PM  Work      10
+13 extend car warranty             6/1/2026 4:00:00 PM   Personal   0
+11 update resume                   7/12/2026 12:00:00 PM Work       0
+ 7 password report                 7/15/2026 5:00:00 PM  Work      10
 ```
 
 Get all overdue PSWorkItems.
@@ -168,21 +169,21 @@ PS C:\> Get-PSWorkItem -all | Sort-Object category | Format-Table -view category
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-5     revise blog pages    essentials and tips       8/7/2025 5:00:00 PM       0
+5     revise blog pages    essentials and tips       8/7/2026 5:00:00 PM       0
 
    Category: Personal
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-13    extend car warranty                            6/1/2025 4:00:00 PM       0
-10    car wash                                       8/2/2025 11:54:31 AM      0
-9     Prep vacation                                  11/1/2025 5:00:00 PM      0
+13    extend car warranty                            6/1/2026 4:00:00 PM       0
+10    car wash                                       8/2/2026 11:54:31 AM      0
+9     Prep vacation                                  11/1/2026 5:00:00 PM      0
 
    Category: Project
 
 ID    Name                 Description               DueDate                 Pct
 --    ----                 -----------               -------                 ---
-12    Publish PSWorkItem                             8/2/2025 12:05:44 PM      0
+12    Publish PSWorkItem                             8/2/2026 12:05:44 PM      0
 ...
 ```
 
@@ -196,14 +197,19 @@ Get all open PSWorkItems except for those in the Hidden category.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: all
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: all
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Category
@@ -212,16 +218,29 @@ Get all open PSWorkItems by category. There should be tab completion for this pa
 
 Beginning with module version 1.13.0 you can set the category to Hidden. This will have the effect of hiding the PSWorkItem from the default Get-PSWorkItem output unless you specify the Hidden category.
 
+The value is case-sensitive so use tab-completion to get the proper value.
+
 ```yaml
 Type: String
-Parameter Sets: Category
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: days
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+- Name: all
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -DaysDue
@@ -230,14 +249,19 @@ Get open PSWorkItems due in the number of days between 1 and 365.
 
 ```yaml
 Type: Int32
-Parameter Sets: days
-Aliases:
-
-Required: False
-Position: Named
-Default value: 10
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: 10
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: days
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ID
@@ -246,14 +270,19 @@ The task ID.
 
 ```yaml
 Type: String
-Parameter Sets: id
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: id
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Name
@@ -263,14 +292,20 @@ Wildcards are supported.
 
 ```yaml
 Type: String
-Parameter Sets: name
-Aliases: task
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: True
+DefaultValue: None
+SupportsWildcards: true
+Aliases:
+- task
+ParameterSets:
+- Name: name
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Path
@@ -280,19 +315,27 @@ It should end in .db.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: $PSWorkItemPath
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: $PSWorkItemPath
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -310,14 +353,9 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[Complete-PSWorkItem](Complete-PSWorkItem.md)
-
-[Get-PSWorkItemArchive](Get-PSWorkItemArchive.md)
-
-[Remove-PSWorkItem](Remove-PSWorkItem.md)
-
-[New-PSWorkItem](New-PSWorkItem.md)
-
-[Set-PSWorkItem](Set-PSWorkItem.md)
-
-[Open-PSWorkItemConsole](Open-PSWorkItemConsole.md)
+- [Complete-PSWorkItem](Complete-PSWorkItem.md)
+- [Get-PSWorkItemArchive](Get-PSWorkItemArchive.md)
+- [Remove-PSWorkItem](Remove-PSWorkItem.md)
+- [New-PSWorkItem](New-PSWorkItem.md)
+- [Set-PSWorkItem](Set-PSWorkItem.md)
+- [Open-PSWorkItemConsole](Open-PSWorkItemConsole.md)

@@ -2,6 +2,9 @@
 
 [![PSGallery Version](https://img.shields.io/powershellgallery/v/PSWorkItem.png?style=for-the-badge&label=PowerShell%20Gallery)](https://www.powershellgallery.com/packages/PSWorkItem/) [![PSGallery Downloads](https://img.shields.io/powershellgallery/dt/PSWorkItem.png?style=for-the-badge&label=Downloads)](https://www.powershellgallery.com/packages/PSWorkItem/)
 
+![GitHub Repo stars](https://img.shields.io/github/stars/jdhitsolutions/PSWorkItem)
+![GitHub forks](https://img.shields.io/github/forks/jdhitsolutions/PSWorkItem)
+
 ![](images/db.png)
 
 :information_source: This module is a replacement for the [MyTasks](https://github.com/jdhitsolutions/MyTasks) module. The original PowerShell module offered simple tasks or to-do management. All data was stored in XML files. This module conceptually is designed the same way but instead uses a SQLite database file. The module commands are wrapped around functions from the [MySQLite](https://github.com/jdhitsolutions/MySQLite) module.
@@ -135,7 +138,7 @@ To get started, run `Initialize-PSWorkItemDatabase`. This will create a new data
 
 You can view a database summary with `Get-PSWorkItemDatabase`.
 
-```dos
+```powershell
 PS C:\> Get-PSWorkItemDatabase
 
    Path: C:\Users\Jeff\PSWorkItem.db [44KB]
@@ -155,7 +158,7 @@ Add-PSWorkItemCategory -Category "SRV" -Description "server management tasks"
 
 Use `Get-PSWorkItemCategory` to view your categories. The output should be formatted using any corresponding highlight colors.
 
-```dos
+```powershell
 PS C:\> Get-PSWorkItemCategory
 
 Category     Description
@@ -171,11 +174,10 @@ Hidden       hidden work items not displayed by default
 
 If you need to update a category, you can re-add it using `-Force`.
 
-> The category name is case-sensitive.
+> The category name is case-sensitive so use tab-completion to get the proper value.
 
-```dos
-PS C:\> Add-PSWorkItemCategory -Category Work -Description "company tasks" `
- -PassThru -Force
+```powershell
+PS C:\> Add-PSWorkItemCategory -Category Work -Description "company tasks" -PassThru -Force
 
 Category Description
 -------- -----------
@@ -207,13 +209,12 @@ $PSDefaultParameterValues.Add("New-PSWorkItem:Category","Work")
 
 The primary command in this module, `Get-PSWorkItem`, which has an alias of `gwi`, has several parameter sets to help you select PSWorkItems.
 
-- `Get-PSWorkItem [-All] [-Path <String>]`
-- `Get-PSWorkItem [-Category <String>] [-Path <String>]`
-- `Get-PSWorkItem [-DaysDue <Int32>] [-Path <String>]`
+- `Get-PSWorkItem [-All] [-Category <String>] [-Path <String>]`
+- `Get-PSWorkItem [-DaysDue <Int32>] [-Category <String>] [-Path <String>]`
 - `Get-PSWorkItem [-ID <String>] [-Path <String>]`
 - `Get-PSWorkItem [[-Name] <String>] [-Path <String>]`
 
-The default behavior is to get tasks due within the next ten days
+The default behavior is to get tasks due within the next ten days.
 
 ![Get-PSWorkItem](images/get-psworkitem.png)
 
@@ -252,7 +253,7 @@ Category highlighting is only available in the default view.
 
 Use [Set-PSWorkItem](docs/Set-PSWorkItem.md) or its alias `swi` to update a task based on its ID.
 
-```dos
+```powershell
 PS C:\> Set-PSWorkItem -id 7 -Progress 30 -Due "8/15/2024 12:00PM" -PassThru
 
   Database: C:\Users\Jeff\PSWorkItem.db
@@ -266,7 +267,7 @@ ID Name            Description DueDate               Category Pct
 
 When a task is complete, you can move it to the `Archive` table.
 
-```dos
+```powershell
 PS C:\> Complete-PSWorkItem -id 7 -PassThru
 
     Database: C:\Users\Jeff\PSWorkItem.db
@@ -295,7 +296,7 @@ Beginning with v1.0.0, you can use [Remove-PSWorkItemArchive](docs/Remove-PSWork
 
 You can use [Get-PSWorkItemReport](docs/Get-PSWorkItemReport.md) to get a summary report of open work items grouped by category.
 
-```dos
+```powershell
 PS C:\> Get-PSWorkItemReport
 
    Path: C:\Users\Jeff\PSWorkItem.db
@@ -353,7 +354,7 @@ Update-PSWorkItemPreference -DefaultCategory Work
 
 The next time you import the module, an entry will be made to `$PSDefaultParameterValues`.
 
-```dos
+```powershell
 PS C:\> $PSDefaultParameterValues["New-PSWorkItem:Category"]
 Work
 ```
@@ -509,7 +510,7 @@ I get an HTML-formatted email every morning with tasks due in the next 5 days.
 
 ### Toast Notifications
 
-Another option would be to create something with the excellent [BurntToast](https://github.com/Windos/BurntToast) module.
+Another option would be to create something with the excellent [BurntToast](https://github.com/Winpowershell/BurntToast) module.
 
 ### New-PwshToastAlarm
 
@@ -736,7 +737,7 @@ __If you were using a version of this module older than v1.0.0, this note applie
 
 Most of the commands in this module create custom objects derived from PowerShell [class definitions](PSWorkItem.psm1) and data in the SQLite database file. If you need to troubleshoot a problem, you can use `Get-PSWorkItemData` to select all data from one of the three tables.
 
-```dos
+```powershell
 PS C:\> Get-PSWorkItemData
 
 taskid       : 2196617b-b818-415d-b9cc-52b0c649a77e

@@ -1,8 +1,9 @@
 ---
+document type: cmdlet
 external help file: PSWorkItem-help.xml
+HelpUri: https://jdhitsolutions.com/yourls/f446f5
 Module Name: PSWorkItem
-online version: https://jdhitsolutions.com/yourls/f446f5
-schema: 2.0.0
+PlatyPS schema version: 2024-05-01
 ---
 
 # Update-PSWorkItemPreference
@@ -13,9 +14,18 @@ Update or create a preference file
 
 ## SYNTAX
 
+### Default (Default)
+
 ```yaml
-Update-PSWorkItemPreference [-DefaultCategory <String>] [-Passthru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Update-PSWorkItemPreference [-DefaultCategory <String>] [-Passthru] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
+
+## ALIASES
+
+This cmdlet has the following aliases:
+
+- none
 
 ## DESCRIPTION
 
@@ -43,20 +53,25 @@ PS C:\> Update-PSWorkItemPreference -DefaultCategory Work
 
 ## PARAMETERS
 
-### -Confirm
+### -DefaultCategory
 
-Prompts you for confirmation before running the cmdlet.
+Specify the default category for new PSWorkItems. This must be a valid category in the PSWorkItems database.
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Passthru
@@ -65,14 +80,19 @@ Show the completed file.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -WhatIf
@@ -82,35 +102,50 @@ The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases:
+- wi
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -DefaultCategory
+### -Confirm
 
-Specify the default category for new PSWorkItems. This must be a valid category in the PSWorkItems database.
+Prompts you for confirmation before running the cmdlet.
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
 Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+- cf
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -128,6 +163,5 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[Get-PSWorkItemCategory](Get-PSWorkitemCategory.md)
-
-[Get-PSWorkItemPreference](Get-PSWorkItemPreference.md)
+- [Get-PSWorkItemCategory](Get-PSWorkitemCategory.md)
+- [Get-PSWorkItemPreference](Get-PSWorkItemPreference.md)

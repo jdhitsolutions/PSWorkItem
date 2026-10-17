@@ -1,8 +1,9 @@
 ---
+document type: cmdlet
 external help file: PSWorkItem-help.xml
+HelpUri: https://jdhitsolutions.com/yourls/0a919f
 Module Name: PSWorkItem
-online version: https://jdhitsolutions.com/yourls/0a919f
-schema: 2.0.0
+PlatyPS schema version: 2024-05-01
 ---
 
 # Get-PSWorkItemReport
@@ -13,9 +14,17 @@ Get a summary report of PSWorkItems.
 
 ## SYNTAX
 
+### Default (Default)
+
 ```yaml
 Get-PSWorkItemReport [[-Path] <String>] [<CommonParameters>]
 ```
+
+## ALIASES
+
+This cmdlet has the following aliases:
+
+- none
 
 ## DESCRIPTION
 
@@ -52,19 +61,27 @@ It should end in .db
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 0
-Default value: $PSWorkItemPath
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: $PSWorkItemPath
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -80,4 +97,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[Get-PSWorkItem](Get-PSWorkItem.md)
+- [Get-PSWorkItem](Get-PSWorkItem.md)

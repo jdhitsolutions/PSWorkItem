@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-10-17
+
+### Added
+
+- Added an event subscription for module removal to clean up global variables and PSDefaultParameterValues.
+
+### Changed
+
+- Updated help documentation to the new Platyps model.
+- Updated module to dynamically get the module version for verbose messsges.
+
+### Fixed
+
+- Updated TUI console to fix bugs in filtering by category and/or number of days.
+- Updated `Get-PSWorkItem` so that the `Category` dynamic parameter belongs to the `All` and `Days` parameter sets. This solves the problem of using the parameter with PSDefaultParameterValues
+
 ## [1.14.0] - 2026-05-14
 
 ### Fixed
@@ -398,7 +414,8 @@ This is a major update with significant changes. If this is your first time inst
 - Initial files
 - Created Module outline
 
-[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.14.0..HEAD
+[Unreleased]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.15.0..HEAD
+[1.15.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.14.0..v1.15.0
 [1.14.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.13.0..v1.14.0
 [1.13.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.12.0..v1.13.0
 [1.12.0]: https://github.com/jdhitsolutions/PSWorkItem/compare/v1.11.1..v1.12.0

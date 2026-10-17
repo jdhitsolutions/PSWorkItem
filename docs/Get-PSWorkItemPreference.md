@@ -1,8 +1,9 @@
 ---
+document type: cmdlet
 external help file: PSWorkItem-help.xml
+HelpUri: https://jdhitsolutions.com/yourls/782c6a
 Module Name: PSWorkItem
-online version: https://jdhitsolutions.com/yourls/782c6a
-schema: 2.0.0
+PlatyPS schema version: 2024-05-01
 ---
 
 # Get-PSWorkItemPreference
@@ -13,9 +14,17 @@ Get saved PSWorkItem preferences
 
 ## SYNTAX
 
+### Default (Default)
+
 ```yaml
 Get-PSWorkItemPreference [<CommonParameters>]
 ```
+
+## ALIASES
+
+This cmdlet has the following aliases:
+
+- none
 
 ## DESCRIPTION
 
@@ -46,7 +55,10 @@ The category will be displayed using the ANSI color sequence.
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -62,4 +74,4 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[Update-PSWorkItemPreference](Update-PSWorkItemPreference.md)
+- [Update-PSWorkItemPreference](Update-PSWorkItemPreference.md)

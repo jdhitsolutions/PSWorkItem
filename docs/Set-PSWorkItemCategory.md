@@ -1,8 +1,9 @@
 ---
+document type: cmdlet
 external help file: PSWorkItem-help.xml
+HelpUri: https://jdhitsolutions.com/yourls/6e2c1c
 Module Name: PSWorkItem
-online version: https://jdhitsolutions.com/yourls/6e2c1c
-schema: 2.0.0
+PlatyPS schema version: 2024-05-01
 ---
 
 # Set-PSWorkItemCategory
@@ -13,10 +14,18 @@ Update an existing PSWorkItem category
 
 ## SYNTAX
 
+### Default (Default)
+
 ```yaml
-Set-PSWorkItemCategory [-Category] <String> [-Description <String>]
-[-NewName <String>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-PSWorkItemCategory [-Category] <String> [-Description <String>] [-NewName <String>]
+ [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
+
+## ALIASES
+
+This cmdlet has the following aliases:
+
+- none
 
 ## DESCRIPTION
 
@@ -24,7 +33,7 @@ This command will update an existing PSWorkItem category. The category name is c
 
 If you want to modify the associated ANSI color, you will need to add or modify an entry in the $PSWorkItemCategory hashtable.
 
-$PSWorkItemCategory.Add("Event","`e[38;5;225m")
+    $PSWorkItemCategory.Add("Event","`e[38;5;225m")
 
 ## EXAMPLES
 
@@ -46,30 +55,20 @@ Specify a case-sensitive category name. There should be tab completion for this 
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: Name
-
-Required: True
-Position: 0sq
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Confirm
-
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases:
+- Name
+ParameterSets:
+- Name: (All)
+  Position: 0sq
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Description
@@ -78,32 +77,40 @@ Specify a category comment or description.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -NewName
 
-Specify a new name for the category.
-This is case-sensitive.
-Be careful renaming a category with active tasks using the old category name.
+Specify a new name for the category. This is case-sensitive. Be careful renaming a category with active tasks using the old category name.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PassThru
@@ -112,53 +119,92 @@ Write the updated category to the pipeline.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Path
 
-The path to the PSWorkItem SQLite database file.
-It should end in .db
+The path to the PSWorkItem SQLite database file. It should end in .db
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: $PSWorkItemPath
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: $PSWorkItemPath
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -WhatIf
 
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
+DefaultValue: None
+SupportsWildcards: false
+Aliases:
+- wi
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Confirm
+
+Prompts you for confirmation before running the command.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+Aliases:
+- cf
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -176,12 +222,8 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[Add-PSWorkItemCategory](Add-PSWorkItemCategory.md)
-
-[Get-PSWorkItemCategory](Get-PSWorkItemCategory.md)
-
-[Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)
-
-[Get-PSWorkItemPreference](Get-PSWorkItemPreference.md)
-
-[Update-PSWorkItemPreference](Update-PSWorkItemPreference.md)
+- [Add-PSWorkItemCategory](Add-PSWorkItemCategory.md)
+- [Get-PSWorkItemCategory](Get-PSWorkItemCategory.md)
+- [Remove-PSWorkItemCategory](Remove-PSWorkItemCategory.md)
+- [Get-PSWorkItemPreference](Get-PSWorkItemPreference.md)
+- [Update-PSWorkItemPreference](Update-PSWorkItemPreference.md)

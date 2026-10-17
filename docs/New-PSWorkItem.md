@@ -1,8 +1,9 @@
 ---
+document type: cmdlet
 external help file: PSWorkItem-help.xml
+HelpUri: https://jdhitsolutions.com/yourls/b784f7
 Module Name: PSWorkItem
-online version: https://jdhitsolutions.com/yourls/b784f7
-schema: 2.0.0
+PlatyPS schema version: 2024-05-01
 ---
 
 # New-PSWorkItem
@@ -16,14 +17,22 @@ Create a new PSWorkItem.
 ### date (Default)
 
 ```yaml
-New-PSWorkItem [-Name] <String> [[-Description] <String>] [-DueDate <DateTime>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [[-Category] <String>] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [[-Description] <String>] [[-Category] <String>]
+ [-DueDate <DateTime>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### days
 
 ```yaml
-New-PSWorkItem [-Name] <String> [[-Description] <String>] [-DaysDue <Int32>] [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [[-Category] <String>] [<CommonParameters>]
+New-PSWorkItem [-Name] <String> [[-Description] <String>] [[-Category] <String>] [-DaysDue <Int32>]
+ [-Path <String>] [-PassThru] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
+
+## ALIASES
+
+This cmdlet has the following aliases:
+
+- `nwi`
 
 ## DESCRIPTION
 
@@ -67,30 +76,40 @@ Beginning with module version 1.13.0 you can set the category to Hidden. This wi
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Confirm
+### -DaysDue
 
-Prompts you for confirmation before running the command.
+Specify the number of days before the task is due to be completed. Enter a value between 1 and 365.
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: Int32
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: days
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Description
@@ -99,14 +118,20 @@ Add a comment or task description. Do not include apostrophes.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: comment
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases:
+- comment
+ParameterSets:
+- Name: (All)
+  Position: 2
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -DueDate
@@ -116,14 +141,20 @@ The default is the value of adding the number of days in $PSWorkItemDefaultDays 
 
 ```yaml
 Type: DateTime
-Parameter Sets: date
-Aliases: Date
-
-Required: False
-Position: Named
-Default value: $PSWorkItemDefaultDays from now
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+DefaultValue: $PSWorkItemDefaultDays from now
+SupportsWildcards: false
+Aliases:
+- Date
+ParameterSets:
+- Name: date
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Name
@@ -132,28 +163,39 @@ The name of the work item. Do not include apostrophes.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: task
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases:
+- task
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PassThru
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Path
@@ -163,14 +205,19 @@ It should end in .db.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: $PSWorkItemPath
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: $PSWorkItemPath
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -WhatIf
@@ -180,35 +227,50 @@ The command is not run.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+Aliases:
+- wi
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -DaysDue
+### -Confirm
 
-Specify the number of days before the task is due to be completed. Enter a value between 1 and 365.
+Prompts you for confirmation before running the command.
 
 ```yaml
-Type: Int32
-Parameter Sets: days
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
 Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
+- cf
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
 
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -228,12 +290,8 @@ Learn more about PowerShell: http://jdhitsolutions.com/yourls/newsletter
 
 ## RELATED LINKS
 
-[Get-PSWorkItem](Get-PSWorkItem.md)
-
-[Set-PSWorkItem](Set-PSWorkItem.md)
-
-[Complete-PSWorkItem](Complete-PSWorkItem.md)
-
-[Remove-PSWorkItem](Remove-PSWorkItem.md)
-
-[Open-PSWorkItemConsole](Open-PSWorkItemConsole.md)
+- [Get-PSWorkItem](Get-PSWorkItem.md)
+- [Set-PSWorkItem](Set-PSWorkItem.md)
+- [Complete-PSWorkItem](Complete-PSWorkItem.md)
+- [Remove-PSWorkItem](Remove-PSWorkItem.md)
+- [Open-PSWorkItemConsole](Open-PSWorkItemConsole.md)

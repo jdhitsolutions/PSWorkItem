@@ -158,8 +158,8 @@ Function ShowHelp {
 Function RefreshTable {
     [CmdletBinding()]
     Param(
-        [string]$FilterCategory = '*',
-        [int]$DaysDue
+        [string]$FilterCategory,
+        [int]$DaysDue = $FilterDays.Text.ToString()
     )
     Write-Verbose "[$((Get-Date).TimeOfDay) PRIVATE] Starting $($MyInvocation.MyCommand)"
     $TableView.RemoveAll()
@@ -167,14 +167,21 @@ Function RefreshTable {
     #4 Jan 2024 format due date with leading zeros and no seconds
     $cult = Get-Culture
 
-    if ($DaysDue -gt 0) {
+    #20 Aug 2026 - update to allow filtering on Hidden category
+    if ($DaysDue -gt 0 -AND $FilterCategory) {
+        $Items = Get-PSWorkItem -Path $txtPath.Text.ToString() -DaysDue $DaysDue -Category $FilterCategory
+    }
+    elseif ($DaysDue -gt 0) {
         $Items = Get-PSWorkItem -Path $txtPath.Text.ToString() -DaysDue $DaysDue
+    }
+    elseif ($FilterCategory) {
+        $items = Get-PSWorkItem -Path $txtPath.Text.ToString() -All -Category $FilterCategory
     }
     else {
         $items = Get-PSWorkItem -Path $txtPath.Text.ToString() -All
     }
-    $Data = $Items | Where-Object { $_.Category -Like $FilterCategory } |
-    Select-Object ID, Name, Description,
+
+    $Data = $Items | Select-Object ID, Name, Description,
     @{Name = 'Due'; Expression = {
         if ($cult.DateTimeFormat.ShortDatePattern -match "^M/d/yyyy$") {
             "{0:MM/dd/yyyy hh:mm tt}" -f $_.DueDate

@@ -1,8 +1,8 @@
-Function Get-PSWorkItem {
+function Get-PSWorkItem {
     [cmdletbinding(DefaultParameterSetName = 'days')]
     [alias('gwi')]
     [outputType('PSWorkItem')]
-    Param(
+    param(
         [Parameter(
             Position = 0,
             HelpMessage = 'The name of the work item. Wildcards are supported.',
@@ -46,19 +46,32 @@ Function Get-PSWorkItem {
         )]
         [String]$Path = $global:PSWorkItemPath
     )
-    DynamicParam {
+    dynamicparam {
         # Added 26 Sept 2023 to support dynamic categories based on path
-        if (-Not $PSBoundParameters.ContainsKey('Path')) {
+        # Parameter is dynamic so that I can autocomplete values from the database
+        if (-not $PSBoundParameters.ContainsKey('Path')) {
             $Path = $global:PSWorkItemPath
         }
-        If (Test-Path $Path) {
+
+        if (Test-Path $Path) {
             $paramDictionary = New-Object -Type System.Management.Automation.RuntimeDefinedParameterDictionary
 
             # Defining parameter attributes
             $attributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[System.Attribute]
+
+            <#
+            20 Aug 2026 add the parameter to multiple parameter sets
             $attributes = New-Object System.Management.Automation.ParameterAttribute
-            $attributes.ParameterSetName = 'Category'
+            $attributes.ParameterSetName = 'All'
             $attributes.HelpMessage = 'Get all open tasks by category'
+            #>
+            $attributesAll = New-Object System.Management.Automation.ParameterAttribute
+            $attributesAll.ParameterSetName = 'all'
+            $attributesAll.HelpMessage = 'Get all open tasks by category'
+
+            $attributesDays = New-Object System.Management.Automation.ParameterAttribute
+            $attributesDays.ParameterSetName = 'days'
+            $attributesDays.HelpMessage = 'Get tasks due in specified days by category'
 
             # Adding ValidateSet parameter validation
             #It is possible categories might be entered in different cases in the database
@@ -71,7 +84,9 @@ Function Get-PSWorkItem {
             # Adding ValidateNotNullOrEmpty parameter validation
             $v = New-Object System.Management.Automation.ValidateNotNullOrEmptyAttribute
             $AttributeCollection.Add($v)
-            $attributeCollection.Add($attributes)
+            #$attributeCollection.Add($attributes)
+            $attributeCollection.Add($attributesAll)
+            $attributeCollection.Add($attributesDays)
 
             # Defining the runtime parameter
             $dynParam1 = New-Object -Type System.Management.Automation.RuntimeDefinedParameter('Category', [String], $attributeCollection)
@@ -80,7 +95,7 @@ Function Get-PSWorkItem {
             return $paramDictionary
         } # end if
     } #end DynamicParam
-    Begin {
+    begin {
         StartTimer
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         $PSDefaultParameterValues['_verbose:block'] = 'Begin'
@@ -95,13 +110,20 @@ Function Get-PSWorkItem {
         }
     } #begin
 
-    Process {
+    process {
         $PSDefaultParameterValues['_verbose:block'] = 'Process'
         $results = [System.Collections.Generic.list[object]]::new()
         _verbose -message ($strings.DetectedParameterSet -f $PSCmdlet.ParameterSetName)
-        Switch -regex ($PSCmdlet.ParameterSetName) {
-            'all|days' { $query = 'Select * from tasks where category<> "Hidden"' }
-            'category' { $query = "Select * from tasks where category ='$($PSBoundParameters['Category'])' collate nocase" }
+        switch -regex ($PSCmdlet.ParameterSetName) {
+            'all|days' {
+                if (-not $PSBoundParameters['Category']) {
+                    $query = 'Select * from tasks where category <> "Hidden"'
+                }
+                else {
+                    $query = "Select * from tasks where category = '$($PSBoundParameters['Category'])'"
+                }
+            }
+            # 'category' { $query = "Select * from tasks where category ='$($PSBoundParameters['Category'])' collate nocase" }
             <#
                 6 August 2022 -JDH
                 Because SQLite doesn't have a datetime type, querying is messy. It is just
@@ -120,7 +142,9 @@ Function Get-PSWorkItem {
                 $query = "Select * from tasks where name = '$Name' collate nocase"
             }
         }
-
+        if ($Category) {
+            #$query += " AND "
+        }
         _verbose -message $query
         $tasks = Invoke-MySQLiteQuery -Query $query -Path $Path
 
@@ -155,7 +179,7 @@ Function Get-PSWorkItem {
         }
     } #process
 
-    End {
+    end {
         $PSDefaultParameterValues['_verbose:block'] = 'End'
         $PSDefaultParameterValues['_verbose:Command'] = $MyInvocation.MyCommand
         _verbose -message $strings.Ending
